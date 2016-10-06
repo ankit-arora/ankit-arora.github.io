@@ -30,9 +30,9 @@ self.addEventListener('push', function(event) {
     // get all the notification data
     notificationData = JSON.parse(event.data.text());
     // localStorage.setItem("nD",event.data.text());
-    if (window.indexedDB) {
-
-    }
+    // if (window.indexedDB) {
+    //
+    // }
 
     // extract the parameters we need and fill up the notification
     redirectPath = notificationData['redirectPath'];
