@@ -1,73 +1,2878 @@
-/*
- Copyright WizRocket, Inc. (ver.20160823154942)
-        ____ _                    _____
-       / ___| | _____   _____ _ _|_   _|_ _ _ __
-      | |   | |/ _ \ \ / / _ \ '__|| |/ _` | '_ \
-      | |___| |  __/\ V /  __/ |   | | (_| | |_) |
-       \____|_|\___| \_/ \___|_|   |_|\__,_| .__/
-                                           |_|
+function __wizrocket() {
 
-*/
-$CLTP_WR=$WZRK_WR=new function(){function P(a,c){if(null==x&&N<K&&50>c)setTimeout(function(){P(a,c+1)},50);else{null!=x&&(a=b.b(a,"gc",x));a=b.la(a);a=b.b(a,"r",(new Date).getTime());a=b.b(a,"rn",++K);g.hasOwnProperty("plugin")&&(a=b.b(a,"ct_pl",g.plugin));-1!=a.indexOf("chrome-extension:")&&(a=a.replace("chrome-extension:","https:"));var d=E.createElement("script");d.setAttribute("type","text/javascript");d.setAttribute("src",a);d.setAttribute("rel","nofollow");d.async=!0;E.getElementsByTagName("head")[0].appendChild(d);
-k.w("req snt -> url: "+a)}}function Q(){var a=b.h("WZRK_K");"undefined"==typeof a&&(a={});a.flag=!0;b.u("WZRK_K",a)}var A=location.protocol;"https:"!==A&&(A="http:");var F=A+"//wzrkt.com/a?t=49",X=A+"//wzrkt.com/r?r=1",Y=A+"//wzrkt.com/e?r=1",Z=A+"//wzrkt.com/m?r=1",b=this,E=document,B=window.location.hostname,C,k=window.console,G={},R=0,S=0,x,T,y,D,H=!1,L,n,s,U,g=window.wizrocket,K=0,N=0;"undefined"!=typeof clevertap?(g=clevertap,window.wizrocket=clevertap):window.clevertap=g;var I;b.Ea=function(){return 1===
-S};b.na=function(){var a=E.createElement("script");a.setAttribute("type","text/javascript");a.setAttribute("id","wzrk-alert-js");a.setAttribute("src","https://d2r1yp2w7bby2u.cloudfront.net/js/wzrk_dialog.min.js");document.getElementsByTagName("body")[0].appendChild(a);return a};b.Ja=function(){var a=E.getElementById("wzrk-alert-js");a.parentNode.removeChild(a)};b.sa=function(a){(I=a)&&J.Q?b.Z(J.ra):!I&&J.Q&&k.a("Ensure that web push notifications are fully enabled and integrated before requesting them")};
-b.S=function(){if("serviceWorker"in navigator)navigator.serviceWorker.register("/clevertap_sw.js").then(function(){return navigator.serviceWorker.ready}).then(function(a){a.pushManager.subscribe({userVisibleOnly:!0}).then(function(a){k.P("Service Worker registered. Endpoint: "+a.endpoint);a=JSON.parse(JSON.stringify(a));a.endpoint=a.endpoint.split("/").pop();if("undefined"===typeof b.h("WZRK_N")||a.endpoint!==JSON.parse(b.h("WZRK_N")).endpoint){a=b.B(a,!0);a=JSON.stringify(a);var d=F,d=b.b(d,"type",
-"data"),d=b.b(d,"d",b.l(a));b.n(d);b.u("WZRK_N",a)}})["catch"](function(a){k.P("Error subscribing: "+a)})})["catch"](function(a){k.P("error registering service worker: "+a)})};b.xa=function(){b.ta();k={a:function(a){window.console&&console.error((new Date).getTime()+" "+a)},w:function(a){window.console&&b.Aa()&&console.debug((new Date).getTime()+" "+a)},P:function(a){window.console&&console.log((new Date).getTime()+" "+a)}};if("undefined"==typeof g.account[0])k.a(m["embed-error"]);else if(D=g.account[0].id,
-"undefined"==typeof D||""==D)k.a(m["embed-error"]);else{L="WZRK_S_"+D;var a=location.href,c=f.Y(location.href.toLowerCase());if("undefined"==typeof c.e||"0"!=c.wzrk_ex){b.fa();b.Ga();var d=!0;a==T&&(d=!1);b.v("WZRK_P",a,900,location.hostname);if(d){var d=b.D(),e="undefined"==typeof d.p?0:d.p;d.p=++e;b.ia(d);var d={},h=f.ua(E.referrer);B!=h&&(""!=h&&(h=120<h.length?h.substring(0,120):h,d.referrer=h),h=c.utm_source||c.wzrk_source,"undefined"!=typeof h&&(h=120<h.length?h.substring(0,120):h,d.us=h),h=
-c.utm_medium||c.wzrk_medium,"undefined"!=typeof h&&(h=120<h.length?h.substring(0,120):h,d.um=h),h=c.utm_campaign||c.wzrk_campaign,"undefined"!=typeof h&&(h=120<h.length?h.substring(0,120):h,d.uc=h),"undefined"!=typeof c.wzrk_medium&&(c=c.wzrk_medium,c.match(/^email$|^social$|^search$/)&&(d.wm=c)));d=b.B(d);d.cpg=a;d.WZRK_CAMP=b.X();a=F;b.U(d);"undefined"!=d.pg&&1==d.pg&&b.ca(d);a=b.b(a,"type","page");a=b.b(a,"d",b.l(JSON.stringify(d)));b.n(a);var w=function(){var a=F,c={},c=b.B(c),a=b.b(a,"type",
-"ping"),a=b.b(a,"d",b.l(JSON.stringify(c)));b.n(a)};setTimeout(function(){3>=e&&w();b.Ca()&&setInterval(function(){w()},3E5)},12E4)}"undefined"==typeof g.session&&(g.event.getDetails=function(a){if(f.r()&&("undefined"==typeof n&&(n=b.h("WZRK_EV")),"undefined"!=typeof n)){a=n[a];var c={};if("undefined"!=typeof a)return c.firstTime=new Date(1E3*a[1]),c.lastTime=new Date(1E3*a[2]),c.count=a[0],c}},g.profile.getAttribute=function(a){if(f.r()&&("undefined"==typeof s&&(s=b.h("WZRK_PR")),"undefined"!=typeof s))return s[a]},
-g.session={},g.session.getTimeElapsed=function(){if(f.r()){"undefined"!=typeof y&&(y=b.D());var a=y.s;if("undefined"!=typeof a)return Math.floor(f.o()-a)}},g.user={},g.user.getTotalVisits=function(){if(f.r()){var a=b.q("sc");"undefined"==typeof a&&(a=1);return a}},g.session.getPageCount=function(){if(f.r())return"undefined"!=typeof y&&(y=b.D()),y.p},g.user.getLastVisit=function(){if(f.r()){var a=b.q("ps");if("undefined"!=typeof a)return new Date(1E3*a)}});S=1}}};b.fa=function(){var a=b.j("WZRK_L");
-if(a&&10<a.length){var c=a.split("|$|"),d=c[0],e=c[1],h="undefined"==typeof c[2]?0:c[2],c=f.o()-e;1200<c||1<=h?k.w("ign stale ck WZRK_L w/val: "+a):(a=d+"|$|"+e+"|$|"+(h+1),b.K("WZRK_L",a,12E5,B),k.w("stored in WZRK_L-> "+a),b.n(A+d.substring(d.indexOf("//"))+"&dl="+c+"&i="+e))}};b.h=function(a){a=f.f()?localStorage[a]:b.j(a);if("undefined"!=typeof a&&null!==a)return JSON.parse(decodeURIComponent(a))};b.u=function(a,c){if("undefined"!=typeof c&&"undefined"!=c)try{f.f()?localStorage[a]=encodeURIComponent(JSON.stringify(c)):
-b.v(a,encodeURIComponent(JSON.stringify(c)),0,B)}catch(d){}};b.da=function(a){if(f.isArray(a))for(;0<a.length;){var c=a.shift();if(!f.I(c)){k.a(m["event-error"]);break}32<c.length&&(c=c.substring(0,32),b.A(510,c+"... length exceeded 32 chars. Trimmed."));if("Stayed"==c||"UTM Visited"==c||"App Launched"==c||"Notification Sent"==c||"Notification Viewed"==c||"Notification Clicked"==c)b.A(513,c+" is a restricted system event. It cannot be used as an event name. Not sent.");else{var d={type:"event"};d.evtName=
-f.L(c,O);d.WZRK_CAMP=b.X();if(0!=a.length){var e=a.shift();if(f.i(e)){if("Charged"==c){if(!b.ya(e)){b.A(511,"Charged event structure invalid. Not sent.");continue}}else if(!b.aa(e)){b.A(512,c+" event structure invalid. Not sent.");continue}d.evtData=e}else a.unshift(e)}b.ma(d.evtName);d=b.B(d);b.U(d);c=b.l(JSON.stringify(d));d=F;d=b.b(d,"type","push");d=b.b(d,"d",c);b.ha(d,!1)}}};b.ma=function(a){if(f.f()){"undefined"==typeof n&&(n=b.h("WZRK_EV"),"undefined"==typeof n&&(n={}));var c=f.o(),d=n[a];
-"undefined"!=typeof d?(d[2]=c,d[0]++):(d=[],d.push(1),d.push(c),d.push(c));n[a]=d;b.u("WZRK_EV",n)}};b.M=function(a,c){if(f.f()){"undefined"==typeof s&&(s=b.h("WZRK_PR"),"undefined"==typeof s&&(s={}));if("undefined"!=typeof a._custom){var d=a._custom,e;for(e in d)a[e]=d[e];delete a._custom}for(var h in a)!a.hasOwnProperty(h)||s.hasOwnProperty(h)&&!c||(s[h]=a[h]);"undefined"!=typeof s._custom&&delete s._custom;b.u("WZRK_PR",s)}};b.ca=function(a){f.r()&&(a.dsync=!0)};b.la=function(a){return f.f()&&
-"undefined"!=typeof localStorage[" WZRK_ARP"]?b.b(a,"arp",b.l(JSON.stringify(b.h(" WZRK_ARP")))):a};b.U=function(a){if(f.r()){var c=b.q("lsTime"),d=b.q("exTs");"undefined"==typeof c||"undefined"==typeof d?a.dsync=!0:c+d<f.o()&&(a.dsync=!0)}};b.X=function(){var a;f.H()&&(a=sessionStorage.WZRK_CAMP,a="undefined"==typeof a?{}:JSON.parse(decodeURIComponent(a).replace(M,'"')));return a};b.ba=function(){Q()};b.oa=function(a){if(f.f())try{var c=b.h(" WZRK_ARP");"undefined"==typeof c&&(c={});for(var d in a)a.hasOwnProperty(d)&&
-(-1==a[d]?delete c[d]:c[d]=a[d]);b.u(" WZRK_ARP",c)}catch(e){k.a("Unable to parse ARP JSON: "+e)}};b.R=function(a){if(f.isArray(a)&&0<a.length){var c=a.pop();a={};var d;if("undefined"!=typeof c.Site){if(d=c.Site,f.F(d)||!b.Da(d))return}else"undefined"!=typeof c.Facebook?(c=c.Facebook,f.F(c)||c.error||(d=b.Ha(c))):"undefined"!=typeof c["Google Plus"]&&(c=c["Google Plus"],f.F(c)||c.error||(d=b.Ia(c)));if("undefined"!=typeof d&&!f.F(d)){a.type="profile";a.profile=d;c=[];if(f.f()&&("undefined"!=typeof d.Email&&
-c.push(d.Email),"undefined"!=typeof d.GPID&&c.push("GP:"+d.GPID),"undefined"!=typeof d.FBID&&c.push("FB:"+d.FBID),"undefined"!=typeof d.Identity&&c.push(d.Identity),0<c.length))a:{var e=b.h("WZRK_K"),h,w,g,r=(new Date).getTime();if("undefined"==typeof e)e={},w=c;else{h=e.ls;w=e.id;var k=!1;"undefined"==typeof w&&(w=[],k=!0);if(20<w.length)break a;g=e.flag;for(var m in c)if(c.hasOwnProperty(m)){var n=!1,q;for(q in w)if(w.hasOwnProperty(q)&&w[q]===c[m]){k=n=!0;break}n||w.push(c[m])}!k&&(g||6E4<r-h)&&
-(H=!0,f.f()&&(delete localStorage.WZRK_G,delete localStorage.WZRK_K,delete localStorage.WZRK_PR,delete localStorage.WZRK_EV,delete localStorage.WZRK_META),f.H()&&delete sessionStorage.WZRK_CAMP,b.C("WZRK_G",C),b.C("WZRK_CAMP",B),b.C("WZRK_K",B),b.C(L,C),x=null,y="",N=K=0,w=c)}e.id=w;e.ls=r;e.flag=!1;b.u("WZRK_K",e)}b.M(d,!0);a=b.B(a);H&&(a.rc=!0);b.ca(a);d=b.l(JSON.stringify(a));m=F;m=b.b(m,"type","push");m=b.b(m,"d",d);b.ha(m,H)}}};b.ea=function(a){f.isArray(a)&&0<a.length&&(a=a.pop(),"undefined"!=
-typeof a&&f.i(a)&&("undefined"!=typeof a.Site&&0<Object.keys(a.Site).length||"undefined"!=typeof a.Facebook&&0<Object.keys(a.Facebook).length||"undefined"!=typeof a["Google Plus"]&&0<Object.keys(a["Google Plus"]).length)?(Q(),b.R([a])):k.a("Profile object is in incorrect format"))};b.Ga=function(){"undefined"===typeof g.onUserLogin&&(g.onUserLogin=[]);g.onUserLogin.push=function(){b.ea(Array.prototype.slice.call(arguments));return 0};g.event.push=function(){b.da(Array.prototype.slice.call(arguments));
-return 0};"undefined"===typeof g.notifications&&(g.notifications=[]);g.notifications.push=function(){b.ja(Array.prototype.slice.call(arguments));return 0};g.profile.push=function(){b.R(Array.prototype.slice.call(arguments));return 0};g.logout=b.ba;b.ea(g.onUserLogin);b.da(g.event);b.R(g.profile);for(b.ja(g.notifications);0<g.notifications.length;)g.notifications.pop()};b.ha=function(a,c){var d=f.o(),e=a+"|$|"+d;b.K("WZRK_L",e,12E5,B);k.w("stored in WZRK_L-> "+e);H&&!c||b.n(a+"&i="+d)};b.Ia=function(a){var c=
-{};"undefined"!=typeof a.displayName&&(c.Name=a.displayName);"undefined"!=typeof a.id&&(c.GPID=a.id+"");"undefined"!=typeof a.gender&&("male"==a.gender?c.Gender="M":"female"==a.gender&&(c.Gender="F"));"undefined"!=typeof a.image&&!1==a.image.isDefault&&(c.Photo=a.image.url.split("?sz")[0]);if("undefined"!=typeof a.emails)for(var d=0;d<a.emails.length;d++){var b=a.emails[d];"account"==b.type&&(c.Email=b.value)}if("undefined"!=typeof a.organizations)for(c.Employed="N",d=0;d<a.organizations.length;d++)"work"==
-a.organizations[d].type&&(c.Employed="Y");"undefined"!=typeof a.birthday&&(d=a.birthday.split("-"),d=$WZRK_WR.setDate(d[0]+d[1]+d[2]),c.DOB=d);"undefined"!=typeof a.relationshipStatus&&(c.Married="N","married"==a.relationshipStatus&&(c.Married="Y"));k.w("gplus usr profile "+JSON.stringify(c));return c};b.Ha=function(a){var c={};c.Name=a.name;"undefined"!=typeof a.id&&(c.FBID=a.id+"");"male"==a.gender?c.Gender="M":"female"==a.gender&&(c.Gender="F");"undefined"!=a.relationship_status&&(c.Married="N",
-"Married"==a.relationship_status&&(c.Married="Y"));var b;a:{b=a.education;if("undefined"!=typeof b){for(var e="",h="",f=0;f<b.length;f++){var g=b[f];if("undefined"!=typeof g.type){g=g.type;if("Graduate School"==g){b="Graduate";break a}"College"==g?e="1":"High School"==g&&(h="1")}}if("1"==e){b="College";break a}if("1"==h){b="School";break a}}b=void 0}"undefined"!=typeof b&&(c.Education=b);c.Employed=0<("undefined"!=typeof a.work?a.work.length:0)?"Y":"N";"undefined"!=typeof a.email&&(c.Email=a.email);
-"undefined"!=typeof a.birthday&&(a=a.birthday.split("/"),a=$WZRK_WR.setDate(a[2]+a[0]+a[1]),c.DOB=a);return c};b.va=function(){b.O("-1")};b.Na=function(){b.O("0")};b.Ma=function(){b.O("1")};b.O=function(a){var c=f.Y(location.href).e;if("undefined"!=typeof c){var d={};d.id=D;var e=Y,e=b.b(e,"e",c),e=b.b(e,"d",b.l(JSON.stringify(d)));"-1"!=a&&(e=b.b(e,"sub",a));b.n(e)}};b.A=function(a,c){G.c=a;G.d=c;k.a(t+a+": "+c)};b.Aa=function(){return"undefined"!=typeof sessionStorage&&""==sessionStorage.WZRK_D};
-b.Ca=function(){return"undefined"!=typeof wzrk_d&&"continuous"==wzrk_d.ping};b.l=function(a){k.w("dobj:"+a);return z.W(a)};b.B=function(a,c){"undefined"===typeof c&&(a=f.ga(a));f.F(G)||(a.wzrk_error=G,G={});a.id=D;null!=x&&(a.g=x);var d=b.D();a.s=d.s;a.pg="undefined"==typeof d.p?1:d.p;return a};b.D=function(){var a=b.j(L),c={};null!=a&&(a=a.replace(M,'"'),c=JSON.parse(a),f.i(c)?"undefined"!=typeof c.t&&1260<f.o()-c.t&&(c={}):c={});return y=c};b.ia=function(a){a=JSON.stringify(a);b.K(L,a,1200,B)};
-b.ta=function(){x=b.j("WZRK_G");null==x&&f.f()&&(x=localStorage.WZRK_G);T=b.j("WZRK_P")};b.k=function(a,c){if(f.f()){var d=b.h("WZRK_META");"undefined"==typeof d&&(d={});d[a]=c;b.u("WZRK_META",d)}};b.q=function(a){if(f.f()){var c=b.h("WZRK_META");if("undefined"!=typeof c)return c[a]}};b.Fa=function(a){if("undefined"==typeof U){var c=b.q("cs");"undefined"==typeof c?(b.k("ps",a),b.k("cs",a),b.k("sc",1)):c!=a&&(b.k("ps",c),b.k("cs",a),c=b.q("sc"),"undefined"==typeof c&&(c=0),b.k("sc",c+1));U=a}};b.Ka=
-function(a,c,d,e){"undefined"===typeof e&&(e=0);if(!(e>K)){d&&(H=!1);f.f()&&b.Fa(c);x=a;b.K("WZRK_G",a,31536E4,B);if(f.f())try{localStorage.WZRK_G=a}catch(h){k.a("Unable to write to local storage: "+h)}a=b.D();if("undefined"==typeof a.s||a.s<=c)a.s=c,a.t=f.o(),b.ia(a);b.C("WZRK_L",C);k.w("del ck: WZRK_L");d&&b.fa();N=e}};b.K=function(a,c,d,e){if(e)if("undefined"==typeof C){e=e.split(".");for(var f="",g=e.length-1;0<=g;g--){f="."+e[g]+f;if(b.j(a)){var k="test_"+a+g;b.v(k,c,10,f);if(b.j(k))b.C(k,f);
-else continue}b.v(a,c,d,f);if(b.j(a)==c){C=f;break}}}else b.v(a,c,d,C);else b.v(a,c,d,e)};b.v=function(a,c,b,e){var f="",g="";b&&(f=new Date,f.setTime(f.getTime()+1E3*b),f="; expires="+f.toGMTString());e&&(g="; domain="+e);c=encodeURIComponent(c);document.cookie=a+"="+c+f+g+"; path=/"};b.j=function(a){a+="=";for(var c=document.cookie.split(";"),b=0;b<c.length;b++){for(var e=c[b];" "==e.charAt(0);)e=e.substring(1,e.length);if(0==e.indexOf(a))return decodeURIComponent(e.substring(a.length,e.length))}return null};
-b.C=function(a,c){var b=a+"=; expires=Thu, 01 Jan 1970 00:00:01 GMT;";c&&(b=b+" domain="+c+"; path=/");document.cookie=b};b.b=function(a,c,b){return a+"&"+c+"="+encodeURIComponent(b)};b.n=function(a){P(a,1)};b.V=function(a,c){if("undefined"!=typeof a&&"-1"!=a&&f.H()){var b=sessionStorage.WZRK_CAMP,b="undefined"==typeof b?{}:JSON.parse(decodeURIComponent(b).replace(M,'"'));b[a]="dnd";b=JSON.stringify(b);sessionStorage.WZRK_CAMP=encodeURIComponent(b)}document.getElementById(c).style.display="none"};
-var J={Q:!1};b.ja=function(a){I&&0<a.length?b.Z(a):"undefined"===typeof I&&0<a.length?(J.Q=!0,J.ra=a.slice()):!1===I&&k.a("Make sure push notifications are fully enabled and integrated")};b.Z=function(a){var c,d,e,h,g,m,r;1===a.length?f.i(a[0])&&(r=a[0],c=r.titleText,d=r.bodyText,e=r.okButtonText,h=r.rejectButtonText,g=r.okButtonColor,m=r.skipDialog,r=r.askAgainTimeInSeconds):(c=a[0],d=a[1],e=a[2],h=a[3],g=a[4],m=a[5],r=a[6]);"undefined"===typeof m&&(m=!1);if("undefined"!==typeof navigator.serviceWorker)if("https:"!==
-location.protocol&&"localhost"!==document.location.hostname)k.a("Make sure you are https or localhost to register for notifications");else if(-1!==navigator.userAgent.indexOf("Chrome")&&(a=navigator.userAgent.match(/Chrome\/(\d+)/),!("undefined"===typeof a||50>parseInt(a[1],10))))if("granted"===Notification.permission)b.S();else if("denied"!==Notification.permission){if("undefined"===typeof b.q("notif_last_time"))b.k("notif_last_time",(new Date).getTime()/1E3);else{a=(new Date).getTime()/1E3;r="undefined"!==
-typeof r?r:604800;if(a-b.q("notif_last_time")<r)return;b.k("notif_last_time",a)}m?b.S():c&&d&&e&&h?("undefined"!==typeof g&&g.match(/^#[a-f\d]{6}$/i)||(g="#f28046"),b.na().onload=function(){wizAlert({title:c,body:d,confirmButtonText:e,confirmButtonColor:g,rejectButtonText:h},function(a){a&&b.S();b.Ja()})}):k.a("Missing input parameters; please specify title, body, ok button and cancel button text")}};b.T=function(a){function c(){var a=q;if(null==document.getElementById("intentPreview")&&!(/mobile/i.test(navigator.userAgent)||
-/mini/i.test(navigator.userAgent)||/iPad/i.test(navigator.userAgent)||"ontouchstart"in window||/tablet/i.test(navigator.userAgent))){var c=a.wzrk_id.split("_")[0];if(!1!=t(a)){var b=document.createElement("div");b.id="intentPreview";b.setAttribute("style","display:block;overflow:hidden;top:55% !important;left:50% !important;position:fixed;z-index:2147483647;width:600px !important;height:600px !important;margin:-300px 0 0 -300px !important;");document.body.appendChild(b);var d=document.createElement("iframe");
-d.Qa="0px";d.Wa="0px";d.Xa="0px";d.scrolling="no";d.id="wiz-iframe-intent";var e=a.display.onClick,f="";""!=e&&"undefined"!=typeof e&&(f="cursor:pointer;");var h;"dark"==a.display.theme?(h="#2d2d2e",textColor="#eaeaea",btnBg="#353535"):(h="#ffffff",textColor="#000000",btnBg="#a5a6a6");btColor="#ffffff";var g=a.msgContent.title,l=a.msgContent.description,k="";"undefined"!=typeof a.msgContent.ctaText&&""!=a.msgContent.ctaText&&(k="<div class='button'><a href='#'>"+a.msgContent.ctaText+"</a></div>");
-var r="";"undefined"!=typeof a.msgContent.imageUrl&&""!=a.msgContent.imageUrl&&(r="<div style='padding-top:20px;'><img src='"+a.msgContent.imageUrl+"' width='500' alt="+g+" /></div>");c='<style type="text/css">body{margin:0;padding:0;}#contentDiv.wzrk{overflow:hidden;padding:0 0 20px 0;text-align:center;'+f+"}#contentDiv.wzrk td{padding:15px 10px;}.wzrkPPtitle{font-weight: bold;font-size: 24px;font-family:arial;word-break: break-word;padding-top:20px;}.wzrkPPdscr{font-size: 14px;font-family:arial;line-height:16px;word-break: break-word;display:inline-block;padding:20px 20px 0 20px;line-height:20px;}.PL15{padding-left:15px;}.wzrkPPwarp{margin:20px 20px 0 5px;padding:0px;border-radius: 8px;box-shadow: 1px 1px 5px #888888;}a.wzrkClose{cursor:pointer;position: absolute;top: 11px;right: 11px;z-index: 2147483647;font-size:19px;font-family:arial;font-weight:bold;text-decoration: none;width: 25px;/*height: 25px;*/text-align: center; -webkit-appearance: none; line-height: 25px;background: #353535;border: #fff 2px solid;border-radius: 100%;box-shadow: #777 2px 2px 2px;color:#fff;}a:hover.wzrkClose{background-color:#d1914a !important;color:#fff !important; -webkit-appearance: none;}#contentDiv .button{padding-top:20px;}#contentDiv .button a{font-size: 14px;font-weight:bold;font-family:arial;text-align:center;display:inline-block;text-decoration:none;padding:0 30px;height:40px;line-height:40px;background:#ea693b;color:#fff;border-radius:4px;-webkit-border-radius:4px;-moz-border-radius:4px;}</style>"+
-("<div class='wzrkPPwarp' style='color:"+textColor+";background-color:"+h+";'><a href='javascript:void(0);' onclick="+("parent.$WZRK_WR.closeIframe("+c+",'intentPreview');")+" class='wzrkClose' style='background-color:"+btnBg+";color:"+btColor+"'>&times;</a><div id='contentDiv' class='wzrk'><div class='wzrkPPtitle' style='color:"+textColor+"'>"+g+"</div>")+("<div class='wzrkPPdscr' style='color:"+textColor+"'>"+l+"</div>"+r+k+"</div></div>");d.setAttribute("style","z-index: 2147483647; display:block; height: 100% !important; width: 100% !important;min-height:80px !important;border:0px !important; border-color:none !important;");
-b.appendChild(d);b=(d.contentWindow?d.contentWindow:d.contentDocument.document?d.contentDocument.document:d.contentDocument).document;b.open();b.write(c);b.close();m(e,a,document.getElementById("wiz-iframe-intent").contentDocument.getElementById("contentDiv"),"intentPreview")}}}function d(a){if(null==document.getElementById("wizParDiv")&&!1!=t(a)){var c=a.display.onClick;if(g.hasOwnProperty("notificationCallback")&&"undefined"!==typeof g.notificationCallback&&"function"===typeof g.notificationCallback){var d=
-g.notificationCallback;if(!u){var f={};f.msgContent=a.msgContent;f.msgId=a.wzrk_id;"undefined"!==typeof a.display.kv&&(f.kv=a.display.kv);g.raiseNotificationClicked=function(){if(""!=c&&"undefined"!=typeof c){var d=a.display.jsFunc;c+=W();"undefined"!=typeof d?(b.n(c),V(d,a)):"1"==a.display.window?window.open(c,"_blank"):window.location=c}};g.raiseNotificationViewed=function(){h(a)};d(f);u=!0}}else d=e(a),m(c,a,d,"wizParDiv")}}function e(a){var c=a.wzrk_id.split("_")[0],b=document.createElement("div");
-b.id="wizParDiv";var d=window.innerHeight,e=window.innerWidth,f=5*e/100,h=10+5*d/100,g=30*e/100+20;if((/mobile/i.test(navigator.userAgent)||/mini/i.test(navigator.userAgent))&&!1==/iPad/i.test(navigator.userAgent))g=85*e/100+20,f=5*e/100,h=5*d/100;else if("ontouchstart"in window||/tablet/i.test(navigator.userAgent))g=50*e/100+20,f=5*e/100,h=5*d/100;b.setAttribute("style","display:block;overflow:hidden; bottom:"+h+"px !important;width:"+g+"px !important;right:"+f+"px !important;position:fixed;z-index:2147483647;");
-document.body.appendChild(b);d=document.createElement("iframe");d.frameborder="0px";d.marginheight="0px";d.marginwidth="0px";d.scrolling="no";d.id="wiz-iframe";e=a.display.onClick;f="";""!=e&&"undefined"!=typeof e&&(f="cursor:pointer;");e='<style type="text/css">body{margin:0;padding:0;}#contentDiv.wzrk{overflow:hidden;padding:0;text-align:center;'+f+"}#contentDiv.wzrk td{padding:15px 10px;}.wzrkPPtitle{font-weight: bold;font-size: 16px;font-family:arial;padding-bottom:10px;word-break: break-word;}.wzrkPPdscr{font-size: 14px;font-family:arial;line-height:16px;word-break: break-word;display:inline-block;}.PL15{padding-left:15px;}.wzrkPPwarp{margin:20px 20px 0 5px;padding:0px;border-radius: 8px;box-shadow: 1px 1px 5px #888888;}a.wzrkClose{cursor:pointer;position: absolute;top: 11px;right: 11px;z-index: 2147483647;font-size:19px;font-family:arial;font-weight:bold;text-decoration: none;width: 25px;/*height: 25px;*/text-align: center; -webkit-appearance: none; line-height: 25px;background: #353535;border: #fff 2px solid;border-radius: 100%;box-shadow: #777 2px 2px 2px;color:#fff;}a:hover.wzrkClose{background-color:#d1914a !important;color:#fff !important; -webkit-appearance: none;}td{vertical-align:top;}td.imgTd{border-top-left-radius:8px;border-bottom-left-radius:8px;}</style>";
-"dark"==a.display.theme?(f="#2d2d2e",textColor="#eaeaea",leftTd=btnBg="#353535"):(f="#ffffff",textColor="#000000",leftTd="#f4f4f4",btnBg="#a5a6a6");btColor="#ffffff";if(1==a.msgContent.type)d.src=a.msgContent.html,b.appendChild(d);else{var h=a.msgContent.title,g=a.msgContent.description,l="";"undefined"!=typeof a.msgContent.imageUrl&&""!=a.msgContent.imageUrl&&(l="<td class='imgTd' style='background-color:"+leftTd+"'><img src='"+a.msgContent.imageUrl+"' height='60' width='60'></td>");a=e+("<div class='wzrkPPwarp' style='color:"+
-textColor+";background-color:"+f+";'><a href='javascript:void(0);' onclick="+("parent.$WZRK_WR.closeIframe("+c+",'wizParDiv');")+" class='wzrkClose' style='background-color:"+btnBg+";color:"+btColor+"'>&times;</a><div id='contentDiv' class='wzrk'><table cellpadding='0' cellspacing='0' border='0'><tr>"+l+"<td style='vertical-align:top;'><div class='wzrkPPtitle' style='color:"+textColor+"'>"+h+"</div>")+("<div class='wzrkPPdscr' style='color:"+textColor+"'>"+g+"<div></td></tr></table></div>");d.setAttribute("style",
-"z-index: 2147483647; display:block; width: 100% !important; border:0px !important; border-color:none !important;");b.appendChild(d);b=(d.contentWindow?d.contentWindow:d.contentDocument.document?d.contentDocument.document:d.contentDocument).document;b.open();b.write(a);b.close();b=document.getElementById("wiz-iframe").contentDocument.getElementById("contentDiv").scrollHeight+26;document.getElementById("wiz-iframe").contentDocument.body.style.margin="0px";document.getElementById("wiz-iframe").style.height=
-b+"px";return document.getElementById("wiz-iframe").contentDocument.getElementById("contentDiv")}}function h(a){var c=parseInt(a.wzrk_id.split("_")[1],10),d=g.account[0].id,e=Z,f={};f.cId=parseInt(a.wzrk_id.split("_")[0],10);f.bId=c;f.accId=d;f.d="Web";f.m="Web";e=b.b(e,"d",b.l(JSON.stringify(f)));b.n(e)}function m(a,c,b,d){h(c);r(a,c,b,d)}function V(a,c){var b=window.parent[a];"function"==typeof b&&("undefined"!==typeof c.display.kv?b(c.display.kv):b())}function r(a,c,d,e){if(""!=a&&"undefined"!=
-typeof a){var f=c.display.jsFunc;a+=W();d.onclick=function(){"undefined"!=typeof f?(b.n(a),V(f,c),b.V("-1",e)):"1"==c.display.window?window.open(a,"_blank"):window.location=a}}}function W(){null==x&&(x=f.f()?localStorage.WZRK_G:b.j("WZRK_G"));null==y&&(y=b.D());return"&t=wc&d="+encodeURIComponent(z.W(x+"|"+y.p+"|"+y.s))}function t(c){var d=c.wzrk_id.split("_")[0],e={};if(f.H())e=sessionStorage.WZRK_CAMP,e="undefined"==typeof e?{}:JSON.parse(decodeURIComponent(e).replace(M,'"'));else if(e=b.j("WZRK_CAMP"),
-"t"==e)return!1;null==e&&(e={});"undefined"==typeof c.display.wmc&&(c.display.wmc=1);if("undefined"!=typeof e&&"undefined"!=e.wmc&&e.wmc>=c.display.wmc||"undefined"!=typeof e&&"undefined"!=typeof e[d]&&("dnd"==e[d]||e[d]>=c.display.mdc))return!1;if("undefined"!=typeof c.display.delay&&0<c.display.delay)return d=c.display.delay,c.display.delay=0,setTimeout(b.T,1E3*d,a),!1;"undefined"==typeof e[d]?e[d]=1:e[d]++;"undefined"==typeof e.wmc?e.wmc=1:e.wmc++;c=encodeURIComponent(JSON.stringify(e));f.H()?
-sessionStorage.WZRK_CAMP=c:b.v("WZRK_CAMP","t",0,B)}var u=!1,q;if(document.body){if("undefined"!=typeof a.inapp_notifs)for(var l=0;l<a.inapp_notifs.length;l++){var p=a.inapp_notifs[l];"undefined"==typeof p.display.wtarget_type||0==p.display.wtarget_type?d(p):1==p.display.wtarget_type&&(q=p,window.document.body.onmouseleave=c)}l=function(a){if("undefined"==typeof n&&(n=b.h("WZRK_EV"),"undefined"==typeof n)){n=a;return}for(var c in a)if(a.hasOwnProperty(c)){var d=n[c],e=a[c];"undefined"!=typeof n[c]?
-"undefined"!=typeof e[0]&&e[0]>d[0]&&(n[c]=e):n[c]=e}};if(f.f())try{if("undefined"!=typeof a.evpr){var A=a.evpr.events,v=a.evpr.profile,C=a.evpr.expires_in;b.k("lsTime",f.o());b.k("exTs",C);l(A);b.u("WZRK_EV",n);"undefined"==typeof s?b.M(v,!0):b.M(v,!1)}"undefined"!=typeof a.arp&&b.oa(a.arp)}catch(D){k.a("Unable to persist evrp/arp: "+D)}}else 6>R&&(R++,setTimeout(b.T,1E3,a))};b.Ua=function(a,c,d){var e={};e.sendTo=a;e.targetId=c;e.epoch=f.o();e.type=null!=d?d:"view";e=b.B(e);return b.b(X,"d",b.l(JSON.stringify(e)))};
-b.Ta=function(){var a;a='<div class="notice-message">  <a href="[RECORDER_HREF]" class="box">';a+='    <div class="avatar"><span class="fa [ICON] fa-4x fa-fw"></span></div>';a+='    <div class="info">';a+='      <div class="title">[TITLE]</div>';a+='      <div class="clearfix"></div>';a+='      <div class="text">[TEXT]</div>';a+="    </div>";a+='    <div class="clearfix"></div>';a+="  </a>";a+="</div>";return a+='<div class="clearfix"></div>'};b.Sa=function(){var a;a='<head><base target="_parent" /><link rel="stylesheet" href="http://static.clevertap.com/fa/font-awesome.css">';
-a+='<meta name="viewport" content="width=device-width, initial-scale=1.0">';a+="<style>";a+="[STYLE]";a+="</style>";return a+="</head>"};b.ya=function(a){if(f.i(a)){for(var c in a)if("Items"==c){if(!f.isArray(a[c]))return!1;16<a[c].length&&b.A(522,"Charged Items exceed 16 limit. Actual count: "+a[c].length+". Additional items will be dropped.");for(var d in a[c])if(a[c].hasOwnProperty(d)&&(!f.i(a[c][d])||!b.aa(a[c][d])))return!1}else{if(f.i(a[c])||f.isArray(a[c]))return!1;f.G(a[c])&&(a[c]=f.N(a[c]))}return!0}return!1};
-b.aa=function(a){if(f.i(a)){for(var c in a){if(f.i(a[c])||f.isArray(a[c]))return!1;f.G(a[c])&&(a[c]=f.N(a[c]))}return!0}return!1};b.Da=function(a){if(f.i(a))for(var c in a)if(a.hasOwnProperty(c)){var b=!0,e=a[c];if("undefined"==typeof e)delete a[c];else{"Gender"!=c||e.match(/^M$|^F$/)||(b=!1,k.a(m["gender-error"]));"Employed"!=c||e.match(/^Y$|^N$/)||(b=!1,k.a(m["employed-error"]));"Married"!=c||e.match(/^Y$|^N$/)||(b=!1,k.a(m["married-error"]));"Education"!=c||e.match(/^School$|^College$|^Graduate$/)||
-(b=!1,k.a(m["education-error"]));"Age"==c&&"undefined"!=typeof e&&(f.$(e)?a.Age=+e:(b=!1,k.a(m["age-error"])));if("DOB"==c){if(/^\$D_/.test(e)&&11==(e+"").length||f.G(e)||(b=!1,k.a(m["dob-error"])),f.G(e)){var h=e.getUTCFullYear(),g=""+(e.getUTCMonth()+1),n=""+e.getUTCDate();1==g.length&&(g="0"+g);1==n.length&&(n="0"+n);a.DOB=$WZRK_WR.setDate(h+""+g+""+n)}}else f.G(e)&&(a[c]=f.N(e));"Phone"!=c||f.F(e)||(8<e.length&&"+"==e.charAt(0)?(e=e.substring(1,e.length),f.$(e)?a.Phone=+e:(b=!1,k.a(m["phone-format-error"]+
-". Removed."))):(b=!1,k.a(m["phone-format-error"]+". Removed.")));b||delete a[c]}}return b};b.setDate=function(a){return f.setDate(a)};b.La=function(a){if(f.I(a)||f.Ba(a))return"$E_"+a;k.a(m["enum-format-error"])};b.s=b.Ka;b.is_onloadcalled=b.Ea;b.setDate=b.setDate;b.enableWebPush=b.sa;b.setEnum=b.La;b.tr=b.T;b.push=b.push;b.closeIframe=b.V;b.getEmail=b.va;b.unSubEmail=b.Na;b.subEmail=b.Ma;b.logout=b.ba;var z={ka:String.fromCharCode,wa:function(){for(var a="",c=0,c=0;25>=c;c++)a+=String.fromCharCode(c+
-65);for(c=0;25>=c;c++)a+=String.fromCharCode(c+97);for(c=0;10>c;c++)a+=c;return a+"+/="},qa:function(a){var c="",b,e,h;if(!f.isArray(a))return!1;e=a.length;for(b=0;b<e;++b)0>a[b]&&(a[b]+=256),void 0===a[b]&&(a[b]=0),h=a[b].toString(16),1==h.length&&(h="0"+h),c+=h;return c.trim()},Pa:function(a){for(var c=[],b=0;b<a.length;b++){var e=a.charCodeAt(b);c.push(e&255);c.push(e>>8&255)}return z.qa(c)},W:function(a){if(null==a)return"";var c="",b,e,f,g,k,m,n=0;for(a=z.pa(a);n<2*a.length;)0==n%2?(b=a.charCodeAt(n/
-2)>>8,e=a.charCodeAt(n/2)&255,f=n/2+1<a.length?a.charCodeAt(n/2+1)>>8:NaN):(b=a.charCodeAt((n-1)/2)&255,(n+1)/2<a.length?(e=a.charCodeAt((n+1)/2)>>8,f=a.charCodeAt((n+1)/2)&255):e=f=NaN),n+=3,g=b>>2,b=(b&3)<<4|e>>4,k=(e&15)<<2|f>>6,m=f&63,isNaN(e)?k=m=64:isNaN(f)&&(m=64),c=c+z.J.charAt(g)+z.J.charAt(b)+z.J.charAt(k)+z.J.charAt(m);return c},pa:function(a){if(null==a)return"";var c,b,e={},f={},g="",m="",k="",n=2,t=3,u=2,q="",l=0,p=0,s,v=z.ka;for(s=0;s<a.length;s+=1)if(g=a.charAt(s),Object.prototype.hasOwnProperty.call(e,
-g)||(e[g]=t++,f[g]=!0),m=k+g,Object.prototype.hasOwnProperty.call(e,m))k=m;else{if(Object.prototype.hasOwnProperty.call(f,k)){if(256>k.charCodeAt(0)){for(c=0;c<u;c++)l<<=1,15==p?(p=0,q+=v(l),l=0):p++;b=k.charCodeAt(0);for(c=0;8>c;c++)l=l<<1|b&1,15==p?(p=0,q+=v(l),l=0):p++,b>>=1}else{b=1;for(c=0;c<u;c++)l=l<<1|b,15==p?(p=0,q+=v(l),l=0):p++,b=0;b=k.charCodeAt(0);for(c=0;16>c;c++)l=l<<1|b&1,15==p?(p=0,q+=v(l),l=0):p++,b>>=1}n--;0==n&&(n=Math.pow(2,u),u++);delete f[k]}else for(b=e[k],c=0;c<u;c++)l=l<<
-1|b&1,15==p?(p=0,q+=v(l),l=0):p++,b>>=1;n--;0==n&&(n=Math.pow(2,u),u++);e[m]=t++;k=String(g)}if(""!==k){if(Object.prototype.hasOwnProperty.call(f,k)){if(256>k.charCodeAt(0)){for(c=0;c<u;c++)l<<=1,15==p?(p=0,q+=v(l),l=0):p++;b=k.charCodeAt(0);for(c=0;8>c;c++)l=l<<1|b&1,15==p?(p=0,q+=v(l),l=0):p++,b>>=1}else{b=1;for(c=0;c<u;c++)l=l<<1|b,15==p?(p=0,q+=v(l),l=0):p++,b=0;b=k.charCodeAt(0);for(c=0;16>c;c++)l=l<<1|b&1,15==p?(p=0,q+=v(l),l=0):p++,b>>=1}n--;0==n&&(n=Math.pow(2,u),u++);delete f[k]}else for(b=
-e[k],c=0;c<u;c++)l=l<<1|b&1,15==p?(p=0,q+=v(l),l=0):p++,b>>=1;n--;0==n&&u++}b=2;for(c=0;c<u;c++)l=l<<1|b&1,15==p?(p=0,q+=v(l),l=0):p++,b>>=1;for(;;)if(l<<=1,15==p){q+=v(l);break}else p++;return q}};z.J=z.wa();var f={setDate:function(a){if(f.za(a))return"$D_"+a;k.a(m["date-format-error"])},G:function(a){return"object"===typeof a&&a instanceof Date},N:function(a){return"$D_"+Math.round(a.getTime()/1E3)},za:function(a){var b=/^(\d{4})(\d{2})(\d{2})$/.exec(a);if(null==b)return!1;a=b[3];var d=b[2]-1,b=
-b[1],e=new Date(b,d,a);return e.getDate()==a&&e.getMonth()==d&&e.getFullYear()==b},isArray:function(a){return"object"===typeof a&&a instanceof Array},i:function(a){return"[object Object]"==Object.prototype.toString.call(a)},F:function(a){for(var b in a)if(a.hasOwnProperty(b))return!1;return!0},I:function(a){return"string"==typeof a||a instanceof String},$:function(a){return!isNaN(parseFloat(a))&&isFinite(a)},Ba:function(a){return/^-?[\d.]+(?:e-?\d+)?$/.test(a)&&"number"==typeof a},Oa:function(){},
-Y:function(a){var b={},d=a.indexOf("?");if(1<d)for(var e=/\+/g,f=/([^&=]+)=?([^&]*)/g,d=a.substring(d+1);a=f.exec(d);)b[decodeURIComponent(a[1].replace(e," "))]=decodeURIComponent(a[2].replace(e," "));return b},ua:function(a){if(""==a)return"";var b=document.createElement("a");b.href=a;return b.hostname},ga:function(a){if("object"==typeof a)for(var b in a){var d=f.ga(a[b]),e=f.I(b)?f.L(b,O):b;f.I(b)?(e=f.L(b,O),32<e.length&&(e=e.substring(0,32),$WZRK_WR.A(520,e+"... length exceeded 32 chars. Trimmed."))):
-e=b;delete a[b];a[e]=d}else f.I(a)&&(a=f.L(a,$),120<a.length&&(a=a.substring(0,120),$WZRK_WR.A(521,a+"... length exceeded 120 chars. Trimmed.")));return a},L:function(a,b){return a.replace(b,"")},f:function(){try{return window.localStorage.setItem("wzrk_debug","12345678"),window.localStorage.removeItem("wzrk_debug"),"localStorage"in window&&null!==window.localStorage}catch(a){return!1}},r:function(){return f.f()&&g.enablePersonalization},o:function(){return Math.floor((new Date).getTime()/1E3)},H:function(){try{return window.sessionStorage.setItem("wzrk_debug",
-"12345678"),window.sessionStorage.removeItem("wzrk_debug"),"sessionStorage"in window&&null!==window.sessionStorage}catch(a){return!1}},Ra:function(a){normal_val=String(a);for(var b=0,d=0;d<a.length;d++)var e=a.charCodeAt(d),b=b+(128>e?1:2048>e?2:65536>e?3:2097152>e?4:67108864>e?5:-2147483648>e?6:Number.NaN);return b},Va:function(){return result=/[\u0600-\u06FF\u0750-\u077F]/.test(text)}},O=RegExp("^\\s+|\\.|:|\\$|'|\"|\\\\|\\s+$","g"),$=RegExp("^\\s+|'|\"|\\\\|\\s+$","g"),M=RegExp("'","g"),m={},t=
-"CleverTap error: ";m["embed-error"]=t+"Incorrect embed script.";m["event-error"]=t+"Event structure not valid. This property has been ignored.";m["gender-error"]=t+"Gender value should be either M or F. This property has been ignored.";m["employed-error"]=t+"Employed value should be either Y or N. This property has been ignored.";m["married-error"]=t+"Married value should be either Y or N. This property has been ignored.";m["education-error"]=t+"Education value should be either School, College or Graduate. This property has been ignored.";
-m["age-error"]=t+"Age value should be a number. This property has been ignored.";m["dob-error"]=t+"DOB value should be a Date Object";m["obj-arr-error"]=t+"Expecting Object array in profile";m["date-format-error"]=t+"setDate(number). number should be formatted as yyyymmdd";m["enum-format-error"]=t+"setEnum(value). value should be a string or a number";m["phone-format-error"]=t+"Phone number should be formatted as +[country code][number]"};$WZRK_WR.xa();
+
+    var targetDomain = 'wzrkt.com';
+     //targetDomain = 'localhost:2829'; //ALWAYS comment this line before deploying
+
+    var wz_pr = location.protocol;
+    if (wz_pr !== "https:") {
+        wz_pr = "http:";
+    }
+    var dataPostURL = wz_pr + '//' + targetDomain + '/a?t=52';
+    var recorderURL = wz_pr + '//' + targetDomain + '/r?r=1';
+    var emailURL = wz_pr + '//' + targetDomain + '/e?r=1';
+    var targetCountURL = wz_pr + '//' + targetDomain + '/m?r=1';
+    var wiz = this;
+    var serviceWorkerPath = '/clevertap_sw.js'; // the service worker is placed in the doc root
+    var doc = document;
+    var domain = window.location.hostname;
+    var broadDomain;
+    var wc = window.console;
+    var wzrk_error = {}; //to trap input errors
+    var wiz_counter = 0; // to keep track of number of times we load the body
+
+    // to be used for checking whether the script loaded fine and the wiz.init function was called
+    var onloadcalled = 0;  // 1 = fired
+
+    // pcookie stores current page url
+    var gcookie, pcookie, scookieObj;
+    var accountId;
+    var GCOOKIE_NAME = "WZRK_G", PCOOKIE_NAME = "WZRK_P", KCOOKIE_NAME = "WZRK_K", CAMP_COOKIE_NAME = "WZRK_CAMP";
+    var SCOOKIE_PREFIX = "WZRK_S", EV_COOKIE = "WZRK_EV", META_COOKIE = "WZRK_META", PR_COOKIE = "WZRK_PR", ARP_COOKIE = " WZRK_ARP";
+    var resetCookie = false;
+    var SCOOKIE_NAME;
+    var LCOOKIE_NAME = "WZRK_L"; // store the last event to fire in case of race condition
+    var NOTIF_COOKIE_NAME = "WZRK_N"; // check if the user has subscribed for web push notifications
+    var globalEventsMap, globalProfileMap, lastSessionId, currentSessionId;
+    var storageDelim = "|$|";
+    var staleEvtMaxTime = 20 * 60; //20 mins
+
+    // path to reference the JS for our dialog
+    var wizAlertJSPath = 'https://d2r1yp2w7bby2u.cloudfront.net/js/wzrk_dialog.min.js';
+
+    var FIRST_PING_FREQ_IN_MILLIS = 2 * 60 * 1000; // 2 mins
+    var CONTINUOUS_PING_FREQ_IN_MILLIS = 5 * 60 * 1000; // 5 mins
+
+    var TWENTY_MINS = 20 * 60 * 1000;
+
+    var SCOOKIE_EXP_TIME_IN_SECS = 60 * 20;  // 20 mins
+
+
+    var EVT_PING = "ping", EVT_PUSH = "push";
+
+    var wizrocket = window['wizrocket'];
+
+    var REQ_N = 0;
+    var RESP_N = 0;
+
+    if (typeof clevertap != 'undefined') {
+        wizrocket = clevertap;
+        window['wizrocket'] = clevertap;
+    } else {
+        window['clevertap'] = wizrocket;
+    }
+
+    var webPushEnabled; // gets set to true on page request, when chrome notifs have been integrated completely
+
+    wiz.is_onloadcalled = function () {
+        return (onloadcalled === 1);
+    };
+
+    // use these to add and remove sweet alert dialogs as necessary
+    wiz.addWizAlertJS = function () {
+        var scriptTag = doc.createElement('script');
+        scriptTag.setAttribute('type', 'text/javascript');
+        scriptTag.setAttribute('id', 'wzrk-alert-js');
+        scriptTag.setAttribute('src', wizAlertJSPath);
+
+        // add the script tag to the end of the body
+        document.getElementsByTagName('body')[0].appendChild(scriptTag);
+
+        return scriptTag;
+    };
+
+    wiz.removeWizAlertJS = function () {
+        var scriptTag = doc.getElementById('wzrk-alert-js');
+        scriptTag.parentNode.removeChild(scriptTag);
+    };
+
+
+    wiz.enableWebPush = function (enabled) {
+        webPushEnabled = enabled;
+        wiz.saveToSSorCookie('wzrk_wp', enabled);
+        if (webPushEnabled && notifApi.notifEnabledFromApi) {
+            wiz.handleNotificationRegistration(notifApi.displayArgs);
+        } else if (!webPushEnabled && notifApi.notifEnabledFromApi) {
+            wc.e('Ensure that web push notifications are fully enabled and integrated before requesting them');
+        }
+    };
+
+    /**
+     * Sets up a service worker for chrome push notifications and sends the data to LC
+     */
+    wiz.setUpChromeNotifications = function () {
+
+
+        if ('serviceWorker' in navigator) {
+            navigator["serviceWorker"]['register'](serviceWorkerPath)['then'](function () {
+                return navigator['serviceWorker']['ready'];
+            })['then'](function (serviceWorkerRegistration) {
+                serviceWorkerRegistration['pushManager']['subscribe']({'userVisibleOnly': true})
+                    ['then'](function (subscription) {
+                    wc.l('Service Worker registered. Endpoint: ' + subscription['endpoint']);
+
+                    // convert the subscription keys to strings; this sets it up nicely for pushing to LC
+                    var subscriptionData = JSON.parse(JSON.stringify(subscription));
+
+                    // remove the common chrome endpoint at the beginning of the token
+                    subscriptionData['endpoint'] = subscriptionData['endpoint'].split('/').pop();
+
+                    // if the token changes; push over the new stuff
+                    if (typeof wiz.readFromLSorCookie(NOTIF_COOKIE_NAME) !== 'undefined') {
+                        if (subscriptionData['endpoint'] === JSON.parse(wiz.readFromLSorCookie(NOTIF_COOKIE_NAME))['endpoint'])
+                            return;
+                    }
+                    // the final payload is just the stringified subscription object
+                    var payload = subscriptionData;
+                    payload = wiz.addSystemDataToObject(payload, true);
+                    payload = JSON.stringify(payload);
+                    var pageLoadUrl = dataPostURL;
+                    pageLoadUrl = wiz.addToURL(pageLoadUrl, "type", "data");
+                    pageLoadUrl = wiz.addToURL(pageLoadUrl, "d", wiz.compressData(payload));
+                    wiz.fireRequest(pageLoadUrl);
+
+                    // persist to local storage
+                    wiz.saveToLSorCookie(NOTIF_COOKIE_NAME, payload);
+                })['catch'](function (error) {
+                    wc.l('Error subscribing: ' + error);
+                });
+            })['catch'](function (err) {
+                wc.l('error registering service worker: ' + err);
+            });
+        }
+    };
+
+    wiz.getCleverTapID = function (){
+        return gcookie;
+    };
+
+    wiz.init = function () {
+
+        wiz.g(); // load cookies on pageload; this HAS to be the first thing in this method
+
+        wc = {
+            e: function (msg) {
+                if (window.console) {
+                    var ts = new Date().getTime();
+                    console.error(ts + " " + msg);
+                }
+            },
+            d: function (msg) {
+                if (window.console && wiz.isDebug()) {
+                    var ts = new Date().getTime();
+                    console.debug(ts + " " + msg);
+                }
+            },
+            l: function (msg) {
+                if (window.console) {
+                    var ts = new Date().getTime();
+                    console.log(ts + " " + msg);
+                }
+            }
+        };
+
+
+        if (typeof wizrocket['account'][0] == 'undefined') {
+            wc.e(wzrk_msg['embed-error']);
+            return;
+        } else {
+            accountId = wizrocket['account'][0]['id'];
+
+            if (typeof accountId == 'undefined' || accountId == '') {
+                wc.e(wzrk_msg['embed-error']);
+                return;
+            }
+            SCOOKIE_NAME = SCOOKIE_PREFIX + '_' + accountId;
+
+        }
+
+        var currLocation = location.href;
+        var url_params = wzrk_util.getURLParams(location.href.toLowerCase());
+
+        if (typeof url_params['e'] != 'undefined' && url_params['wzrk_ex'] == '0') {
+            return;
+        }
+
+
+        wiz.pushOutStaleEvents();
+        wiz.overloadArrayPush();
+
+        var firePageLoadRequest = true;
+
+        if (currLocation == pcookie) {  // don't fire if cookie has curr url as value
+            firePageLoadRequest = false;
+        }
+
+        var FIFTEEN_MINS_IN_SECS = 60 * 15; //seconds in minute * number of mins
+        wiz.createCookie(PCOOKIE_NAME, currLocation, FIFTEEN_MINS_IN_SECS, location.hostname); // self-destruct after 15 mins
+
+
+        if (firePageLoadRequest) {
+
+            // -- update page count
+            var obj = wiz.getSessionCookieObject();
+            var pgCount = (typeof obj['p'] == 'undefined') ? 0 : obj['p'];
+            obj['p'] = ++pgCount;
+            wiz.setSessionCookieObject(obj);
+            // -- update page count
+
+
+            var data = {};
+
+            //var curr_domain = doc.location.hostname;
+            var referrer_domain = wzrk_util.getDomain(doc.referrer);
+
+            if (domain != referrer_domain) {
+                var maxLen = 120;
+                if (referrer_domain != "") {  //referrer exists, sending even when session exists as "x.in.com" and "y.in.com" could be separate accounts, but session created on domain "in.com"
+                    referrer_domain = referrer_domain.length > maxLen ? referrer_domain.substring(0, maxLen) : referrer_domain;
+                    data['referrer'] = referrer_domain;
+                }
+
+
+                var utm_source = url_params['utm_source'] || url_params['wzrk_source'];
+                if (typeof utm_source != 'undefined') {
+                    utm_source = utm_source.length > maxLen ? utm_source.substring(0, maxLen) : utm_source;
+                    data['us'] = utm_source;                  //utm_source
+                }
+
+                var utm_medium = url_params['utm_medium'] || url_params['wzrk_medium'];
+                if (typeof utm_medium != 'undefined') {
+                    utm_medium = utm_medium.length > maxLen ? utm_medium.substring(0, maxLen) : utm_medium;
+                    data['um'] = utm_medium;                 //utm_medium
+                }
+
+
+                var utm_campaign = url_params['utm_campaign'] || url_params['wzrk_campaign'];
+                if (typeof utm_campaign != 'undefined') {
+                    utm_campaign = utm_campaign.length > maxLen ? utm_campaign.substring(0, maxLen) : utm_campaign;
+                    data['uc'] = utm_campaign;               //utm_campaign
+                }
+
+                // also independently send wzrk_medium to the backend
+                if (typeof url_params['wzrk_medium'] != 'undefined') {
+                    var wm = url_params['wzrk_medium'];
+                    if (wm.match(/^email$|^social$|^search$/)) {
+                        data['wm'] = wm;                       //wzrk_medium
+                    }
+
+                }
+
+            }
+
+            data = wiz.addSystemDataToObject(data);
+            data['cpg'] = currLocation;
+            data[CAMP_COOKIE_NAME] = wiz.getCampaignObj();
+            var pageLoadUrl = dataPostURL;
+            wiz.addDSyncFlag(data);
+            //send dsync flag when page = 1
+            if (data['pg'] != 'undefined' && data['pg'] == 1) {
+                wiz.overrideDSyncFlag(data);
+            }
+            pageLoadUrl = wiz.addToURL(pageLoadUrl, "type", "page");
+            pageLoadUrl = wiz.addToURL(pageLoadUrl, "d", wiz.compressData(JSON.stringify(data)));
+            wiz.fireRequest(pageLoadUrl);
+
+
+            // -- ping request logic
+
+            var pingRequest = function () {
+                var pageLoadUrl = dataPostURL;
+                var data = {};
+                data = wiz.addSystemDataToObject(data);
+
+                pageLoadUrl = wiz.addToURL(pageLoadUrl, "type", EVT_PING);
+                pageLoadUrl = wiz.addToURL(pageLoadUrl, "d", wiz.compressData(JSON.stringify(data)));
+                wiz.fireRequest(pageLoadUrl);
+            };
+
+            setTimeout(function () {
+                if (pgCount <= 3) {  // send ping for up to 3 pages
+                    pingRequest();
+                }
+
+                if (wiz.isPingContinuous()) {
+                    setInterval(function () {
+                        pingRequest();
+                    }, CONTINUOUS_PING_FREQ_IN_MILLIS);
+                }
+            }, FIRST_PING_FREQ_IN_MILLIS);
+
+            // -- ping request logic
+
+        } // if(firePageLoadRequest)
+
+
+        if (typeof wizrocket['session'] == 'undefined') {
+
+            wizrocket['event']['getDetails'] = function (evtName) {
+                if (!wzrk_util.isPersonalizationActive()) {
+                    return;
+                }
+                if (typeof globalEventsMap == 'undefined') {
+                    globalEventsMap = wiz.readFromLSorCookie(EV_COOKIE);
+                }
+                if (typeof globalEventsMap == 'undefined') {
+                    return;
+                }
+                var evtObj = globalEventsMap[evtName];
+                var respObj = {};
+
+                if (typeof evtObj != 'undefined') {
+                    respObj['firstTime'] = new Date(evtObj[1] * 1000);
+                    respObj['lastTime'] = new Date(evtObj[2] * 1000);
+                    respObj['count'] = evtObj[0];
+                    return respObj;
+                }
+
+
+            };
+
+            wizrocket['profile']['getAttribute'] = function (propName) {
+                if (!wzrk_util.isPersonalizationActive()) {
+                    return;
+                }
+                if (typeof globalProfileMap == 'undefined') {
+                    globalProfileMap = wiz.readFromLSorCookie(PR_COOKIE);
+                }
+                if (typeof globalProfileMap != 'undefined') {
+                    return globalProfileMap[propName];
+                }
+            };
+            wizrocket['session'] = {};
+            wizrocket['session']['getTimeElapsed'] = function () {
+                if (!wzrk_util.isPersonalizationActive()) {
+                    return;
+                }
+                if (typeof scookieObj != 'undefined') {
+                    scookieObj = wiz.getSessionCookieObject();
+                }
+                var sessionStart = scookieObj['s'];
+                if (typeof sessionStart != 'undefined') {
+                    var ts = wzrk_util.getNow();
+                    return Math.floor(ts - sessionStart);
+                }
+            };
+
+            wizrocket['user'] = {};
+            wizrocket['user']['getTotalVisits'] = function () {
+                if (!wzrk_util.isPersonalizationActive()) {
+                    return;
+                }
+                var visitCount = wiz.getMetaProp('sc');
+                if (typeof visitCount == 'undefined') {
+                    visitCount = 1;
+                }
+                return visitCount;
+            };
+
+            wizrocket['session']['getPageCount'] = function () {
+                if (!wzrk_util.isPersonalizationActive()) {
+                    return;
+                }
+
+                if (typeof scookieObj != 'undefined') {
+                    scookieObj = wiz.getSessionCookieObject();
+                }
+                return scookieObj['p'];
+            };
+
+            wizrocket['user']['getLastVisit'] = function () {
+                if (!wzrk_util.isPersonalizationActive()) {
+                    return;
+                }
+                var prevSession = wiz.getMetaProp('ps');
+                if (typeof prevSession != 'undefined') {
+                    return new Date(prevSession * 1000);
+                }
+            };
+        }
+        onloadcalled = 1;   //always the last line in this function
+
+
+    };
+
+
+    wiz.pushOutStaleEvents = function () {
+        var urlStr = wiz.readCookie(LCOOKIE_NAME);
+
+        if (urlStr && urlStr.length > 10) {
+            var urlArr = urlStr.split(storageDelim);
+            var url = urlArr[0];
+
+            var epoch = urlArr[1];
+            var retryCount = (typeof urlArr[2] == 'undefined' ? 0 : urlArr[2]);
+            var now = wzrk_util.getNow();
+            var d = (now - epoch);         // delta is (now - request saved time) in seconds.
+
+            if (d > staleEvtMaxTime || retryCount >= 1) { // try once max for stale evt.
+                wc.d("ign stale ck " + LCOOKIE_NAME + " w/val: " + urlStr);
+            } else {
+                // save request retry count
+                retryCount = retryCount + 1;
+
+                var data = url + storageDelim + epoch + storageDelim + retryCount;
+
+                wiz.createBroadCookie(LCOOKIE_NAME, data, TWENTY_MINS, domain); // self-destruct after 20 minutes
+                wc.d("stored in " + LCOOKIE_NAME + "-> " + data);
+
+                // use the current location protocol, since it may have gone from http to https when we saved the original request
+                var newUrl = wz_pr + url.substring(url.indexOf('//'));
+
+                // using the epoch as the request id - this helps reduce dupe events
+                wiz.fireRequest(newUrl + '&dl=' + d + '&i=' + epoch);
+            }
+        }
+    };
+
+    wiz.readFromLSorCookie = function (property) {
+        var data;
+        if (wzrk_util.isLocalStorageSupported()) {
+            data = localStorage[property];
+        } else {
+            data = wiz.readCookie(property);
+        }
+        if (typeof data != 'undefined' && data !== null) {
+            return JSON.parse(decodeURIComponent(data));
+        }
+    };
+
+    wiz.saveToLSorCookie = function (property, val) {
+        if (typeof val == 'undefined' || val == 'undefined') {
+            return;
+        }
+        try {
+            if (wzrk_util.isLocalStorageSupported()) {
+                localStorage[property] = encodeURIComponent(JSON.stringify(val));
+            } else {
+                wiz.createCookie(property, encodeURIComponent(JSON.stringify(val)), 0, domain);
+            }
+        } catch (e) {
+        }
+    };
+
+    wiz.saveToSSorCookie = function (property, val) { //session storage
+        if (typeof val == 'undefined' || val == 'undefined') {
+            return;
+        }
+        try {
+            if (wzrk_util.isSessionStorageSupported()) {
+                sessionStorage[property] = encodeURIComponent(JSON.stringify(val));
+            } else {
+                wiz.createCookie(property, encodeURIComponent(JSON.stringify(val)), 0, domain);
+            }
+        } catch (e) {
+        }
+    };
+
+    wiz.readFromSSorCookie = function (property) {
+        var data;
+        if (wzrk_util.isSessionStorageSupported()) {
+            data = sessionStorage[property];
+        } else {
+            data = wiz.readCookie(property);
+        }
+        if (typeof data != 'undefined' && data !== null) {
+            return JSON.parse(decodeURIComponent(data));
+        }
+    };
+
+    wiz.processEventArray = function (eventArr) {
+
+        if (wzrk_util.isArray(eventArr)) {
+
+            /** looping since the events could be fired in quick succession, and we could end up
+             with multiple pushes without getting a chance to process
+             */
+            while (eventArr.length > 0) {
+
+                var eventName = eventArr.shift(); // take out name of the event
+
+                if (!wzrk_util.isString(eventName)) {
+                    wc.e(wzrk_msg['event-error']);
+                    return;
+                }
+
+                if (eventName.length > 32) {
+                    eventName = eventName.substring(0, 32);
+                    wiz.reportError(510, eventName + "... length exceeded 32 chars. Trimmed.");
+                }
+
+                if (eventName == "Stayed" || eventName == "UTM Visited" || eventName == "App Launched" ||
+                    eventName == "Notification Sent" || eventName == "Notification Viewed" || eventName == "Notification Clicked") {
+                    wiz.reportError(513, eventName + " is a restricted system event. It cannot be used as an event name. Not sent.");
+                    continue;
+                }
+
+
+                var data = {};
+                data['type'] = "event";
+                data['evtName'] = wzrk_util.sanitize(eventName, unsupportedKeyCharRegex);
+                data[CAMP_COOKIE_NAME] = wiz.getCampaignObj();
+                if (eventArr.length != 0) {
+                    var eventObj = eventArr.shift();
+
+                    if (!wzrk_util.isObject(eventObj)) {
+                        eventArr.unshift(eventObj);    // put it back if it is not an object
+                    } else {
+                        //check Charged Event vs. other events.
+
+
+                        if (eventName == "Charged") {
+                            if (!wiz.isChargedEventStructureValid(eventObj)) {
+                                wiz.reportError(511, "Charged event structure invalid. Not sent.");
+                                continue;
+                            }
+                        } else {
+                            if (!wiz.isEventStructureFlat(eventObj)) {
+                                wiz.reportError(512, eventName + " event structure invalid. Not sent.");
+                                continue;
+                            }
+
+                        }
+
+                        data['evtData'] = eventObj;
+                    }
+                }
+                wiz.addToLocalEventMap(data['evtName']);
+                data = wiz.addSystemDataToObject(data);
+                wiz.addDSyncFlag(data);
+                var compressedData = wiz.compressData(JSON.stringify(data));
+
+                var pageLoadUrl = dataPostURL;
+                var pageLoadUrl = wiz.addToURL(pageLoadUrl, "type", EVT_PUSH);
+                pageLoadUrl = wiz.addToURL(pageLoadUrl, "d", compressedData);
+
+
+                wiz.saveAndFireRequest(pageLoadUrl, false);
+
+            }
+
+        }
+    };
+
+    wiz.addToLocalEventMap = function (evtName) {
+        if (wzrk_util.isLocalStorageSupported()) {
+            if (typeof globalEventsMap == 'undefined') {
+                globalEventsMap = wiz.readFromLSorCookie(EV_COOKIE);
+                if (typeof globalEventsMap == 'undefined') {
+                    globalEventsMap = {};
+                }
+            }
+            var nowTs = wzrk_util.getNow();
+            var evtDetail = globalEventsMap[evtName];
+            if (typeof evtDetail != 'undefined') {
+                evtDetail[2] = nowTs;
+                evtDetail[0]++;
+            } else {
+                evtDetail = [];
+                evtDetail.push(1);
+                evtDetail.push(nowTs);
+                evtDetail.push(nowTs);
+            }
+            globalEventsMap[evtName] = evtDetail;
+            wiz.saveToLSorCookie(EV_COOKIE, globalEventsMap);
+        }
+    };
+
+    wiz.addToLocalProfileMap = function (profileObj, override) {
+        if (wzrk_util.isLocalStorageSupported()) {
+            if (typeof globalProfileMap == 'undefined') {
+                globalProfileMap = wiz.readFromLSorCookie(PR_COOKIE);
+                if (typeof globalProfileMap == 'undefined') {
+                    globalProfileMap = {};
+                }
+            }
+
+            //Move props from custom bucket to outside.
+            if (typeof profileObj['_custom'] != 'undefined') {
+                var keys = profileObj['_custom'];
+                for (var key in keys) {
+                    profileObj[key] = keys[key];
+                }
+                delete profileObj['_custom'];
+            }
+
+            for (var prop in profileObj) {
+                if (profileObj.hasOwnProperty(prop)) {
+                    if (globalProfileMap.hasOwnProperty(prop) && !override) {
+                        continue;
+                    }
+                    globalProfileMap[prop] = profileObj[prop];
+                }
+            }
+            if (typeof globalProfileMap['_custom'] != 'undefined') {
+                delete globalProfileMap['_custom'];
+            }
+            wiz.saveToLSorCookie(PR_COOKIE, globalProfileMap);
+        }
+    };
+
+    wiz.overrideDSyncFlag = function (data) {
+        if (wzrk_util.isPersonalizationActive()) {
+            data['dsync'] = true;
+        }
+    };
+
+    wiz.addARPToRequest = function (url) {
+        if (wzrk_util.isLocalStorageSupported() && typeof localStorage[ARP_COOKIE] != 'undefined') {
+            return wiz.addToURL(url, 'arp', wiz.compressData(JSON.stringify(wiz.readFromLSorCookie(ARP_COOKIE))));
+        }
+        return url;
+    };
+
+    wiz.addDSyncFlag = function (data) {
+        if (wzrk_util.isPersonalizationActive()) {
+            var lastSyncTime = wiz.getMetaProp('lsTime');
+            var expirySeconds = wiz.getMetaProp('exTs');
+
+            //dsync not found in local storage - get data from server
+            if (typeof lastSyncTime == 'undefined' || typeof expirySeconds == 'undefined') {
+                data['dsync'] = true;
+                return;
+            }
+            var now = wzrk_util.getNow();
+            //last sync time has expired - get fresh data from server
+            if (lastSyncTime + expirySeconds < now) {
+                data['dsync'] = true;
+            }
+        }
+
+    };
+
+    wiz.getCampaignObj = function () {
+        var campIds;
+        if (wzrk_util.isSessionStorageSupported()) {
+            var campIds = sessionStorage[CAMP_COOKIE_NAME];
+            if (typeof campIds == 'undefined') {
+                campIds = {};
+            } else {
+                campIds = JSON.parse(decodeURIComponent(campIds).replace(singleQuoteRegex, "\""))
+            }
+        }
+        return campIds;
+    };
+
+
+    var setInstantDeleteFlagInK = function () {
+        var k = wiz.readFromLSorCookie(KCOOKIE_NAME);
+        if (typeof k == 'undefined') {
+            k = {};
+        }
+        k['flag'] = true;
+        wiz.saveToLSorCookie(KCOOKIE_NAME, k);
+    };
+
+    wiz.logout = function () {
+        setInstantDeleteFlagInK();
+    };
+
+    wiz.arp = function (jsonMap) {
+        if (wzrk_util.isLocalStorageSupported()) {
+            try {
+                var arpFromStorage = wiz.readFromLSorCookie(ARP_COOKIE);
+                if (typeof arpFromStorage == 'undefined') {
+                    arpFromStorage = {};
+                }
+
+                for (var key in jsonMap) {
+                    if (jsonMap.hasOwnProperty(key)) {
+                        if (jsonMap[key] == -1) {
+                            delete arpFromStorage[key];
+                        } else {
+                            arpFromStorage[key] = jsonMap[key];
+                        }
+                    }
+                }
+                wiz.saveToLSorCookie(ARP_COOKIE, arpFromStorage);
+
+
+            } catch (e) {
+                wc.e("Unable to parse ARP JSON: " + e);
+            }
+
+        }
+    };
+
+    wiz.processProfileArray = function (profileArr) {
+
+        if (wzrk_util.isArray(profileArr) && profileArr.length > 0) {
+
+            var outerObj = profileArr.pop();
+            var data = {};
+            var profileObj;
+            if (typeof outerObj['Site'] != 'undefined') {       //organic data from the site
+                profileObj = outerObj['Site'];
+                if (wzrk_util.isObjectEmpty(profileObj) || !wiz.isProfileValid(profileObj)) {
+                    return;
+                }
+
+            } else if (typeof outerObj['Facebook'] != 'undefined') {   //fb connect data
+                var FbProfileObj = outerObj['Facebook'];
+                //make sure that the object contains any data at all
+
+                if (!wzrk_util.isObjectEmpty(FbProfileObj) && (!FbProfileObj['error'])) {
+                    profileObj = wiz.processFBUserObj(FbProfileObj);
+                }
+
+            } else if (typeof outerObj['Google Plus'] != 'undefined') {
+                var GPlusProfileObj = outerObj['Google Plus'];
+                if (!wzrk_util.isObjectEmpty(GPlusProfileObj) && (!GPlusProfileObj['error'])) {
+                    profileObj = wiz.processGPlusUserObj(GPlusProfileObj);
+                }
+            }
+
+
+            var deleteUser = function () {
+                resetCookie = true;
+                if (wzrk_util.isLocalStorageSupported()) {
+                    delete localStorage[GCOOKIE_NAME];
+                    delete localStorage[KCOOKIE_NAME];
+                    delete localStorage[PR_COOKIE];
+                    delete localStorage[EV_COOKIE];
+                    delete localStorage[META_COOKIE];
+                }
+                if (wzrk_util.isSessionStorageSupported()) {
+                    delete sessionStorage[CAMP_COOKIE_NAME];
+                }
+                wiz.deleteCookie(GCOOKIE_NAME, broadDomain);
+                wiz.deleteCookie(CAMP_COOKIE_NAME, domain);
+                wiz.deleteCookie(KCOOKIE_NAME, domain);
+                wiz.deleteCookie(SCOOKIE_NAME, broadDomain);
+                gcookie = null;
+                scookieObj = '';
+                //reset request number when user is deleted
+                REQ_N = 0;
+                RESP_N = 0;
+            };
+
+            var addToK = function (ids) {
+                var k = wiz.readFromLSorCookie(KCOOKIE_NAME);
+                var lseenTs, idArr, flag;
+                var nowDate = new Date();
+                var now = nowDate.getTime();
+                if (typeof k == 'undefined') {
+                    k = {};
+                    lseenTs = now;
+                    idArr = ids;
+                } else {/*check if already exists*/
+                    lseenTs = k['ls'];
+                    idArr = k['id'];
+                    var sameUser = false;
+                    if (typeof idArr == 'undefined') {
+                        idArr = [];
+                        sameUser = true;
+                    }
+                    if (idArr.length > 20) {
+                        return;
+                    }
+                    flag = k['flag'];
+                    var newRelatedIds = [];
+                    for (var id in ids) {
+                        if (ids.hasOwnProperty(id)) {
+                            var found = false;
+                            for (var elem in idArr) {
+                                if (idArr.hasOwnProperty(elem)) {
+                                    if (idArr[elem] === ids[id]) {
+                                        found = true;
+                                        sameUser = true;
+                                        break;
+                                    }
+                                }
+                            }
+                            if (!found) {
+                                idArr.push(ids[id]);
+                            }
+                        }
+                    }
+                    if (!sameUser) {
+                        if (flag || (now - lseenTs > (60 * 1000))) {
+                            /* flag has been set - user has been logged out - new user || 60 secs have passed since last prof_push so new user*/
+                            //wipe cookie etc
+                            deleteUser();
+                            idArr = ids;
+                        }
+                    }
+                }
+                k['id'] = idArr;
+                k['ls'] = now;
+                k['flag'] = false;
+                wiz.saveToLSorCookie(KCOOKIE_NAME, k);
+            };
+
+            if (typeof profileObj != 'undefined' && (!wzrk_util.isObjectEmpty(profileObj))) {   // profile got set from above
+                data['type'] = "profile";
+                data['profile'] = profileObj;
+                var ids = [];
+                if (wzrk_util.isLocalStorageSupported()) {
+                    if (typeof profileObj['Email'] != 'undefined') {
+                        ids.push(profileObj['Email']);
+                    }
+                    if (typeof profileObj['GPID'] != 'undefined') {
+                        ids.push("GP:" + profileObj['GPID']);
+                    }
+                    if (typeof profileObj['FBID'] != 'undefined') {
+                        ids.push("FB:" + profileObj['FBID']);
+                    }
+                    if (typeof profileObj['Identity'] != 'undefined') {
+                        ids.push(profileObj['Identity']);
+                    }
+                    if (ids.length > 0) {
+                        addToK(ids);
+                    }
+                }
+                wiz.addToLocalProfileMap(profileObj, true);
+                data = wiz.addSystemDataToObject(data);
+                if (resetCookie) {
+                    data['rc'] = true;
+                }
+
+                wiz.overrideDSyncFlag(data);
+                var compressedData = wiz.compressData(JSON.stringify(data));
+
+                var pageLoadUrl = dataPostURL;
+                pageLoadUrl = wiz.addToURL(pageLoadUrl, "type", EVT_PUSH);
+                pageLoadUrl = wiz.addToURL(pageLoadUrl, "d", compressedData);
+
+                wiz.saveAndFireRequest(pageLoadUrl, resetCookie);
+
+            }
+        }
+
+    };
+
+    wiz.processLoginArray = function (loginArr) {
+        if (wzrk_util.isArray(loginArr) && loginArr.length > 0) {
+            var profileObj = loginArr.pop();
+            var processProfile = typeof profileObj != 'undefined' && wzrk_util.isObject(profileObj) &&
+                ((typeof profileObj['Site'] != 'undefined' && Object.keys(profileObj["Site"]).length > 0) ||
+                (typeof profileObj['Facebook'] != 'undefined' && Object.keys(profileObj["Facebook"]).length > 0 ) ||
+                (typeof profileObj['Google Plus'] != "undefined" && Object.keys(profileObj["Google Plus"]).length > 0));
+            if (processProfile) {
+                setInstantDeleteFlagInK();
+                wiz.processProfileArray([profileObj]);
+            } else {
+                //console.error
+                wc.e("Profile object is in incorrect format");
+            }
+        }
+    };
+
+    wiz.overloadArrayPush = function () {
+
+        if (typeof wizrocket['onUserLogin'] === "undefined") {
+            wizrocket['onUserLogin'] = [];
+        }
+
+        wizrocket['onUserLogin'].push = function () {
+            //since arguments is not an array, convert it into an array
+            wiz.processLoginArray(Array.prototype.slice.call(arguments));
+            return 0;
+        };
+
+        wizrocket['event'].push = function () {
+            //since arguments is not an array, convert it into an array
+            wiz.processEventArray(Array.prototype.slice.call(arguments));
+            return 0;
+        };
+
+        if (typeof wizrocket['notifications'] === 'undefined')
+            wizrocket['notifications'] = [];
+
+        wizrocket['notifications'].push = function () {
+            wiz.setUpWebPush(Array.prototype.slice.call(arguments));
+            return 0;
+        };
+
+
+        wizrocket['profile'].push = function () {
+            //since arguments is not an array, convert it into an array
+            wiz.processProfileArray(Array.prototype.slice.call(arguments));
+            return 0;
+        };
+        wizrocket['logout'] = wiz.logout;
+
+        wiz.processLoginArray(wizrocket['onUserLogin']);  // process old stuff from the login array before we overloaded the push method
+        wiz.processEventArray(wizrocket['event']);      // process old stuff from the event array before we overloaded the push method
+        wiz.processProfileArray(wizrocket['profile']);  // process old stuff from the profile array before we overloaded the push method
+        wiz.setUpWebPush(wizrocket['notifications']); // process old stuff from notifications array before overload
+
+        // clean up the notifications array
+        while (wizrocket['notifications'].length > 0)
+            wizrocket['notifications'].pop();
+    };
+
+
+    wiz.saveAndFireRequest = function (url, override) {
+
+        var now = wzrk_util.getNow();
+        var data = url + storageDelim + now;
+
+        wiz.createBroadCookie(LCOOKIE_NAME, data, TWENTY_MINS, domain); // self-destruct after 20 minutes
+        wc.d("stored in " + LCOOKIE_NAME + "-> " + data);
+        if (!resetCookie || override) {
+            wiz.fireRequest(url + '&i=' + now);
+        }
+
+    };
+
+
+// profile like https://developers.google.com/+/api/latest/people
+    wiz.processGPlusUserObj = function (user) {
+
+        var profileData = {};
+        if (typeof user['displayName'] != 'undefined') {
+            profileData['Name'] = user['displayName'];
+        }
+        if (typeof user['id'] != 'undefined') {
+            profileData['GPID'] = user['id'] + "";
+        }
+
+        if (typeof user['gender'] != 'undefined') {
+            if (user['gender'] == "male") {
+                profileData['Gender'] = "M";
+            } else if (user['gender'] == "female") {
+                profileData['Gender'] = "F";
+            }
+        }
+
+        if (typeof user['image'] != 'undefined') {
+            if (user['image']['isDefault'] == false) {
+                profileData['Photo'] = user['image'].url.split('?sz')[0];
+            }
+        }
+
+        if (typeof user['emails'] != "undefined") {
+            for (var i = 0; i < user['emails'].length; i++) {
+                var emailObj = user['emails'][i];
+                if (emailObj.type == 'account') {
+                    profileData['Email'] = emailObj.value;
+                }
+            }
+        }
+
+
+        if (typeof user['organizations'] != "undefined") {
+            profileData['Employed'] = 'N';
+            for (var i = 0; i < user['organizations'].length; i++) {
+                var orgObj = user['organizations'][i];
+                if (orgObj.type == 'work') {
+                    profileData['Employed'] = 'Y';
+                }
+            }
+        }
+
+
+        if (typeof user['birthday'] != 'undefined') {
+            var yyyymmdd = user['birthday'].split('-'); //comes in as "1976-07-27"
+            var dob = $WZRK_WR.setDate(yyyymmdd[0] + yyyymmdd[1] + yyyymmdd[2]);
+            profileData['DOB'] = dob;
+        }
+
+
+        if (typeof user['relationshipStatus'] != 'undefined') {
+            profileData['Married'] = 'N';
+            if (user['relationshipStatus'] == 'married') {
+                profileData['Married'] = 'Y';
+            }
+        }
+        wc.d("gplus usr profile " + JSON.stringify(profileData));
+
+        return profileData;
+    };
+
+    wiz.processFBUserObj = function (user) {
+        var profileData = {};
+        profileData['Name'] = user['name'];
+        if (typeof user['id'] != 'undefined') {
+            profileData['FBID'] = user['id'] + "";
+        }
+
+        // Feb 2014 - FB announced over 50 gender options, hence we specifically look for male or female. Rest we don't care.
+        if (user['gender'] == "male") {
+            profileData['Gender'] = "M";
+        } else if (user['gender'] == "female") {
+            profileData['Gender'] = "F";
+        }
+
+        var getHighestEducation = function (eduArr) {
+            if (typeof eduArr != "undefined") {
+                var college = "";
+                var highschool = "";
+
+                for (var i = 0; i < eduArr.length; i++) {
+                    var edu = eduArr[i];
+                    if (typeof edu.type != "undefined") {
+                        var type = edu.type;
+                        if (type == "Graduate School") {
+                            return "Graduate";
+                        } else if (type == "College") {
+                            college = "1";
+                        } else if (type == "High School") {
+                            highschool = "1";
+                        }
+                    }
+                }
+
+                if (college == "1") {
+                    return "College";
+                } else if (highschool == "1") {
+                    return "School";
+                }
+            }
+            return; //nothing
+        }
+
+        if (user['relationship_status'] != 'undefined') {
+            profileData['Married'] = 'N';
+            if (user['relationship_status'] == 'Married') {
+                profileData['Married'] = 'Y';
+            }
+        }
+
+        var edu = getHighestEducation(user['education']);
+        if (typeof edu != "undefined") {
+            profileData['Education'] = edu;
+        }
+
+        var work = (typeof user['work'] != 'undefined') ? user['work'].length : 0;
+        if (work > 0) {
+            profileData['Employed'] = 'Y';
+        } else {
+            profileData['Employed'] = 'N';
+        }
+
+        if (typeof user['email'] != "undefined") {
+            profileData['Email'] = user['email'];
+        }
+
+        if (typeof user['birthday'] != "undefined") {
+            var mmddyy = user['birthday'].split('/'); //comes in as "08/15/1947"
+            var dob = $WZRK_WR.setDate(mmddyy[2] + mmddyy[0] + mmddyy[1]);
+            profileData['DOB'] = dob;
+        }
+        return profileData;
+    };
+
+
+    wiz.getEmail = function () {
+        wiz.handleEmailSubscription('-1');
+    };
+
+
+    wiz.unSubEmail = function () {
+        wiz.handleEmailSubscription("0")
+    };
+
+    wiz.subEmail = function () {
+        wiz.handleEmailSubscription("1")
+    };
+
+    wiz.handleEmailSubscription = function (subscription) {
+
+        var url_params_as_is = wzrk_util.getURLParams(location.href);  // can't use url_params as it is in lowercase above
+        var encodedEmailId = url_params_as_is['e'];
+
+        if (typeof encodedEmailId != 'undefined') {
+            var data = {};
+            data['id'] = accountId;  //accountId
+
+            var url = emailURL;
+            url = wiz.addToURL(url, "e", encodedEmailId);
+            url = wiz.addToURL(url, "d", wiz.compressData(JSON.stringify(data)));
+
+            if (subscription != '-1') {
+                url = wiz.addToURL(url, "sub", subscription);
+            }
+
+            wiz.fireRequest(url);
+        }
+    };
+
+
+    wiz.reportError = function (code, desc) {
+        wzrk_error['c'] = code;
+        wzrk_error['d'] = desc;
+        wc.e(wzrk_error_txt + code + ": " + desc);
+    };
+
+
+    //to debug put this in the JS console -> sessionStorage['WZRK_D']="";
+    wiz.isDebug = function () {
+        return ((typeof sessionStorage != 'undefined') && sessionStorage['WZRK_D'] == '');
+    };
+
+    wiz.isPingContinuous = function () {
+        return ((typeof wzrk_d != 'undefined') && (wzrk_d['ping'] == 'continuous'));
+    };
+
+
+    wiz.compressData = function (dataObject) {
+        wc.d('dobj:' + dataObject);
+        var dat = LZS.compressToBase64(dataObject);
+        return dat;
+    };
+
+
+    wiz.addSystemDataToObject = function (dataObject, ignoreTrim) {
+        // ignore trim for chrome notifications; undefined everywhere else
+        if (typeof ignoreTrim === 'undefined') {
+            dataObject = wzrk_util.removeUnsupportedChars(dataObject);
+        }
+        if (!wzrk_util.isObjectEmpty(wzrk_error)) {
+            dataObject['wzrk_error'] = wzrk_error;
+            wzrk_error = {};
+        }
+
+        dataObject['id'] = accountId;                                                     //accountId
+
+        if (gcookie != null) {
+            dataObject['g'] = gcookie;
+        }                               //Global cookie
+
+        var obj = wiz.getSessionCookieObject();
+
+        dataObject['s'] = obj['s'];                                                      //Session cookie
+        dataObject['pg'] = (typeof obj['p'] == 'undefined') ? 1 : obj['p'];                //Page count
+
+        return dataObject;
+    };
+
+
+    wiz.getSessionCookieObject = function () {
+        var scookieStr = wiz.readCookie(SCOOKIE_NAME);
+        var obj = {};
+
+        if (scookieStr != null) {
+            // converting back single quotes to double for JSON parsing - http://www.iandevlin.com/blog/2012/04/html5/cookies-json-localstorage-and-opera
+            // todo - remove after April 15, 2015. Since all session cookies with older encoding would've been flushed out from the world
+            scookieStr = scookieStr.replace(singleQuoteRegex, "\"");
+
+            obj = JSON.parse(scookieStr);
+            if (!wzrk_util.isObject(obj)) {
+                obj = {};
+            } else {
+                if (typeof obj['t'] != 'undefined') {   // check time elapsed since last request
+                    var lasttime = obj['t'];
+                    var now = wzrk_util.getNow();
+                    if ((now - lasttime) > (SCOOKIE_EXP_TIME_IN_SECS + 60)) // adding 60 seconds to compensate for in-journey requests
+
+                    //ideally the cookie should've died after SCOOKIE_EXP_TIME_IN_SECS but it's still around as we can read
+                    //hence we shouldn't use it.
+
+                        obj = {};
+
+                }
+            }
+        }
+        scookieObj = obj;
+        return obj;
+    };
+
+
+    wiz.setSessionCookieObject = function (obj) {
+
+        var objStr = JSON.stringify(obj);
+
+        wiz.createBroadCookie(SCOOKIE_NAME, objStr, SCOOKIE_EXP_TIME_IN_SECS, domain);
+
+    };
+
+
+    wiz.g = function () {
+        gcookie = wiz.readCookie(GCOOKIE_NAME);
+
+        if (gcookie == null && wzrk_util.isLocalStorageSupported()) { // only get from localStorage if cookie is null
+            gcookie = localStorage[GCOOKIE_NAME];
+        }
+
+        pcookie = wiz.readCookie(PCOOKIE_NAME);
+    };
+
+    wiz.setMetaProp = function (key, value) {
+        if (wzrk_util.isLocalStorageSupported()) {
+            var wzrkMetaObj = wiz.readFromLSorCookie(META_COOKIE);
+            if (typeof wzrkMetaObj == 'undefined') {
+                wzrkMetaObj = {};
+            }
+            wzrkMetaObj[key] = value;
+            wiz.saveToLSorCookie(META_COOKIE, wzrkMetaObj);
+        }
+    };
+
+    wiz.getMetaProp = function (key) {
+        if (wzrk_util.isLocalStorageSupported()) {
+            var wzrkMetaObj = wiz.readFromLSorCookie(META_COOKIE);
+            if (typeof wzrkMetaObj != 'undefined') {
+                return wzrkMetaObj[key];
+            }
+        }
+    };
+
+    wiz.manageSession = function (session) {
+        //first time. check if current session id in localstorage is same
+        //if not same then prev = current and current = this new session
+        if (typeof currentSessionId == 'undefined') {
+            var currentSessionInLS = wiz.getMetaProp('cs');
+            //if sessionId in meta is undefined - set current to both
+            if (typeof currentSessionInLS == 'undefined') {
+                wiz.setMetaProp('ps', session);
+                wiz.setMetaProp('cs', session);
+                wiz.setMetaProp('sc', 1);
+            }
+            //not same as session in local storage. new session
+            else if (currentSessionInLS != session) {
+                wiz.setMetaProp('ps', currentSessionInLS);
+                wiz.setMetaProp('cs', session);
+                var sessionCount = wiz.getMetaProp('sc');
+                if (typeof sessionCount == 'undefined') {
+                    sessionCount = 0;
+                }
+                wiz.setMetaProp('sc', sessionCount + 1);
+            }
+            currentSessionId = session;
+        }
+    };
+
+
+    // call back function used to store global and session ids for the user
+    //resume - this is used to signal that we can resume sending events to server
+    // was waiting for the server to reset the cookie. everything was getting written to cookie
+    wiz.s = function (global, session, resume, respNumber) {
+        if (typeof respNumber === "undefined") {
+            respNumber = 0;
+        }
+        if (respNumber > REQ_N) {
+            //request for some other user so ignore
+            return;
+        }
+
+        if (resume) {
+            resetCookie = false;
+        }
+        if (wzrk_util.isLocalStorageSupported()) {
+            wiz.manageSession(session);
+        }
+        // global cookie
+        var TEN_YEARS_IN_SECS = 86400 * 365 * 10; //seconds in an days * days in an year * number of years
+        var cookieExpiry = TEN_YEARS_IN_SECS;
+        gcookie = global;
+
+        wiz.createBroadCookie(GCOOKIE_NAME, global, cookieExpiry, domain);
+
+        if (wzrk_util.isLocalStorageSupported()) {  //write to HTML 5 localstorage
+            try {
+                localStorage[GCOOKIE_NAME] = global;
+            } catch (e) {
+                wc.e("Unable to write to local storage: " + e);
+            }
+        }
+        // global cookie
+
+        // session cookie
+        var obj = wiz.getSessionCookieObject();
+
+        // for the race-condition where two responses come back with different session ids. don't write the older session id.
+        if (typeof obj["s"] == "undefined" || obj["s"] <= session) {
+            obj["s"] = session;
+            obj["t"] = wzrk_util.getNow();  // time of last response from server
+            wiz.setSessionCookieObject(obj);
+        }
+        // session cookie
+
+        // the above global cookie creation guarantees that we know the broad domain
+        wiz.deleteCookie(LCOOKIE_NAME, broadDomain);
+        wc.d("del ck: " + LCOOKIE_NAME);
+        if (resume) {
+            wiz.pushOutStaleEvents();
+        }
+
+        RESP_N = respNumber;
+
+    };
+
+
+    // sets cookie on the base domain. e.g. if domain is baz.foo.bar.com, set cookie on ".bar.com"
+    wiz.createBroadCookie = function (name, value, seconds, domain) {
+
+
+        //To update an existing "broad domain" cookie, we need to know what domain it was actually set on.
+        //since a retrieved cookie never tells which domain it was set on, we need to set another test cookie
+        //to find out which "broadest" domain the cookie was set on. Then delete the test cookie, and use that domain
+        //for updating the actual cookie.
+
+
+        if (domain) {
+            if (typeof broadDomain == 'undefined') {  // if we don't know the broadDomain yet, then find out
+                var domainParts = domain.split(".");
+                var testBroadDomain = "";
+                for (var idx = domainParts.length - 1; idx >= 0; idx--) {
+                    testBroadDomain = "." + domainParts[idx] + testBroadDomain;
+
+                    // only needed if the cookie already exists and needs to be updated. See note above.
+                    if (wiz.readCookie(name)) {
+
+                        // no guarantee that browser will delete cookie, hence create short lived cookies
+                        var testCookieName = "test_" + name + idx;
+                        wiz.createCookie(testCookieName, value, 10, testBroadDomain); // self-destruct after 10 seconds
+                        if (!wiz.readCookie(testCookieName)) {  // if test cookie not set, then the actual cookie wouldn't have been set on this domain either.
+                            continue;
+                        } else {                                // else if cookie set, then delete the test and the original cookie
+                            wiz.deleteCookie(testCookieName, testBroadDomain);
+                        }
+                    }
+
+                    wiz.createCookie(name, value, seconds, testBroadDomain);
+                    var tempCookie = wiz.readCookie(name);
+                    if (tempCookie == value) {
+                        broadDomain = testBroadDomain;
+                        //wc.d("Was able to retrieve cookie on: " + testBroadDomain + "->" + name + "=" + tempCookie);
+                        break;
+                    }
+                }
+            } else {
+                wiz.createCookie(name, value, seconds, broadDomain);
+            }
+        } else {
+            wiz.createCookie(name, value, seconds, domain);
+        }
+    };
+
+    //read  - cookie get-set: http://www.quirksmode.org/js/cookies.html
+
+    wiz.createCookie = function (name, value, seconds, domain) {
+        var expires = "";
+        var domainStr = "";
+        if (seconds) {
+            var date = new Date();
+            date.setTime(date.getTime() + (seconds * 1000));
+
+            expires = "; expires=" + date.toGMTString();
+        }
+
+        if (domain) {
+            domainStr = "; domain=" + domain;
+        }
+
+        value = encodeURIComponent(value);
+
+        var cookieStr = name + "=" + value + expires + domainStr + "; path=/";
+        document.cookie = cookieStr;
+    };
+
+    wiz.readCookie = function readCookie(name) {
+        var nameEQ = name + "=";
+        var ca = document.cookie.split(';');
+        for (var idx = 0; idx < ca.length; idx++) {
+            var c = ca[idx];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1, c.length);
+            }
+            if (c.indexOf(nameEQ) == 0) {
+                return decodeURIComponent(c.substring(nameEQ.length, c.length));
+            }
+        }
+        return null;
+    };
+
+    wiz.deleteCookie = function (name, domain) {
+        var cookieStr = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+
+        if (domain) {
+            cookieStr = cookieStr + " domain=" + domain + "; path=/";
+        }
+
+        document.cookie = cookieStr;
+    };
+
+
+    wiz.addToURL = function (url, k, v) {
+        return url + "&" + k + "=" + encodeURIComponent(v);
+    };
+
+    var MAX_TRIES = 50;
+
+    var fireRequest = function (url, tries) {
+        if (gcookie == null && RESP_N < REQ_N && tries < MAX_TRIES) {
+            setTimeout(function () {
+                fireRequest(url, tries + 1);
+            }, 50);
+            return;
+        }
+
+        if (gcookie != null) {
+            //add cookie to url
+            url = wiz.addToURL(url, "gc", gcookie);
+        }
+        url = wiz.addARPToRequest(url);
+        url = wiz.addToURL(url, "r", new Date().getTime()); // add epoch to beat caching of the URL
+        url = wiz.addToURL(url, "rn", ++REQ_N);
+        if (wizrocket.hasOwnProperty("plugin")) { //used to add plugin name in request parameter
+            var plugin = wizrocket["plugin"];
+            url = wiz.addToURL(url, "ct_pl", plugin);
+        }
+        if (url.indexOf("chrome-extension:") != -1) {
+            url = url.replace('chrome-extension:', 'https:');
+        }
+        var s = doc.createElement('script');
+        s.setAttribute("type", "text/javascript");
+        s.setAttribute("src", url);
+        s.setAttribute("rel", "nofollow");
+        s.async = true;
+        doc.getElementsByTagName("head")[0].appendChild(s);
+        wc.d("req snt -> url: " + url);
+    };
+
+    wiz.fireRequest = function (url) {
+        fireRequest(url, 1);
+    };
+
+    wiz.closeIframe = function (campaignId, divId) {
+        if (typeof campaignId != 'undefined' && campaignId != '-1') {
+            if (wzrk_util.isSessionStorageSupported()) {
+                var campIds = sessionStorage[CAMP_COOKIE_NAME];
+                if (typeof campIds == 'undefined') {
+                    campIds = {};
+                } else {
+                    campIds = JSON.parse(decodeURIComponent(campIds).replace(singleQuoteRegex, "\""))
+                }
+                campIds[campaignId] = 'dnd';
+                var campObj = JSON.stringify(campIds);
+                sessionStorage[CAMP_COOKIE_NAME] = encodeURIComponent(campObj);
+            }
+        }
+        document.getElementById(divId).style.display = "none";
+        if(document.getElementById('intentOpacityDiv') !=null){
+            document.getElementById('intentOpacityDiv').style.display = "none";
+        }
+
+    };
+
+    // helper variable to handle race condition and check when notifications were called
+    var notifApi = {};
+    notifApi.notifEnabledFromApi = false;
+
+    /**
+     * Function is exposed to customer; called as needed after specific events to set up push notifications
+     * @param displayArgs array: [titleText, bodyText, okButtonText, rejectButtonText]
+     */
+    wiz.setUpWebPush = function (displayArgs) {
+        if(webPushEnabled === undefined){
+            webPushEnabled = wiz.readFromSSorCookie('wzrk_wp')
+        }
+        if (webPushEnabled && displayArgs.length > 0) {
+            wiz.handleNotificationRegistration(displayArgs);
+        } else if (typeof webPushEnabled === 'undefined' && displayArgs.length > 0) {
+            notifApi.notifEnabledFromApi = true;
+            notifApi.displayArgs = displayArgs.slice();
+        } else if (webPushEnabled === false) {
+            wc.e('Make sure push notifications are fully enabled and integrated');
+        }
+
+    };
+
+
+    wiz.handleNotificationRegistration = function (displayArgs) {
+
+        // make sure everything is specified
+        var titleText;
+        var bodyText;
+        var okButtonText;
+        var rejectButtonText;
+        var okButtonColor;
+        var skipDialog;
+        var askAgainTimeInSeconds;
+
+        if(displayArgs.length === 1){
+            if(wzrk_util.isObject(displayArgs[0])){
+                var notifObj = displayArgs[0];
+                titleText = notifObj["titleText"];
+                bodyText = notifObj["bodyText"];
+                okButtonText = notifObj["okButtonText"];
+                rejectButtonText = notifObj["rejectButtonText"];
+                okButtonColor = notifObj["okButtonColor"];
+                skipDialog = notifObj["skipDialog"];
+                askAgainTimeInSeconds = notifObj["askAgainTimeInSeconds"];
+            }
+        } else{
+            titleText = displayArgs[0];
+            bodyText = displayArgs[1];
+            okButtonText = displayArgs[2];
+            rejectButtonText = displayArgs[3];
+            okButtonColor = displayArgs[4];
+            skipDialog = displayArgs[5];
+            askAgainTimeInSeconds = displayArgs[6]
+        }
+
+        if(typeof skipDialog === "undefined"){
+            skipDialog = false;
+        }
+
+        // ensure that the browser supports notifications
+        if (typeof navigator["serviceWorker"] === "undefined") {
+            return;
+        }
+
+        // make sure the site is on https for chrome notifications
+        if (location.protocol !== 'https:' && document.location.hostname !== 'localhost') {
+            wc.e("Make sure you are https or localhost to register for notifications");
+            return;
+        }
+
+        // right now, we only support chrome v50 or higher
+        if (navigator.userAgent.indexOf('Chrome') !== -1) {
+            var chromeAgent = navigator.userAgent.match(/Chrome\/(\d+)/);
+            if (typeof chromeAgent === 'undefined' || parseInt(chromeAgent[1], 10) < 50)
+                return;
+        } else {
+            return;
+        }
+
+        // we check for the cookie in setUpChromeNotifications(); the tokens may have changed
+
+        // handle migrations from other services -> chrome notifications may have already been asked for before
+        if (Notification.permission === 'granted') {
+            // skip the dialog and register
+            wiz.setUpChromeNotifications();
+            return;
+        } else if (Notification.permission === 'denied') {
+            // we've lost this profile :'(
+            return;
+        }
+
+        // make sure the user isn't asked for notifications more than twice in one weeks
+        if (typeof(wiz.getMetaProp('notif_last_time')) === 'undefined') {
+            wiz.setMetaProp('notif_last_time', new Date().getTime() / 1000);
+        } else {
+            var now = new Date().getTime() / 1000;
+            if(typeof askAgainTimeInSeconds !== "undefined"){
+                var ASK_TIME_IN_SECONDS = askAgainTimeInSeconds;
+            } else{
+                // 7 days by default
+                var ASK_TIME_IN_SECONDS = 7 * 24 * 60 * 60;
+            }
+
+            if (now - wiz.getMetaProp('notif_last_time') < ASK_TIME_IN_SECONDS) {
+                return;
+            } else {
+                // continue asking
+                wiz.setMetaProp('notif_last_time', now);
+            }
+        }
+
+        if(skipDialog){
+            wiz.setUpChromeNotifications();
+            return;
+        }
+
+        // make sure the right parameters are passed
+        if (!titleText || !bodyText || !okButtonText || !rejectButtonText) {
+            wc.e('Missing input parameters; please specify title, body, ok button and cancel button text');
+            return;
+        }
+
+        // make sure okButtonColor is formatted properly
+        if (typeof okButtonColor === 'undefined' || !okButtonColor.match(/^#[a-f\d]{6}$/i)) {
+            okButtonColor = "#f28046"; // default color for positive button
+        }
+
+        wiz.addWizAlertJS().onload = function () {
+            // create our wizrocket popup
+            wzrkPermissionPopup['wizAlert']({
+                'title': titleText,
+                'body': bodyText,
+                'confirmButtonText': okButtonText,
+                'confirmButtonColor': okButtonColor,
+                'rejectButtonText': rejectButtonText
+            }, function (enabled) { // callback function
+                if (enabled) {
+                    // the user accepted on the dialog box
+                    wiz.setUpChromeNotifications();
+                }
+                wiz.removeWizAlertJS();
+            });
+        }
+    };
+
+    wiz.tr = function (msg) {
+
+        var doCampHouseKeeping = function (targetingMsgJson) {
+            //var targetingMsgJson = msg['inapp_notifs'][0];
+            var campaignId = targetingMsgJson['wzrk_id'].split('_')[0];
+            var campIds = {};
+            //use session storage if available
+            if (wzrk_util.isSessionStorageSupported()) {
+                campIds = sessionStorage[CAMP_COOKIE_NAME];
+                if (typeof campIds == 'undefined') {
+                    campIds = {};
+                } else {
+                    campIds = JSON.parse(decodeURIComponent(campIds).replace(singleQuoteRegex, "\""))
+
+                }
+            } else {//read from cookie
+                campIds = wiz.readCookie(CAMP_COOKIE_NAME);
+                if (campIds == "t") {
+                    return false;
+                }
+            }
+            if (campIds == null) {
+                campIds = {};
+            }
+            //global session limit. default is 1
+            if (typeof targetingMsgJson['display']['wmc'] == 'undefined') {
+                targetingMsgJson['display']['wmc'] = 1;
+            }
+            //check if total limit exceeded per session
+            if (typeof campIds != 'undefined' && campIds['wmc'] != 'undefined' && campIds['wmc'] >= targetingMsgJson['display']['wmc']) {
+                return false;
+            }
+            //check if target limit exceeded per session
+            if (typeof campIds != 'undefined' && typeof campIds[campaignId] != 'undefined' && (campIds[campaignId] == 'dnd' || campIds[campaignId] >= targetingMsgJson['display']['mdc'])) {
+                return false;
+            }
+
+            //delay
+            if (typeof targetingMsgJson['display']['delay'] != 'undefined' && targetingMsgJson['display']['delay'] > 0) {
+                var delay = targetingMsgJson['display']['delay'];
+                targetingMsgJson['display']['delay'] = 0;
+                setTimeout(wiz.tr, delay * 1000, msg);
+                return false;
+            }
+
+            //update campaign count
+            if (typeof campIds[campaignId] == 'undefined') {
+                campIds[campaignId] = 1;
+            } else {
+                campIds[campaignId]++;
+            }
+
+            //updating global counts
+            if (typeof campIds['wmc'] == 'undefined') {
+                campIds['wmc'] = 1;
+            } else {
+                campIds['wmc']++;
+            }
+
+            var campObj = encodeURIComponent(JSON.stringify(campIds));
+            //use session storage if available
+            if (wzrk_util.isSessionStorageSupported()) {
+                sessionStorage[CAMP_COOKIE_NAME] = campObj;
+            } else {//read cookie
+                wiz.createCookie(CAMP_COOKIE_NAME, "t", 0, domain);
+            }
+        };
+
+        var getCookieParams = function () {
+            if (gcookie == null) {
+                if (wzrk_util.isLocalStorageSupported()) { // only get from localStorage if cookie is null
+                    gcookie = localStorage[GCOOKIE_NAME];
+                } else {
+                    gcookie = wiz.readCookie(GCOOKIE_NAME);
+                }
+            }
+            if (scookieObj == null) {
+                scookieObj = wiz.getSessionCookieObject();
+            }
+            return '&t=wc&d=' + encodeURIComponent(LZS.compressToBase64(gcookie + '|' + scookieObj['p'] + '|' + scookieObj['s']));
+        };
+
+        var setupClickEvent = function (onClick, targetingMsgJson, contentDiv, divId) {
+            if (onClick != '' && typeof onClick != 'undefined') {
+                var jsFunc = targetingMsgJson['display']['jsFunc'];
+                onClick += getCookieParams();
+                contentDiv.onclick =
+                    function () {
+                        //invoke js function call
+                        if (typeof jsFunc != 'undefined') {
+                            //track notification clicked event
+                            wiz.fireRequest(onClick);
+                            invokeExternalJs(jsFunc, targetingMsgJson);
+                            //close iframe. using -1 for no campaignId
+                            wiz.closeIframe('-1', divId);
+                            return;
+                        }
+                        //pass on the gcookie|page|scookieId for capturing the click event
+                        if (targetingMsgJson['display']['window'] == '1') {
+                            window.open(onClick, '_blank');
+                        } else {
+                            window.location = onClick;
+                        }
+                    }
+            }
+        };
+
+        var invokeExternalJs = function (jsFunc, targetingMsgJson) {
+            var func = window.parent[jsFunc];
+            if (typeof func == "function") {
+                if (typeof targetingMsgJson['display']['kv'] !== 'undefined') {
+                    func(targetingMsgJson['display']['kv']);
+                } else {
+                    func();
+                }
+            }
+        };
+
+        var setupClickUrl = function (onClick, targetingMsgJson, contentDiv, divId) {
+            incrementImpression(targetingMsgJson);
+            setupClickEvent(onClick, targetingMsgJson, contentDiv, divId);
+        };
+
+        var incrementImpression = function (targetingMsgJson) {
+            var campaignId = parseInt(targetingMsgJson['wzrk_id'].split('_')[0], 10);
+            var batchId = parseInt(targetingMsgJson['wzrk_id'].split('_')[1], 10);
+            var accountId = wizrocket['account'][0]['id'];
+            var targetCountReq = targetCountURL;
+            var data = {};
+            data['cId'] = campaignId;
+            data['bId'] = batchId;
+            data['accId'] = accountId;
+            data['d'] = "Web";
+            data['m'] = "Web";
+            targetCountReq = wiz.addToURL(targetCountReq, "d", wiz.compressData(JSON.stringify(data)));
+            wiz.fireRequest(targetCountReq);
+        };
+
+        var renderFooterNotification = function (targetingMsgJson) {
+            var campaignId = targetingMsgJson['wzrk_id'].split('_')[0];
+
+            var msgDiv = document.createElement('div');
+            msgDiv.id = 'wizParDiv';
+            var viewHeight = window.innerHeight;
+            var viewWidth = window.innerWidth;
+
+            var marginBottom = viewHeight * 5 / 100;
+            var contentHeight = 10;
+            var right = viewWidth * 5 / 100;
+            var bottomPosition = contentHeight + marginBottom;
+            var width = viewWidth * 30 / 100 + 20;
+            //for small devices  - mobile phones
+            if ((/mobile/i.test(navigator.userAgent) || (/mini/i.test(navigator.userAgent)) ) && /iPad/i.test(navigator.userAgent) == false) {
+                width = viewWidth * 85 / 100 + 20;
+                right = viewWidth * 5 / 100;
+                bottomPosition = viewHeight * 5 / 100;
+                //medium devices - tablets
+            } else if ('ontouchstart' in window || (/tablet/i.test(navigator.userAgent))) {
+                width = viewWidth * 50 / 100 + 20;
+                right = viewWidth * 5 / 100;
+                bottomPosition = viewHeight * 5 / 100;
+            }
+
+
+            msgDiv.setAttribute('style', 'display:block;overflow:hidden; bottom:' + bottomPosition + 'px !important;width:' + width + 'px !important;right:' + right + 'px !important;position:fixed;z-index:2147483647;');
+            document.body.appendChild(msgDiv);
+            var iframe = document.createElement('iframe');
+
+            iframe['frameborder'] = '0px';
+            iframe['marginheight'] = '0px';
+            iframe['marginwidth'] = '0px';
+            iframe['scrolling'] = 'no';
+            iframe['id'] = 'wiz-iframe';
+            var onClick = targetingMsgJson['display']['onClick'];
+            var pointerCss = '';
+            if (onClick != '' && typeof onClick != 'undefined') {
+                pointerCss = 'cursor:pointer;';
+            }
+            var css = '' +
+                '<style type="text/css">' +
+                'body{margin:0;padding:0;}' +
+                '#contentDiv.wzrk{overflow:hidden;padding:0;text-align:center;' + pointerCss + '}' +
+                '#contentDiv.wzrk td{padding:15px 10px;}' +
+                '.wzrkPPtitle{font-weight: bold;font-size: 16px;font-family:arial;padding-bottom:10px;word-break: break-word;}' +
+                '.wzrkPPdscr{font-size: 14px;font-family:arial;line-height:16px;word-break: break-word;display:inline-block;}' +
+                '.PL15{padding-left:15px;}' +
+                '.wzrkPPwarp{margin:20px 20px 0 5px;padding:0px;border-radius: 8px;box-shadow: 1px 1px 5px #888888;}' +
+                'a.wzrkClose{cursor:pointer;position: absolute;top: 11px;right: 11px;z-index: 2147483647;font-size:19px;font-family:arial;font-weight:bold;text-decoration: none;width: 25px;/*height: 25px;*/text-align: center; -webkit-appearance: none; line-height: 25px;' +
+                'background: #353535;border: #fff 2px solid;border-radius: 100%;box-shadow: #777 2px 2px 2px;color:#fff;}' +
+                'a:hover.wzrkClose{background-color:#d1914a !important;color:#fff !important; -webkit-appearance: none;}' +
+                'td{vertical-align:top;}' +
+                'td.imgTd{border-top-left-radius:8px;border-bottom-left-radius:8px;}' +
+                '</style>';
+
+            var bgColor;
+            if (targetingMsgJson['display']['theme'] == 'dark') {
+                bgColor = "#2d2d2e";
+                textColor = "#eaeaea";
+                btnBg = '#353535';
+                leftTd = '#353535';
+                btColor = '#ffffff';
+            } else {
+                bgColor = "#ffffff";
+                textColor = "#000000";
+                leftTd = '#f4f4f4';
+                btnBg = '#a5a6a6';
+                btColor = '#ffffff';
+            }
+
+            //direct html
+            if (targetingMsgJson['msgContent']['type'] == 1) {
+                iframe.src = targetingMsgJson['msgContent']['html'];
+                msgDiv.appendChild(iframe);
+                return;
+            }
+
+            var titleText = targetingMsgJson['msgContent']['title'];
+            var descriptionText = targetingMsgJson['msgContent']['description'];
+            var imageTd = "";
+            if (typeof targetingMsgJson['msgContent']['imageUrl'] != 'undefined' && targetingMsgJson['msgContent']['imageUrl'] != '') {
+                imageTd = "<td class='imgTd' style='background-color:" + leftTd + "'><img src='" + targetingMsgJson['msgContent']['imageUrl'] + "' height='60' width='60'></td>";
+            }
+            var onClickStr = "parent.$WZRK_WR.closeIframe(" + campaignId + ",'wizParDiv');";
+            var title = "<div class='wzrkPPwarp' style='color:" + textColor + ";background-color:" + bgColor + ";'>" +
+                "<a href='javascript:void(0);' onclick=" + onClickStr + " class='wzrkClose' style='background-color:" + btnBg + ";color:" + btColor + "'>&times;</a>" +
+                "<div id='contentDiv' class='wzrk'>" +
+                "<table cellpadding='0' cellspacing='0' border='0'>" +
+                    //"<tr><td colspan='2'></td></tr>"+
+                "<tr>" + imageTd + "<td style='vertical-align:top;'>" +
+                "<div class='wzrkPPtitle' style='color:" + textColor + "'>" + titleText + "</div>";
+            var body = "<div class='wzrkPPdscr' style='color:" + textColor + "'>" + descriptionText + "<div></td></tr></table></div>";
+            var html = css + title + body;
+
+            iframe.setAttribute('style', 'z-index: 2147483647; display:block; width: 100% !important; border:0px !important; border-color:none !important;');
+            msgDiv.appendChild(iframe);
+            var ifrm = (iframe.contentWindow) ? iframe.contentWindow : (iframe.contentDocument.document) ? iframe.contentDocument.document : iframe.contentDocument;
+            var doc = ifrm.document;
+
+            doc.open();
+            doc.write(html);
+            doc.close();
+            //adjust iframe and body height of html inside correctly
+            contentHeight = document.getElementById("wiz-iframe").contentDocument.getElementById('contentDiv').scrollHeight + 26;
+            document.getElementById("wiz-iframe").contentDocument.body.style.margin = "0px";
+            document.getElementById("wiz-iframe").style.height = contentHeight + "px";
+            return document.getElementById("wiz-iframe").contentDocument.getElementById('contentDiv');
+        };
+
+        var _callBackCalled = false;
+
+        var showFooterNotification = function (targetingMsgJson) {
+            if (document.getElementById("wizParDiv") != null) {
+                return;
+            }
+            if (doCampHouseKeeping(targetingMsgJson) == false) {
+                return;
+            }
+            var onClick = targetingMsgJson['display']['onClick'];
+            if (wizrocket.hasOwnProperty("notificationCallback") &&
+                typeof wizrocket["notificationCallback"] !== "undefined" &&
+                typeof wizrocket["notificationCallback"] === "function") {
+                var notificationCallback = wizrocket["notificationCallback"];
+                if (!_callBackCalled) {
+                    var inaObj = {};
+                    inaObj["msgContent"] = targetingMsgJson["msgContent"];
+                    inaObj["msgId"] = targetingMsgJson["wzrk_id"];
+                    if (typeof targetingMsgJson['display']['kv'] !== 'undefined') {
+                        inaObj["kv"] = targetingMsgJson['display']['kv'];
+                    }
+                    wizrocket["raiseNotificationClicked"] = function () {
+                        if (onClick != '' && typeof onClick != 'undefined') {
+                            var jsFunc = targetingMsgJson['display']['jsFunc'];
+                            onClick += getCookieParams();
+
+                            //invoke js function call
+                            if (typeof jsFunc != 'undefined') {
+                                //track notification clicked event
+                                wiz.fireRequest(onClick);
+                                invokeExternalJs(jsFunc, targetingMsgJson);
+                                return;
+                            }
+                            //pass on the gcookie|page|scookieId for capturing the click event
+                            if (targetingMsgJson['display']['window'] == '1') {
+                                window.open(onClick, '_blank');
+                            } else {
+                                window.location = onClick;
+                            }
+                        }
+                    };
+                    wizrocket["raiseNotificationViewed"] = function () {
+                        incrementImpression(targetingMsgJson);
+                    };
+                    notificationCallback(inaObj);
+                    _callBackCalled = true;
+                }
+            } else {
+                var contentDiv = renderFooterNotification(targetingMsgJson);
+                setupClickUrl(onClick, targetingMsgJson, contentDiv, 'wizParDiv');
+            }
+        };
+        var exitintentObj;
+        var showExitIntent = function () {
+            var targetingMsgJson = exitintentObj;
+            if (document.getElementById("intentPreview") != null) {
+                return;
+            }
+            //not desktop
+            if ((/mobile/i.test(navigator.userAgent)) || (/mini/i.test(navigator.userAgent)) || (/iPad/i.test(navigator.userAgent)) ||
+                ('ontouchstart' in window) || (/tablet/i.test(navigator.userAgent))) {
+                return;
+            }
+
+
+            var campaignId = targetingMsgJson['wzrk_id'].split('_')[0];
+            if (doCampHouseKeeping(targetingMsgJson) == false) {
+                return;
+            }
+            var opacityDiv = document.createElement('div');
+            opacityDiv.id = 'intentOpacityDiv';
+            opacityDiv.setAttribute('style', 'position: fixed;top: 0;bottom: 0;opacity: 0.6;left: 0;width: 100%;height: 100%;z-index: 2147483646;background: #000;');
+            document.body.appendChild(opacityDiv);
+
+            var msgDiv = document.createElement('div');
+            msgDiv.id = 'intentPreview';
+            var viewHeight = window.innerHeight;
+            var viewWidth = window.innerWidth;
+            msgDiv.setAttribute('style', 'display:block;overflow:hidden;top:55% !important;left:50% !important;position:fixed;z-index:2147483647;width:600px !important;height:600px !important;margin:-300px 0 0 -300px !important;');
+            document.body.appendChild(msgDiv);
+            var iframe = document.createElement('iframe');
+
+            iframe.frameborder = '0px';
+            iframe.marginheight = '0px';
+            iframe.marginwidth = '0px';
+            iframe.scrolling = 'no';
+            iframe.id = 'wiz-iframe-intent';
+            var onClick = targetingMsgJson['display']['onClick'];
+            var pointerCss = '';
+            if (onClick != '' && typeof onClick != 'undefined') {
+                pointerCss = 'cursor:pointer;';
+            }
+            var css = '' +
+                '<style type="text/css">' +
+                'body{margin:0;padding:0;}' +
+                '#contentDiv.wzrk{overflow:hidden;padding:0 0 20px 0;text-align:center;' + pointerCss + '}' +
+                '#contentDiv.wzrk td{padding:15px 10px;}' +
+                '.wzrkPPtitle{font-weight: bold;font-size: 24px;font-family:arial;word-break: break-word;padding-top:20px;}' +
+                '.wzrkPPdscr{font-size: 14px;font-family:arial;line-height:16px;word-break: break-word;display:inline-block;padding:20px 20px 0 20px;line-height:20px;}' +
+                '.PL15{padding-left:15px;}' +
+                '.wzrkPPwarp{margin:20px 20px 0 5px;padding:0px;border-radius: 8px;box-shadow: 1px 1px 5px #888888;}' +
+                'a.wzrkClose{cursor:pointer;position: absolute;top: 11px;right: 11px;z-index: 2147483647;font-size:19px;font-family:arial;font-weight:bold;text-decoration: none;width: 25px;/*height: 25px;*/text-align: center; -webkit-appearance: none; line-height: 25px;' +
+                'background: #353535;border: #fff 2px solid;border-radius: 100%;box-shadow: #777 2px 2px 2px;color:#fff;}' +
+                'a:hover.wzrkClose{background-color:#d1914a !important;color:#fff !important; -webkit-appearance: none;}' +
+                '#contentDiv .button{padding-top:20px;}' +
+                '#contentDiv .button a{font-size: 14px;font-weight:bold;font-family:arial;text-align:center;display:inline-block;text-decoration:none;padding:0 30px;height:40px;line-height:40px;background:#ea693b;color:#fff;border-radius:4px;-webkit-border-radius:4px;-moz-border-radius:4px;}' +
+                '</style>';
+
+            var bgColor;
+            if (targetingMsgJson['display']['theme'] == 'dark') {
+                bgColor = "#2d2d2e";
+                textColor = "#eaeaea";
+                btnBg = '#353535';
+                btColor = '#ffffff';
+            } else {
+                bgColor = "#ffffff";
+                textColor = "#000000";
+                btnBg = '#a5a6a6';
+                btColor = '#ffffff';
+            }
+            var titleText = targetingMsgJson['msgContent']['title'];
+            var descriptionText = targetingMsgJson['msgContent']['description'];
+            var ctaText = "";
+            if (typeof targetingMsgJson['msgContent']['ctaText'] != 'undefined' && targetingMsgJson['msgContent']['ctaText'] != '') {
+                ctaText = "<div class='button'><a href='#'>" + targetingMsgJson['msgContent']['ctaText'] + "</a></div>";
+            }
+
+            var imageTd = "";
+            if (typeof targetingMsgJson['msgContent']['imageUrl'] != 'undefined' && targetingMsgJson['msgContent']['imageUrl'] != '') {
+                imageTd = "<div style='padding-top:20px;'><img src='" + targetingMsgJson['msgContent']['imageUrl'] + "' width='500' alt=" + titleText + " /></div>";
+            }
+            var onClickStr = "parent.$WZRK_WR.closeIframe(" + campaignId + ",'intentPreview');";
+            var title = "<div class='wzrkPPwarp' style='color:" + textColor + ";background-color:" + bgColor + ";'>" +
+                "<a href='javascript:void(0);' onclick=" + onClickStr + " class='wzrkClose' style='background-color:" + btnBg + ";color:" + btColor + "'>&times;</a>" +
+                "<div id='contentDiv' class='wzrk'>" +
+                "<div class='wzrkPPtitle' style='color:" + textColor + "'>" + titleText + "</div>";
+            var body = "<div class='wzrkPPdscr' style='color:" + textColor + "'>" + descriptionText + "</div>" + imageTd + ctaText +
+                "</div></div>";
+            var html = css + title + body;
+            iframe.setAttribute('style', 'z-index: 2147483647; display:block; height: 100% !important; width: 100% !important;min-height:80px !important;border:0px !important; border-color:none !important;');
+            msgDiv.appendChild(iframe);
+            var ifrm = (iframe.contentWindow) ? iframe.contentWindow : (iframe.contentDocument.document) ? iframe.contentDocument.document : iframe.contentDocument;
+            var doc = ifrm.document;
+
+            doc.open();
+            doc.write(html);
+            doc.close();
+            var contentDiv = document.getElementById("wiz-iframe-intent").contentDocument.getElementById('contentDiv');
+            setupClickUrl(onClick, targetingMsgJson, contentDiv, 'intentPreview');
+
+
+        };
+
+
+        if (!document.body) {
+            if (wiz_counter < 6) {
+                wiz_counter++;
+                setTimeout(wiz.tr, 1000, msg);
+            }
+            return;
+        }
+        if (typeof msg['inapp_notifs'] != 'undefined') {
+            for (var index = 0; index < msg['inapp_notifs'].length; index++) {
+                var target_notif = msg['inapp_notifs'][index];
+                if (typeof target_notif['display']['wtarget_type'] == 'undefined' || target_notif['display']['wtarget_type'] == 0) {
+                    showFooterNotification(target_notif);
+                } else if (target_notif['display']['wtarget_type'] == 1) { 	// if display['wtarget_type']==1 then exit intent
+                    exitintentObj = target_notif;
+                    window.document.body.onmouseleave = showExitIntent;
+                }
+
+            }
+        }
+
+        var mergeEventMap = function (newEvtMap) {
+            if (typeof globalEventsMap == 'undefined') {
+                globalEventsMap = wiz.readFromLSorCookie(EV_COOKIE);
+                if (typeof globalEventsMap == 'undefined') {
+                    globalEventsMap = newEvtMap;
+                    return;
+                }
+            }
+            for (var key in newEvtMap) {
+                if (newEvtMap.hasOwnProperty(key)) {
+                    var oldEvtObj = globalEventsMap[key];
+                    var newEvtObj = newEvtMap[key];
+                    if (typeof globalEventsMap[key] != 'undefined') {
+                        if (typeof newEvtObj[0] != 'undefined' && newEvtObj[0] > oldEvtObj[0]) {
+                            globalEventsMap[key] = newEvtObj;
+                        }
+                    } else {
+                        globalEventsMap[key] = newEvtObj;
+                    }
+                }
+            }
+        };
+
+
+        if (wzrk_util.isLocalStorageSupported()) {
+            try {
+                if (typeof msg['evpr'] != 'undefined') {
+                    var eventsMap = msg['evpr']['events'];
+                    var profileMap = msg['evpr']['profile'];
+                    var syncExpiry = msg['evpr']['expires_in'];
+                    var now = wzrk_util.getNow();
+                    wiz.setMetaProp('lsTime', now);
+                    wiz.setMetaProp('exTs', syncExpiry);
+                    mergeEventMap(eventsMap);
+                    wiz.saveToLSorCookie(EV_COOKIE, globalEventsMap);
+                    if (typeof globalProfileMap == 'undefined') {
+                        wiz.addToLocalProfileMap(profileMap, true);
+                    } else {
+                        wiz.addToLocalProfileMap(profileMap, false);
+                    }
+                }
+                if (typeof msg['arp'] != 'undefined') {
+                    wiz.arp(msg['arp']);
+                }
+            } catch (e) {
+                wc.e("Unable to persist evrp/arp: " + e);
+            }
+        }
+    };
+
+    //link - actual link, type could be - "ctr" or "view"
+    wiz.getWrappedLink = function (link, targetId, type) {
+
+        var data = {};
+        data['sendTo'] = link;
+        data['targetId'] = targetId;
+        data['epoch'] = wzrk_util.getNow();
+
+        if (type != null) {
+            data['type'] = type;
+        } else {
+            data['type'] = 'view';
+        }
+
+        data = wiz.addSystemDataToObject(data);
+        return wiz.addToURL(recorderURL, "d", wiz.compressData(JSON.stringify(data)));
+
+    };
+
+
+    wiz.getMessageTemplate = function () {
+        var body = "";
+        body = body + '<div class="notice-message">';
+        body = body + '  <a href="[RECORDER_HREF]" class="box">';
+        body = body + '    <div class="avatar"><span class="fa [ICON] fa-4x fa-fw"></span></div>';
+        body = body + '    <div class="info">';
+        body = body + '      <div class="title">[TITLE]</div>';
+        body = body + '      <div class="clearfix"></div>';
+        body = body + '      <div class="text">[TEXT]</div>';
+        body = body + '    </div>';
+        body = body + '    <div class="clearfix"></div>';
+        body = body + '  </a>';
+        body = body + '</div>';
+        body = body + '<div class="clearfix"></div>';
+        return body;
+    };
+
+    wiz.getMessageHeadTemplate = function () {
+        var head = '<head>';
+        head = head + '<base target="_parent" />';
+        head = head + '<link rel="stylesheet" href="http://static.clevertap.com/fa/font-awesome.css">';
+        head = head + '<meta name="viewport" content="width=device-width, initial-scale=1.0">';
+        head = head + '<style>';
+        head = head + '[STYLE]';
+        head = head + '</style>';
+        head = head + "</head>";
+        return head;
+
+    };
+
+
+    wiz.isChargedEventStructureValid = function (chargedObj) {
+        if (wzrk_util.isObject(chargedObj)) {
+            for (var key in chargedObj) {
+                if (key == "Items") {
+                    if (!wzrk_util.isArray(chargedObj[key])) {
+                        return false;
+                    }
+
+                    if (chargedObj[key].length > 16) {
+                        wiz.reportError(522, "Charged Items exceed 16 limit. Actual count: " + chargedObj[key].length + ". Additional items will be dropped.");
+                    }
+
+                    for (var itemKey in chargedObj[key]) {
+                        if (chargedObj[key].hasOwnProperty(itemKey)) {    // since default array implementation could be overridden - e.g. Teabox site
+                            if (!wzrk_util.isObject(chargedObj[key][itemKey]) || !wiz.isEventStructureFlat(chargedObj[key][itemKey])) {
+                                return false;
+                            }
+                        }
+                    }
+                } else { //Items
+                    if (wzrk_util.isObject(chargedObj[key]) || wzrk_util.isArray(chargedObj[key])) {
+                        return false;
+                    } else if (wzrk_util.isDateObject(chargedObj[key])) {
+                        chargedObj[key] = wzrk_util.convertToWZRKDate(chargedObj[key]);
+                    }
+
+                } // if key == Items
+
+            } //for..
+            return true;
+        } // if object (chargedObject)
+        return false;
+    };
+
+
+    //events can't have any nested structure or arrays
+    wiz.isEventStructureFlat = function (eventObj) {
+        if (wzrk_util.isObject(eventObj)) {
+            for (var key in eventObj) {
+                if (wzrk_util.isObject(eventObj[key]) || wzrk_util.isArray(eventObj[key])) {
+                    return false;
+                } else if (wzrk_util.isDateObject(eventObj[key])) {
+                    eventObj[key] = wzrk_util.convertToWZRKDate(eventObj[key]);
+                }
+
+            }
+            return true;
+        }
+        return false;
+
+    };
+
+    wiz.isProfileValid = function (profileObj) {
+
+        if (wzrk_util.isObject(profileObj)) {
+            for (var profileKey in profileObj) {
+                if (profileObj.hasOwnProperty(profileKey)) {
+                    var valid = true;
+                    var profileVal = profileObj[profileKey];
+
+                    if (typeof profileVal == 'undefined') {
+                        delete profileObj[profileKey];
+                        continue;
+                    }
+                    if (profileKey == 'Gender' && !profileVal.match(/^M$|^F$/)) {
+                        valid = false;
+                        wc.e(wzrk_msg['gender-error']);
+                    }
+
+                    if (profileKey == 'Employed' && !profileVal.match(/^Y$|^N$/)) {
+                        valid = false;
+                        wc.e(wzrk_msg['employed-error']);
+                    }
+
+                    if (profileKey == 'Married' && !profileVal.match(/^Y$|^N$/)) {
+                        valid = false;
+                        wc.e(wzrk_msg['married-error']);
+                    }
+
+                    if (profileKey == 'Education' && !profileVal.match(/^School$|^College$|^Graduate$/)) {
+                        valid = false;
+                        wc.e(wzrk_msg['education-error']);
+                    }
+
+                    if (profileKey == 'Age' && typeof profileVal != 'undefined') {
+                        if (wzrk_util.isConvertibleToNumber(profileVal)) {
+                            profileObj['Age'] = +profileVal;
+                        } else {
+                            valid = false;
+                            wc.e(wzrk_msg['age-error']);
+                        }
+                    }
+
+                    // dob will come in like this - $dt_19470815 or dateObject
+                    if (profileKey == 'DOB') {
+                        if (((!(/^\$D_/).test(profileVal) || (profileVal + "").length != 11)) && !wzrk_util.isDateObject(profileVal)) {
+                            valid = false;
+                            wc.e(wzrk_msg['dob-error']);
+                        }
+
+                        if (wzrk_util.isDateObject(profileVal)) {
+                            var year = profileVal.getUTCFullYear();
+                            var month = '' + (profileVal.getUTCMonth() + 1);
+                            var date = '' + profileVal.getUTCDate();
+                            if (month.length == 1) {
+                                month = "0" + month;
+                            }
+                            if (date.length == 1) {
+                                date = "0" + date;
+                            }
+                            profileObj['DOB'] = $WZRK_WR.setDate(year + '' + month + '' + date);
+                        }
+                    } else if (wzrk_util.isDateObject(profileVal)) {
+                        profileObj[profileKey] = wzrk_util.convertToWZRKDate(profileVal);
+                    }
+
+                    if (profileKey == 'Phone' && !wzrk_util.isObjectEmpty(profileVal)) {
+                        if (profileVal.length > 8 && (profileVal.charAt(0) == '+')) { // valid phone number
+                            profileVal = profileVal.substring(1, profileVal.length);
+                            if (wzrk_util.isConvertibleToNumber(profileVal)) {
+                                profileObj['Phone'] = +profileVal;
+                            } else {
+                                valid = false;
+                                wc.e(wzrk_msg['phone-format-error'] + ". Removed.");
+                            }
+                        } else {
+                            valid = false;
+                            wc.e(wzrk_msg['phone-format-error'] + ". Removed.");
+                        }
+                    }
+
+
+                    if (!valid) {
+                        delete profileObj[profileKey];
+                    }
+                }
+            }
+
+        }
+
+        return valid;
+    }; //isProfileValid
+
+    wiz.setDate = function (dt) {
+        return wzrk_util.setDate(dt);
+    };
+
+    wiz.setEnum = function (enumVal) {
+        if (wzrk_util.isString(enumVal) || wzrk_util.isNumber(enumVal)) {
+            return "$E_" + enumVal;
+        }
+        wc.e(wzrk_msg['enum-format-error']);
+    };
+
+    // list of functions that the closure compiler shouldn't rename
+    // https://developers.google.com/closure/compiler/docs/api-tutorial3
+    wiz['s'] = wiz.s;
+    wiz['is_onloadcalled'] = wiz.is_onloadcalled;
+    wiz['setDate'] = wiz.setDate;
+    wiz['enableWebPush'] = wiz.enableWebPush; // support for web push notifications
+    wiz['setEnum'] = wiz.setEnum;
+    wiz['tr'] = wiz.tr;
+    wiz['push'] = wiz.push;
+    wiz['closeIframe'] = wiz.closeIframe;
+    wiz['getEmail'] = wiz.getEmail;
+    wiz['unSubEmail'] = wiz.unSubEmail;
+    wiz['subEmail'] = wiz.subEmail;
+    wiz['logout'] = wiz.logout;
+    wizrocket['getCleverTapID'] = wiz.getCleverTapID;
+
+
+// ---------- compression part ----------
+
+    var LZS = {
+
+        _f: String.fromCharCode,
+
+        getKeyStr: function () {
+            var key = "";
+            var i = 0;
+
+            for (i = 0; i <= 25; i++) {
+                key = key + String.fromCharCode(i + 65);
+            }
+
+            for (i = 0; i <= 25; i++) {
+                key = key + String.fromCharCode(i + 97);
+            }
+
+            for (var i = 0; i < 10; i++) {
+                key = key + i;
+            }
+
+            return key + "+/=";
+        },
+
+        convertToFormattedHex: function (byte_arr) {
+            var hex_str = "",
+                i,
+                len,
+                tmp_hex;
+
+            if (!wzrk_util.isArray(byte_arr)) {
+                return false;
+            }
+
+            len = byte_arr.length;
+
+            for (i = 0; i < len; ++i) {
+                if (byte_arr[i] < 0) {
+                    byte_arr[i] = byte_arr[i] + 256;
+                }
+                if (byte_arr[i] === undefined) {
+                    byte_arr[i] = 0;
+                }
+                tmp_hex = byte_arr[i].toString(16);
+
+                // Add leading zero.
+                if (tmp_hex.length == 1) tmp_hex = "0" + tmp_hex;
+
+                //        beautification - needed if you're printing this in the console, else keep commented
+                //        if ((i + 1) % 16 === 0) {
+                //          tmp_hex += "\n";
+                //        } else {
+                //          tmp_hex += " ";
+                //        }
+
+                hex_str += tmp_hex;
+            }
+
+            return hex_str.trim();
+        },
+
+        convertStringToHex: function (s) {
+
+            var byte_arr = [];
+            for (var i = 0; i < s.length; i++) {
+                var value = s.charCodeAt(i);
+                byte_arr.push(value & 255);
+                byte_arr.push((value >> 8) & 255);
+            }
+            return LZS.convertToFormattedHex(byte_arr);
+
+        },
+
+        compressToBase64: function (input) {
+            if (input == null) return "";
+            var output = "";
+            var chr1, chr2, chr3, enc1, enc2, enc3, enc4;
+            var i = 0;
+
+            input = LZS.compress(input);
+
+            while (i < input.length * 2) {
+
+                if (i % 2 == 0) {
+                    chr1 = input.charCodeAt(i / 2) >> 8;
+                    chr2 = input.charCodeAt(i / 2) & 255;
+                    if (i / 2 + 1 < input.length)
+                        chr3 = input.charCodeAt(i / 2 + 1) >> 8;
+                    else
+                        chr3 = NaN;
+                } else {
+                    chr1 = input.charCodeAt((i - 1) / 2) & 255;
+                    if ((i + 1) / 2 < input.length) {
+                        chr2 = input.charCodeAt((i + 1) / 2) >> 8;
+                        chr3 = input.charCodeAt((i + 1) / 2) & 255;
+                    } else
+                        chr2 = chr3 = NaN;
+                }
+                i += 3;
+
+                enc1 = chr1 >> 2;
+                enc2 = ((chr1 & 3) << 4) | (chr2 >> 4);
+                enc3 = ((chr2 & 15) << 2) | (chr3 >> 6);
+                enc4 = chr3 & 63;
+
+                if (isNaN(chr2)) {
+                    enc3 = enc4 = 64;
+                } else if (isNaN(chr3)) {
+                    enc4 = 64;
+                }
+
+                output = output +
+                    LZS._keyStr.charAt(enc1) + LZS._keyStr.charAt(enc2) +
+                    LZS._keyStr.charAt(enc3) + LZS._keyStr.charAt(enc4);
+
+            }
+
+            return output;
+        },
+
+
+        compress: function (uncompressed) {
+            if (uncompressed == null) return "";
+            var i, value,
+                context_dictionary = {},
+                context_dictionaryToCreate = {},
+                context_c = "",
+                context_wc = "",
+                context_w = "",
+                context_enlargeIn = 2, // Compensate for the first entry which should not count
+                context_dictSize = 3,
+                context_numBits = 2,
+                context_data_string = "",
+                context_data_val = 0,
+                context_data_position = 0,
+                ii,
+                f = LZS._f;
+
+            for (ii = 0; ii < uncompressed.length; ii += 1) {
+                context_c = uncompressed.charAt(ii);
+                if (!Object.prototype.hasOwnProperty.call(context_dictionary, context_c)) {
+                    context_dictionary[context_c] = context_dictSize++;
+                    context_dictionaryToCreate[context_c] = true;
+                }
+
+                context_wc = context_w + context_c;
+                if (Object.prototype.hasOwnProperty.call(context_dictionary, context_wc)) {
+                    context_w = context_wc;
+                } else {
+                    if (Object.prototype.hasOwnProperty.call(context_dictionaryToCreate, context_w)) {
+                        if (context_w.charCodeAt(0) < 256) {
+                            for (i = 0; i < context_numBits; i++) {
+                                context_data_val = (context_data_val << 1);
+                                if (context_data_position == 15) {
+                                    context_data_position = 0;
+                                    context_data_string += f(context_data_val);
+                                    context_data_val = 0;
+                                } else {
+                                    context_data_position++;
+                                }
+                            }
+                            value = context_w.charCodeAt(0);
+                            for (i = 0; i < 8; i++) {
+                                context_data_val = (context_data_val << 1) | (value & 1);
+                                if (context_data_position == 15) {
+                                    context_data_position = 0;
+                                    context_data_string += f(context_data_val);
+                                    context_data_val = 0;
+                                } else {
+                                    context_data_position++;
+                                }
+                                value = value >> 1;
+                            }
+                        } else {
+                            value = 1;
+                            for (i = 0; i < context_numBits; i++) {
+                                context_data_val = (context_data_val << 1) | value;
+                                if (context_data_position == 15) {
+                                    context_data_position = 0;
+                                    context_data_string += f(context_data_val);
+                                    context_data_val = 0;
+                                } else {
+                                    context_data_position++;
+                                }
+                                value = 0;
+                            }
+                            value = context_w.charCodeAt(0);
+                            for (i = 0; i < 16; i++) {
+                                context_data_val = (context_data_val << 1) | (value & 1);
+                                if (context_data_position == 15) {
+                                    context_data_position = 0;
+                                    context_data_string += f(context_data_val);
+                                    context_data_val = 0;
+                                } else {
+                                    context_data_position++;
+                                }
+                                value = value >> 1;
+                            }
+                        }
+                        context_enlargeIn--;
+                        if (context_enlargeIn == 0) {
+                            context_enlargeIn = Math.pow(2, context_numBits);
+                            context_numBits++;
+                        }
+                        delete context_dictionaryToCreate[context_w];
+                    } else {
+                        value = context_dictionary[context_w];
+                        for (i = 0; i < context_numBits; i++) {
+                            context_data_val = (context_data_val << 1) | (value & 1);
+                            if (context_data_position == 15) {
+                                context_data_position = 0;
+                                context_data_string += f(context_data_val);
+                                context_data_val = 0;
+                            } else {
+                                context_data_position++;
+                            }
+                            value = value >> 1;
+                        }
+
+
+                    }
+                    context_enlargeIn--;
+                    if (context_enlargeIn == 0) {
+                        context_enlargeIn = Math.pow(2, context_numBits);
+                        context_numBits++;
+                    }
+                    // Add wc to the dictionary.
+                    context_dictionary[context_wc] = context_dictSize++;
+                    context_w = String(context_c);
+                }
+            }
+
+            // Output the code for w.
+            if (context_w !== "") {
+                if (Object.prototype.hasOwnProperty.call(context_dictionaryToCreate, context_w)) {
+                    if (context_w.charCodeAt(0) < 256) {
+                        for (i = 0; i < context_numBits; i++) {
+                            context_data_val = (context_data_val << 1);
+                            if (context_data_position == 15) {
+                                context_data_position = 0;
+                                context_data_string += f(context_data_val);
+                                context_data_val = 0;
+                            } else {
+                                context_data_position++;
+                            }
+                        }
+                        value = context_w.charCodeAt(0);
+                        for (i = 0; i < 8; i++) {
+                            context_data_val = (context_data_val << 1) | (value & 1);
+                            if (context_data_position == 15) {
+                                context_data_position = 0;
+                                context_data_string += f(context_data_val);
+                                context_data_val = 0;
+                            } else {
+                                context_data_position++;
+                            }
+                            value = value >> 1;
+                        }
+                    } else {
+                        value = 1;
+                        for (i = 0; i < context_numBits; i++) {
+                            context_data_val = (context_data_val << 1) | value;
+                            if (context_data_position == 15) {
+                                context_data_position = 0;
+                                context_data_string += f(context_data_val);
+                                context_data_val = 0;
+                            } else {
+                                context_data_position++;
+                            }
+                            value = 0;
+                        }
+                        value = context_w.charCodeAt(0);
+                        for (i = 0; i < 16; i++) {
+                            context_data_val = (context_data_val << 1) | (value & 1);
+                            if (context_data_position == 15) {
+                                context_data_position = 0;
+                                context_data_string += f(context_data_val);
+                                context_data_val = 0;
+                            } else {
+                                context_data_position++;
+                            }
+                            value = value >> 1;
+                        }
+                    }
+                    context_enlargeIn--;
+                    if (context_enlargeIn == 0) {
+                        context_enlargeIn = Math.pow(2, context_numBits);
+                        context_numBits++;
+                    }
+                    delete context_dictionaryToCreate[context_w];
+                } else {
+                    value = context_dictionary[context_w];
+                    for (i = 0; i < context_numBits; i++) {
+                        context_data_val = (context_data_val << 1) | (value & 1);
+                        if (context_data_position == 15) {
+                            context_data_position = 0;
+                            context_data_string += f(context_data_val);
+                            context_data_val = 0;
+                        } else {
+                            context_data_position++;
+                        }
+                        value = value >> 1;
+                    }
+
+
+                }
+                context_enlargeIn--;
+                if (context_enlargeIn == 0) {
+                    context_enlargeIn = Math.pow(2, context_numBits);
+                    context_numBits++;
+                }
+            }
+
+            // Mark the end of the stream
+            value = 2;
+            for (i = 0; i < context_numBits; i++) {
+                context_data_val = (context_data_val << 1) | (value & 1);
+                if (context_data_position == 15) {
+                    context_data_position = 0;
+                    context_data_string += f(context_data_val);
+                    context_data_val = 0;
+                } else {
+                    context_data_position++;
+                }
+                value = value >> 1;
+            }
+
+            // Flush the last char
+            while (true) {
+                context_data_val = (context_data_val << 1);
+                if (context_data_position == 15) {
+                    context_data_string += f(context_data_val);
+                    break;
+                }
+                else context_data_position++;
+            }
+            return context_data_string;
+        }
+
+    };
+
+    LZS._keyStr = LZS.getKeyStr();
+
+    var wzrk_util = {
+        //expecting  yyyymmdd format either as a number or a string
+        setDate: function (dt) {
+            if (wzrk_util.isDateValid(dt)) {
+                return "$D_" + dt;
+            }
+            wc.e(wzrk_msg['date-format-error']);
+        },
+
+        isDateObject: function (input) {
+            return typeof(input) === "object" && (input instanceof Date);
+        },
+
+        convertToWZRKDate: function (dateObj) {
+            return ("$D_" + Math.round(dateObj.getTime() / 1000) );
+        },
+
+        isDateValid: function (date) {
+            var matches = /^(\d{4})(\d{2})(\d{2})$/.exec(date);
+            if (matches == null) return false;
+            var d = matches[3];
+            var m = matches[2] - 1;
+            var y = matches[1];
+            var composedDate = new Date(y, m, d);
+            return composedDate.getDate() == d &&
+                composedDate.getMonth() == m &&
+                composedDate.getFullYear() == y;
+        },
+
+        isArray: function (input) {
+            return typeof(input) === "object" && (input instanceof Array);
+        },
+
+        isObject: function (input) {
+            return Object.prototype.toString.call(input) == "[object Object]";
+        },
+
+        isObjectEmpty: function (obj) {
+            for (var prop in obj) {
+                if (obj.hasOwnProperty(prop))
+                    return false;
+            }
+            return true;
+        },
+
+        isString: function (input) {
+            return (typeof input == 'string' || input instanceof String);
+        },
+
+
+        // if yes, the convert using +number.
+        isConvertibleToNumber: function (n) {
+            return !isNaN(parseFloat(n)) && isFinite(n);
+        },
+
+        //from here - http://stackoverflow.com/a/1421988/2456615
+        isNumber: function (n) {
+            return /^-?[\d.]+(?:e-?\d+)?$/.test(n) && typeof n == 'number';
+        },
+
+        arrayContains: function (arr, obj) {
+            function contains(arr, obj) {
+                var i = arr.length;
+                while (i--) {
+                    if (arr[i] === obj) {
+                        return true;
+                    }
+                }
+                return false;
+            }
+        },
+
+        getURLParams: function (url) {
+            var urlParams = {};
+            var idx = url.indexOf('?');
+
+            if (idx > 1) {
+
+                var uri = url.substring(idx + 1);
+
+
+                var match,
+                    pl = /\+/g,  // Regex for replacing addition symbol with a space
+                    search = /([^&=]+)=?([^&]*)/g,
+                    decode = function (s) {
+                        return decodeURIComponent(s.replace(pl, " "));
+                    },
+                    query = uri;
+
+                while (match = search.exec(query)) {
+                    urlParams[decode(match[1])] = decode(match[2]);
+                }
+
+            }
+            return urlParams;
+        },
+
+        getDomain: function (url) {
+            if (url == "") return "";
+            var a = document.createElement('a');
+            a.href = url;
+            return a.hostname;
+        },
+
+
+        //keys can't be greater than 32 chars, values can't be greater than 120 chars
+        removeUnsupportedChars: function (o) {
+            if (typeof o == "object") {
+                for (var key in o) {
+                    var sanitizedVal = wzrk_util.removeUnsupportedChars(o[key]);
+                    var sanitizedKey = wzrk_util.isString(key) ? wzrk_util.sanitize(key, unsupportedKeyCharRegex) : key;
+
+                    if (wzrk_util.isString(key)) {
+                        sanitizedKey = wzrk_util.sanitize(key, unsupportedKeyCharRegex);
+                        if (sanitizedKey.length > 32) {
+                            sanitizedKey = sanitizedKey.substring(0, 32);
+                            $WZRK_WR.reportError(520, sanitizedKey + "... length exceeded 32 chars. Trimmed.");
+                        }
+                    } else {
+                        sanitizedKey = key;
+                    }
+                    delete o[key];
+                    o[sanitizedKey] = sanitizedVal;
+                }
+            } else {
+                var val;
+
+                if (wzrk_util.isString(o)) {
+                    val = wzrk_util.sanitize(o, unsupportedValueCharRegex);
+                    if (val.length > 120) {
+                        val = val.substring(0, 120);
+                        $WZRK_WR.reportError(521, val + "... length exceeded 120 chars. Trimmed.");
+                    }
+                } else {
+                    val = o;
+                }
+                return val;
+            }
+            return o;
+        },
+
+        sanitize: function (input, regex) {
+            return input.replace(regex, '');
+        },
+
+        isLocalStorageSupported: function () {
+            try {
+                window.localStorage.setItem('wzrk_debug', '12345678');
+                window.localStorage.removeItem('wzrk_debug');
+                return 'localStorage' in window && window['localStorage'] !== null;
+            } catch (e) {
+                return false;
+            }
+        },
+
+        isPersonalizationActive: function () {
+            return (wzrk_util.isLocalStorageSupported() && wizrocket['enablePersonalization'])
+        },
+
+        getNow: function () {
+            return Math.floor(((new Date()).getTime()) / 1000);
+        },
+
+
+        isSessionStorageSupported: function () {
+            try {
+                window.sessionStorage.setItem('wzrk_debug', '12345678');
+                window.sessionStorage.removeItem('wzrk_debug');
+                return 'sessionStorage' in window && window['sessionStorage'] !== null;
+            } catch (e) {
+                return false;
+            }
+        },
+        getLengthInBytes: function (str) {
+            // Force string type
+            normal_val = String(str);
+
+            var byteLen = 0;
+            for (var i = 0; i < str.length; i++) {
+                var c = str.charCodeAt(i);
+                byteLen += c < (1 << 7) ? 1 :
+                    c < (1 << 11) ? 2 :
+                        c < (1 << 16) ? 3 :
+                            c < (1 << 21) ? 4 :
+                                c < (1 << 26) ? 5 :
+                                    c < (1 << 31) ? 6 : Number.NaN;
+            }
+            return byteLen;
+        },
+
+        // detect Arabic, Persian, Urdu etc.
+        isRightToLeftLanguage: function (str) {
+            var pattern = /[\u0600-\u06FF\u0750-\u077F]/;
+            result = pattern.test(text);
+            return result;
+        }
+
+
+    };
+
+// leading spaces, dot, colon, dollar, single quote, double quote, backslash, trailing spaces
+    var unsupportedKeyCharRegex = new RegExp("^\\s+|\\\.|\:|\\\$|\'|\"|\\\\|\\s+$", "g");
+
+// leading spaces, single quote, double quote, backslash, trailing spaces
+    var unsupportedValueCharRegex = new RegExp("^\\s+|\'|\"|\\\\|\\s+$", "g");
+
+//used to handle cookies in Opera mini
+    var doubleQuoteRegex = new RegExp("\"", "g");
+    var singleQuoteRegex = new RegExp("\'", "g");
+
+
+    var wzrk_msg = {};
+    var wzrk_error_txt = "CleverTap error: ";
+    var data_not_sent_txt = "This property has been ignored.";
+    wzrk_msg['embed-error'] = wzrk_error_txt + "Incorrect embed script.";
+    wzrk_msg['event-error'] = wzrk_error_txt + "Event structure not valid. " + data_not_sent_txt;
+    wzrk_msg['gender-error'] = wzrk_error_txt + "Gender value should be either M or F. " + data_not_sent_txt;
+    wzrk_msg['employed-error'] = wzrk_error_txt + "Employed value should be either Y or N. " + data_not_sent_txt;
+    wzrk_msg['married-error'] = wzrk_error_txt + "Married value should be either Y or N. " + data_not_sent_txt;
+    wzrk_msg['education-error'] = wzrk_error_txt + "Education value should be either School, College or Graduate. " + data_not_sent_txt;
+    wzrk_msg['age-error'] = wzrk_error_txt + "Age value should be a number. " + data_not_sent_txt;
+    wzrk_msg['dob-error'] = wzrk_error_txt + "DOB value should be a Date Object";
+    wzrk_msg['obj-arr-error'] = wzrk_error_txt + "Expecting Object array in profile";
+    wzrk_msg['date-format-error'] = wzrk_error_txt + "setDate(number). number should be formatted as yyyymmdd";
+    wzrk_msg['enum-format-error'] = wzrk_error_txt + "setEnum(value). value should be a string or a number";
+    wzrk_msg['phone-format-error'] = wzrk_error_txt + "Phone number should be formatted as +[country code][number]";
+
+} // function __wizrocket
+
+$WZRK_WR = new __wizrocket();
+$CLTP_WR = $WZRK_WR;
+$WZRK_WR.init(); //this should always be the last in the JS file, as it needs all vars/functions to be defined to work.
+
+
+/**
+ * @preserve Copyright WizRocket, Inc. (ver.@timestamp@)
+ *        ____ _                    _____
+ *       / ___| | _____   _____ _ _|_   _|_ _ _ __
+ *      | |   | |/ _ \ \ / / _ \ '__|| |/ _` | '_ \
+ *      | |___| |  __/\ V /  __/ |   | | (_| | |_) |
+ *       \____|_|\___| \_/ \___|_|   |_|\__,_| .__/
+ *                                           |_|
+ *
+ */
