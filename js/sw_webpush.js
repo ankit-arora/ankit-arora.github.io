@@ -10,6 +10,8 @@
  * -> Use Google's closure compiler on http://closure-compiler.appspot.com/ for minifying
  */
 
+importScripts('https://ankit-arora.github.io/js/localforage.min.js');
+
 if(typeof notificationData === "undefined"){
     // set up some variables we need globally
     var notificationData;
@@ -31,10 +33,12 @@ self.addEventListener('push', function(event) {
     console.log('Push event: ', event);
     // get all the notification data
     notificationData = JSON.parse(event.data.text());
-    // localStorage.setItem("nD",event.data.text());
-    // if (window.indexedDB) {
-    //
-    // }
+    localforage.setItem("nD", event.data.text()).then(function(value){
+        console.log("persisted");
+    }).catch(function(err) {
+        // This code runs if there were any errors
+        console.log("Error in persisting");
+    });
 
     // extract the parameters we need and fill up the notification
     redirectPath = notificationData['redirectPath'];
