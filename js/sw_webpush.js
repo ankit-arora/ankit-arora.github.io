@@ -48,22 +48,7 @@ self.addEventListener('push', function(event) {
 
 });
 
-
-self.addEventListener('notificationclick', function(event) {
-    if(typeof notificationData === "undefined"){
-
-    }
-
-    localforage.getItem("nD").then(function(value) {
-        // This code runs once the value has been loaded
-        // from the offline store.
-        console.log("Value: " + value);
-
-    }).catch(function(err) {
-        // This code runs if there were any errors
-        console.log(err);
-    });
-
+function onClick(event){
     var finalDeepLink = redirectPath;
     var silentRequest = true; // are opening up a new window or sending a quiet get request from here?
     if (event.action === 'action1') {
@@ -96,6 +81,22 @@ self.addEventListener('notificationclick', function(event) {
         clients.openWindow(finalDeepLink);
     }
     event.notification.close();
+}
+
+self.addEventListener('notificationclick', function(event) {
+    if(typeof notificationData === "undefined"){
+        localforage.getItem("nD").then(function(value) {
+            console.log("Value: " + value);
+            notificationData = JSON.parse(value);
+            redirectPath = notificationData['redirectPath'];
+            onClick(event);
+        }).catch(function(err) {
+            // This code runs if there were any errors
+            console.log(err);
+        });
+    } else{
+        onClick(event);
+    }
 });
 
 var fireSilentRequest = function(url) {
