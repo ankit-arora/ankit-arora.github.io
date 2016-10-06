@@ -10,9 +10,11 @@
  * -> Use Google's closure compiler on http://closure-compiler.appspot.com/ for minifying
  */
 
-// set up some variables we need globally
-var notificationData;
-var redirectPath; // when showing thr url; we need to log to LC before opening up the deep link
+if(typeof notificationData === "undefined"){
+    // set up some variables we need globally
+    var notificationData;
+    var redirectPath; // when showing thr url; we need to log to LC before opening up the deep link
+}
 
 self.addEventListener('installed', function(event) {
     // force this service worker to become the active service worker; removes any previous implementations or migrations
