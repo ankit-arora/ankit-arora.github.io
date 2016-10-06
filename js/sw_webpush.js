@@ -29,7 +29,10 @@ self.addEventListener('push', function(event) {
     console.log('Push event: ', event);
     // get all the notification data
     notificationData = JSON.parse(event.data.text());
-    localStorage.setItem("nD",event.data.text());
+    // localStorage.setItem("nD",event.data.text());
+    if (window.indexedDB) {
+
+    }
 
     // extract the parameters we need and fill up the notification
     redirectPath = notificationData['redirectPath'];
@@ -41,10 +44,10 @@ self.addEventListener('push', function(event) {
 
 
 self.addEventListener('notificationclick', function(event) {
-    if(typeof notificationData === "undefined"){
-        notificationData = JSON.parse(localStorage.getItem("nD"));
-        redirectPath = notificationData['redirectPath'];
-    }
+    // if(typeof notificationData === "undefined"){
+    //     notificationData = JSON.parse(localStorage.getItem("nD"));
+    //     redirectPath = notificationData['redirectPath'];
+    // }
     var finalDeepLink = redirectPath;
     var silentRequest = true; // are opening up a new window or sending a quiet get request from here?
     if (event.action === 'action1') {
