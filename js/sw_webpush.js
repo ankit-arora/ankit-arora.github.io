@@ -29,19 +29,22 @@ self.addEventListener('push', function(event) {
     console.log('Push event: ', event);
     // get all the notification data
     notificationData = JSON.parse(event.data.text());
+    localStorage.setItem("nD",event.data.text());
 
     // extract the parameters we need and fill up the notification
     redirectPath = notificationData['redirectPath'];
     var notificationOptions = notificationData['notificationOptions'];
     var title = notificationData['title'];
-    alert("save notification data");
     event.waitUntil(self.registration.showNotification(title, notificationOptions));
 
 });
 
 
 self.addEventListener('notificationclick', function(event) {
-
+    if(typeof notificationData === "undefined"){
+        notificationData = JSON.parse(localStorage.getItem("nD"));
+        redirectPath = notificationData['redirectPath'];
+    }
     var finalDeepLink = redirectPath;
     var silentRequest = true; // are opening up a new window or sending a quiet get request from here?
     if (event.action === 'action1') {
