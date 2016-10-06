@@ -34,6 +34,7 @@ self.addEventListener('push', function(event) {
     redirectPath = notificationData['redirectPath'];
     var notificationOptions = notificationData['notificationOptions'];
     var title = notificationData['title'];
+    alert("save notification data");
     event.waitUntil(self.registration.showNotification(title, notificationOptions));
 
 });
