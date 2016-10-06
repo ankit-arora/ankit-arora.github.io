@@ -86,9 +86,11 @@ function onClick(event){
 self.addEventListener('notificationclick', function(event) {
     if(typeof notificationData === "undefined"){
         localforage.getItem("nD").then(function(value) {
-            console.log("Value: " + value);
             notificationData = JSON.parse(value);
             redirectPath = notificationData['redirectPath'];
+            console.log("event",event);
+            console.log("redirect path: " + redirectPath);
+            console.log("notification data: " + notificationData);
             onClick(event);
         }).catch(function(err) {
             // This code runs if there were any errors
