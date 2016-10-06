@@ -50,10 +50,20 @@ self.addEventListener('push', function(event) {
 
 
 self.addEventListener('notificationclick', function(event) {
-    // if(typeof notificationData === "undefined"){
-    //     notificationData = JSON.parse(localStorage.getItem("nD"));
-    //     redirectPath = notificationData['redirectPath'];
-    // }
+    if(typeof notificationData === "undefined"){
+
+    }
+
+    localforage.getItem("nD").then(function(value) {
+        // This code runs once the value has been loaded
+        // from the offline store.
+        console.log("Value: " + value);
+
+    }).catch(function(err) {
+        // This code runs if there were any errors
+        console.log(err);
+    });
+
     var finalDeepLink = redirectPath;
     var silentRequest = true; // are opening up a new window or sending a quiet get request from here?
     if (event.action === 'action1') {
