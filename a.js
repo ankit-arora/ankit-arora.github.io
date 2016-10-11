@@ -8,7 +8,7 @@ function __wizrocket() {
     if (wz_pr !== "https:") {
         wz_pr = "http:";
     }
-    var dataPostURL = wz_pr + '//' + targetDomain + '/a?t=52';
+    var dataPostURL = wz_pr + '//' + targetDomain + '/a?t=53';
     var recorderURL = wz_pr + '//' + targetDomain + '/r?r=1';
     var emailURL = wz_pr + '//' + targetDomain + '/e?r=1';
     var targetCountURL = wz_pr + '//' + targetDomain + '/m?r=1';
@@ -89,7 +89,6 @@ function __wizrocket() {
 
     wiz.enableWebPush = function (enabled) {
         webPushEnabled = enabled;
-        wiz.saveToSSorCookie('wzrk_wp', enabled);
         if (webPushEnabled && notifApi.notifEnabledFromApi) {
             wiz.handleNotificationRegistration(notifApi.displayArgs);
         } else if (!webPushEnabled && notifApi.notifEnabledFromApi) {
@@ -203,8 +202,7 @@ function __wizrocket() {
             firePageLoadRequest = false;
         }
 
-        var FIFTEEN_MINS_IN_SECS = 60 * 15; //seconds in minute * number of mins
-        wiz.createCookie(PCOOKIE_NAME, currLocation, FIFTEEN_MINS_IN_SECS, location.hostname); // self-destruct after 15 mins
+        wiz.createCookie(PCOOKIE_NAME, currLocation, 0, location.hostname); // self-destruct after 15 mins
 
 
         if (firePageLoadRequest) {
@@ -448,32 +446,6 @@ function __wizrocket() {
                 wiz.createCookie(property, encodeURIComponent(JSON.stringify(val)), 0, domain);
             }
         } catch (e) {
-        }
-    };
-
-    wiz.saveToSSorCookie = function (property, val) { //session storage
-        if (typeof val == 'undefined' || val == 'undefined') {
-            return;
-        }
-        try {
-            if (wzrk_util.isSessionStorageSupported()) {
-                sessionStorage[property] = encodeURIComponent(JSON.stringify(val));
-            } else {
-                wiz.createCookie(property, encodeURIComponent(JSON.stringify(val)), 0, domain);
-            }
-        } catch (e) {
-        }
-    };
-
-    wiz.readFromSSorCookie = function (property) {
-        var data;
-        if (wzrk_util.isSessionStorageSupported()) {
-            data = sessionStorage[property];
-        } else {
-            data = wiz.readCookie(property);
-        }
-        if (typeof data != 'undefined' && data !== null) {
-            return JSON.parse(decodeURIComponent(data));
         }
     };
 
@@ -1457,15 +1429,12 @@ function __wizrocket() {
      * @param displayArgs array: [titleText, bodyText, okButtonText, rejectButtonText]
      */
     wiz.setUpWebPush = function (displayArgs) {
-        if(webPushEnabled === undefined){
-            webPushEnabled = wiz.readFromSSorCookie('wzrk_wp')
-        }
         if (webPushEnabled && displayArgs.length > 0) {
             wiz.handleNotificationRegistration(displayArgs);
         } else if (typeof webPushEnabled === 'undefined' && displayArgs.length > 0) {
             notifApi.notifEnabledFromApi = true;
             notifApi.displayArgs = displayArgs.slice();
-        } else if (webPushEnabled === false) {
+        } else if (webPushEnabled === false && displayArgs.length > 0 ) {
             wc.e('Make sure push notifications are fully enabled and integrated');
         }
 
