@@ -9,20 +9,37 @@
         clevertap.event.push("testevent",{"testProperty":"property1"});
     </script>
 
+    <script src="https://www.gstatic.com/firebasejs/3.4.1/firebase.js"></script>
+    <script>
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyBB9Y1M5nmHeeevpy6bBHplQ-Bnb0rvafw",
+            authDomain: "ankit-website.firebaseapp.com",
+            databaseURL: "https://ankit-website.firebaseio.com",
+            storageBucket: "",
+            messagingSenderId: "33851337940"
+        };
+        firebase.initializeApp(config);
+    </script>
+
+    <!--<link rel="manifest" href="/manifest.json">-->
+
 </head>
 <body>
 test server
 <script type="text/javascript">
-//    (function () {
-//        var wzrk = document.createElement('script');
-//        wzrk.type = 'text/javascript';
-//        wzrk.async = true;
-//        wzrk.src = ('https:' == document.location.protocol ? 'https://d2r1yp2w7bby2u.cloudfront.net' : 'http://static.clevertap.com') + '/js/a.js?v=0';
-////            wzrk.src = '/a.js?v=0';
-//        var s = document.getElementsByTagName('script')[0];
-//        s.parentNode.insertBefore(wzrk, s);
-//    })();
+    (function () {
+        var wzrk = document.createElement('script');
+        wzrk.type = 'text/javascript';
+        wzrk.async = true;
+        wzrk.src = ('https:' == document.location.protocol ? 'https://d2r1yp2w7bby2u.cloudfront.net' : 'http://static.clevertap.com') + '/js/a.js?v=0';
+//            wzrk.src = '/a.js?v=0';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(wzrk, s);
+    })();
+
+
 </script>
-<iframe style="display: none" src="https://ankit-arora.github.io/iframe.html"></iframe>
+<!--<iframe style="display: none" src="https://ankit-arora.github.io/iframe.html"></iframe>-->
 </body>
 </html>
