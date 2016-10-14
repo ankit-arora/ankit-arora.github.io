@@ -1,1 +1,1 @@
-importScripts('https://d2r1yp2w7bby2u.cloudfront.net/js/sw_webpush.js');
+importScripts('https://s3-eu-west-1.amazonaws.com/static.wizrocket.com/js/sw_webpush.js');
