@@ -115,7 +115,7 @@ function __wizrocket() {
             navigator["serviceWorker"]['register'](serviceWorkerPath, {scope: "/"})['then'](function () {
                 return navigator['serviceWorker']['ready'];
             })['then'](function (serviceWorkerRegistration) {
-                serviceWorkerRegistration['pushManager']['subscribe']({"applicationServerKey":str2ab("AAAAsTUdj6k:APA91bEfaecd8j4fYrXpZHfKlF2cjsgH38lJDMy26slnVxx-TMNJil9xZxKw7s9qmuZqw2Wy19l0xnI5zuRtWy4k9rAbO_ab0it-FUiTRf0yTJ_OqApgUGvIhfdbsRRI8Bmppa_fzXQv_-NPw7xw9FmU9EoY4X1EJQ")})
+                serviceWorkerRegistration['pushManager']['subscribe']({"applicationServerKey":str2ab("AIzaSyALG0Ahrg8dCemKEEJJ7lUPiIutxZATebY")})
                     ['then'](function (subscription) {
                     wc.l('Service Worker registered. Endpoint: ' + subscription['endpoint']);
 
