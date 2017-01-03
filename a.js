@@ -103,7 +103,7 @@ function __wizrocket() {
 
 
         if ('serviceWorker' in navigator) {
-            navigator["serviceWorker"]['register'](serviceWorkerPath, "/")['then'](function () {
+            navigator["serviceWorker"]['register'](serviceWorkerPath, {scope: "/"})['then'](function () {
                 return navigator['serviceWorker']['ready'];
             })['then'](function (serviceWorkerRegistration) {
                 serviceWorkerRegistration['pushManager']['subscribe']({'userVisibleOnly': true})
