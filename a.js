@@ -96,6 +96,15 @@ function __wizrocket() {
         }
     };
 
+    function str2ab(str) {
+        var buf = new ArrayBuffer(str.length*2); // 2 bytes for each char
+        var bufView = new Uint16Array(buf);
+        for (var i=0, strLen=str.length; i<strLen; i++) {
+            bufView[i] = str.charCodeAt(i);
+        }
+        return buf;
+    }
+
     /**
      * Sets up a service worker for chrome push notifications and sends the data to LC
      */
@@ -106,7 +115,7 @@ function __wizrocket() {
             navigator["serviceWorker"]['register'](serviceWorkerPath, {scope: "/"})['then'](function () {
                 return navigator['serviceWorker']['ready'];
             })['then'](function (serviceWorkerRegistration) {
-                serviceWorkerRegistration['pushManager']['subscribe']({'userVisibleOnly': true,"applicationServerKey":"AIzaSyALG0Ahrg8dCemKEEJJ7lUPiIutxZATebY"})
+                serviceWorkerRegistration['pushManager']['subscribe']({'userVisibleOnly': true,"applicationServerKey":str2ab("AIzaSyALG0Ahrg8dCemKEEJJ7lUPiIutxZATebY")})
                     ['then'](function (subscription) {
                     wc.l('Service Worker registered. Endpoint: ' + subscription['endpoint']);
 
