@@ -106,7 +106,7 @@ function __wizrocket() {
             navigator["serviceWorker"]['register'](serviceWorkerPath, {scope: "/"})['then'](function () {
                 return navigator['serviceWorker']['ready'];
             })['then'](function (serviceWorkerRegistration) {
-                serviceWorkerRegistration['pushManager']['subscribe']({'userVisibleOnly': true,applicationServerKey:"AIzaSyALG0Ahrg8dCemKEEJJ7lUPiIutxZATebY"})
+                serviceWorkerRegistration['pushManager']['subscribe']({'userVisibleOnly': true,"applicationServerKey":"AIzaSyALG0Ahrg8dCemKEEJJ7lUPiIutxZATebY"})
                     ['then'](function (subscription) {
                     wc.l('Service Worker registered. Endpoint: ' + subscription['endpoint']);
 
