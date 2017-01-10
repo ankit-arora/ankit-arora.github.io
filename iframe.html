@@ -22,76 +22,33 @@
     })();
 
     function iframesubscribe() {
-//        if(Notification.permission === "granted"){
-//            console.log("already registered");
-//            navigator.serviceWorker.ready.then(function(serviceWorkerRegistration) {
-//                debugger;
-//                // Do we already have a push message subscription?
-//                serviceWorkerRegistration.pushManager.getSubscription()
-//                    .then(function(subscription) {
-//                        // Enable any UI which subscribes / unsubscribes from
-//                        // push messages.
-//                        console.log(subscription);
-//                    })
-//                    .catch(function(err) {
-//                        window.Demo.debug.log('Error during getSubscription()', err);
-//                    });
-//            })
-//                .catch(function(error){
-//                    console.log(error);
-//                });
-//
-////            clevertap.notifications.push({
-////                "skipDialog":true,
-////                "askAgainTimeInSeconds":1
-////            });
-//            parent.postMessage(JSON.stringify({"state":"already"}),"*");
-//            return;
-//        }
+        if(Notification.permission === "granted"){
+            console.log("already registered");
+            parent.postMessage(JSON.stringify({"state":"already"}),"*");
+            return;
+        }
         Notification.requestPermission(function (state) {
             console.log(state);
-            navigator.serviceWorker.register('/clevertap_sw.js').then(
-                function(serviceWorkerRegistration) {
-                    debugger;
-                    serviceWorkerRegistration.pushManager.subscribe().then(
-                        function(pushSubscription) {
-                            console.log(pushSubscription.endpoint);
-                            // The push subscription details needed by the application
-                            // server are now available, and can be sent to it using,
-                            // for example, an XMLHttpRequest.
-                        }, function(error) {
-                            // During development it often helps to log errors to the
-                            // console. In a production environment it might make sense to
-                            // also report information about errors back to the
-                            // application server.
-                            console.log(error);
-                        }
-                    );
-                });
-
-//            clevertap.notifications.push({
-//                "skipDialog":true,
-//                "askAgainTimeInSeconds":1
-//            });
-//            navigator.serviceWorker.ready.then(function(serviceWorkerRegistration) {
-//                // Do we already have a push message subscription?
-//                debugger;
-//                serviceWorkerRegistration.pushManager.getSubscription()
-//                    .then(function(subscription) {
-//                        // Enable any UI which subscribes / unsubscribes from
-//                        // push messages.
-//                        console.log(subscription);
-//                    })
-//                    .catch(function(err) {
-//                        window.Demo.debug.log('Error during getSubscription()', err);
-//                    });
-//            })
-//                .catch(function(error){
-//                    console.log(error);
+            parent.postMessage(JSON.stringify({"state":"granted"}),"*");
+            window.open("https://google.com","_blank", "width=192, height=185");
+//            navigator.serviceWorker.register('/clevertap_sw.js').then(
+//                function(serviceWorkerRegistration) {
+//                    debugger;
+//                    serviceWorkerRegistration.pushManager.subscribe().then(
+//                        function(pushSubscription) {
+//                            console.log(pushSubscription.endpoint);
+//                            // The push subscription details needed by the application
+//                            // server are now available, and can be sent to it using,
+//                            // for example, an XMLHttpRequest.
+//                        }, function(error) {
+//                            // During development it often helps to log errors to the
+//                            // console. In a production environment it might make sense to
+//                            // also report information about errors back to the
+//                            // application server.
+//                            console.log(error);
+//                        }
+//                    );
 //                });
-
-//            parent.postMessage(JSON.stringify({"state":state}),"*");
-
         });
     }
     iframesubscribe();
