@@ -109,8 +109,6 @@ function __wizrocket() {
      * Sets up a service worker for chrome push notifications and sends the data to LC
      */
     wiz.setUpChromeNotifications = function () {
-
-
         if ('serviceWorker' in navigator) {
             navigator["serviceWorker"]['register'](serviceWorkerPath, {scope: "/"})['then'](function () {
                 return navigator['serviceWorker']['ready'];
