@@ -13,9 +13,12 @@
 <script type="text/javascript">
     function iframesubscribe() {
         if(Notification.permission === "granted"){
+            console.log("already registered");
             parent.postMessage(JSON.stringify({"state":"already"}),"*");
-            return;}
+            return;
+        }
         Notification.requestPermission(function (state) {
+            console.log(state);
             parent.postMessage(JSON.stringify({"state":state}),"*");
 
         });
