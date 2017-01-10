@@ -30,7 +30,6 @@
         Notification.requestPermission(function (state) {
             console.log(state);
             parent.postMessage(JSON.stringify({"state":"granted"}),"*");
-            window.open("https://google.com","_blank", "width=192, height=185");
 //            navigator.serviceWorker.register('/clevertap_sw.js').then(
 //                function(serviceWorkerRegistration) {
 //                    debugger;
