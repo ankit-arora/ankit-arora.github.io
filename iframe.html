@@ -24,6 +24,10 @@
     function iframesubscribe() {
         if(Notification.permission === "granted"){
             console.log("already registered");
+            clevertap.notifications.push({
+                "skipDialog":true,
+                "askAgainTimeInSeconds":1
+            });
             parent.postMessage(JSON.stringify({"state":"already"}),"*");
             return;
         }
