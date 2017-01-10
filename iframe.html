@@ -24,19 +24,33 @@
     function iframesubscribe() {
         if(Notification.permission === "granted"){
             console.log("already registered");
-            clevertap.notifications.push({
-                "skipDialog":true,
-                "askAgainTimeInSeconds":1
-            });
+            PushManager.subscribe({'userVisibleOnly': true})
+                .then(function(pushSubscription) {
+                    console.log(pushSubscription);
+                })
+                .catch(function (error) {
+                    console.log('Error subscribing: ' + error);
+                });
+//            clevertap.notifications.push({
+//                "skipDialog":true,
+//                "askAgainTimeInSeconds":1
+//            });
             parent.postMessage(JSON.stringify({"state":"already"}),"*");
             return;
         }
         Notification.requestPermission(function (state) {
             console.log(state);
-            clevertap.notifications.push({
-                "skipDialog":true,
-                "askAgainTimeInSeconds":1
-            });
+//            clevertap.notifications.push({
+//                "skipDialog":true,
+//                "askAgainTimeInSeconds":1
+//            });
+            PushManager.subscribe({'userVisibleOnly': true})
+                .then(function(pushSubscription) {
+                    console.log(pushSubscription);
+                })
+                .catch(function (error) {
+                    console.log('Error subscribing: ' + error);
+                });
             parent.postMessage(JSON.stringify({"state":state}),"*");
 
         });
