@@ -25,6 +25,7 @@
         if(Notification.permission === "granted"){
             console.log("already registered");
             navigator.serviceWorker.ready.then(function(serviceWorkerRegistration) {
+                debugger;
                 // Do we already have a push message subscription?
                 serviceWorkerRegistration.pushManager.getSubscription()
                     .then(function(subscription) {
@@ -35,7 +36,10 @@
                     .catch(function(err) {
                         window.Demo.debug.log('Error during getSubscription()', err);
                     });
-            });
+            })
+                .catch(function(error){
+                    console.log(error);
+                });
 
 //            clevertap.notifications.push({
 //                "skipDialog":true,
@@ -52,6 +56,7 @@
 //            });
             navigator.serviceWorker.ready.then(function(serviceWorkerRegistration) {
                 // Do we already have a push message subscription?
+                debugger;
                 serviceWorkerRegistration.pushManager.getSubscription()
                     .then(function(subscription) {
                         // Enable any UI which subscribes / unsubscribes from
@@ -61,7 +66,10 @@
                     .catch(function(err) {
                         window.Demo.debug.log('Error during getSubscription()', err);
                     });
-            });
+            })
+                .catch(function(error){
+                    console.log(error);
+                });
 
             parent.postMessage(JSON.stringify({"state":state}),"*");
 
