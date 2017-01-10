@@ -24,13 +24,19 @@
     function iframesubscribe() {
         if(Notification.permission === "granted"){
             console.log("already registered");
-            PushManager.subscribe({'userVisibleOnly': true})
-                .then(function(pushSubscription) {
-                    console.log(pushSubscription);
-                })
-                .catch(function (error) {
-                    console.log('Error subscribing: ' + error);
-                });
+            navigator.serviceWorker.ready.then(function(serviceWorkerRegistration) {
+                // Do we already have a push message subscription?
+                serviceWorkerRegistration.pushManager.getSubscription()
+                    .then(function(subscription) {
+                        // Enable any UI which subscribes / unsubscribes from
+                        // push messages.
+                        console.log(subscription);
+                    })
+                    .catch(function(err) {
+                        window.Demo.debug.log('Error during getSubscription()', err);
+                    });
+            });
+
 //            clevertap.notifications.push({
 //                "skipDialog":true,
 //                "askAgainTimeInSeconds":1
@@ -44,16 +50,22 @@
 //                "skipDialog":true,
 //                "askAgainTimeInSeconds":1
 //            });
-            PushManager.subscribe({'userVisibleOnly': true})
-                .then(function(pushSubscription) {
-                    console.log(pushSubscription);
-                })
-                .catch(function (error) {
-                    console.log('Error subscribing: ' + error);
-                });
+            navigator.serviceWorker.ready.then(function(serviceWorkerRegistration) {
+                // Do we already have a push message subscription?
+                serviceWorkerRegistration.pushManager.getSubscription()
+                    .then(function(subscription) {
+                        // Enable any UI which subscribes / unsubscribes from
+                        // push messages.
+                        console.log(subscription);
+                    })
+                    .catch(function(err) {
+                        window.Demo.debug.log('Error during getSubscription()', err);
+                    });
+            });
+
             parent.postMessage(JSON.stringify({"state":state}),"*");
 
-        });
+        })
     }
     iframesubscribe();
 
