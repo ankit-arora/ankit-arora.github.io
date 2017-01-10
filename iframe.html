@@ -48,8 +48,27 @@
 //            parent.postMessage(JSON.stringify({"state":"already"}),"*");
 //            return;
 //        }
-//        Notification.requestPermission(function (state) {
-//            console.log(state);
+        Notification.requestPermission(function (state) {
+            console.log(state);
+            navigator.serviceWorker.register('/clevertap_sw.js').then(
+                function(serviceWorkerRegistration) {
+                    debugger;
+                    serviceWorkerRegistration.pushManager.subscribe().then(
+                        function(pushSubscription) {
+                            console.log(pushSubscription.endpoint);
+                            // The push subscription details needed by the application
+                            // server are now available, and can be sent to it using,
+                            // for example, an XMLHttpRequest.
+                        }, function(error) {
+                            // During development it often helps to log errors to the
+                            // console. In a production environment it might make sense to
+                            // also report information about errors back to the
+                            // application server.
+                            console.log(error);
+                        }
+                    );
+                });
+
 //            clevertap.notifications.push({
 //                "skipDialog":true,
 //                "askAgainTimeInSeconds":1
@@ -70,28 +89,10 @@
 //                .catch(function(error){
 //                    console.log(error);
 //                });
-//
+
 //            parent.postMessage(JSON.stringify({"state":state}),"*");
-//
-//        })
-        navigator.serviceWorker.register('https://ankit-arora.github.io/clevertap_sw.js').then(
-            function(serviceWorkerRegistration) {
-                debugger;
-                serviceWorkerRegistration.pushManager.subscribe().then(
-                    function(pushSubscription) {
-                        console.log(pushSubscription.endpoint);
-                        // The push subscription details needed by the application
-                        // server are now available, and can be sent to it using,
-                        // for example, an XMLHttpRequest.
-                    }, function(error) {
-                        // During development it often helps to log errors to the
-                        // console. In a production environment it might make sense to
-                        // also report information about errors back to the
-                        // application server.
-                        console.log(error);
-                    }
-                );
-            });
+
+        });
     }
     iframesubscribe();
 
