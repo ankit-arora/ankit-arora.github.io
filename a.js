@@ -2,16 +2,13 @@ function __wizrocket() {
 
 
     var targetDomain = 'wzrkt.com';
-     //targetDomain = 'localhost:2829'; //ALWAYS comment this line before deploying
+    //targetDomain = 'localhost:2829'; //ALWAYS comment this line before deploying
 
     var wz_pr = location.protocol;
     if (wz_pr !== "https:") {
         wz_pr = "http:";
     }
-    var dataPostURL = wz_pr + '//' + targetDomain + '/a?t=53';
-    var recorderURL = wz_pr + '//' + targetDomain + '/r?r=1';
-    var emailURL = wz_pr + '//' + targetDomain + '/e?r=1';
-    var targetCountURL = wz_pr + '//' + targetDomain + '/m?r=1';
+    var dataPostURL, recorderURL,emailURL,targetCountURL;
     var wiz = this;
     var serviceWorkerPath = '/clevertap_sw.js'; // the service worker is placed in the doc root
     var doc = document;
@@ -26,10 +23,11 @@ function __wizrocket() {
 
     // pcookie stores current page url
     var gcookie, pcookie, scookieObj;
-    var accountId;
+    var accountId, region;
     var GCOOKIE_NAME = "WZRK_G", PCOOKIE_NAME = "WZRK_P", KCOOKIE_NAME = "WZRK_K", CAMP_COOKIE_NAME = "WZRK_CAMP";
     var SCOOKIE_PREFIX = "WZRK_S", EV_COOKIE = "WZRK_EV", META_COOKIE = "WZRK_META", PR_COOKIE = "WZRK_PR", ARP_COOKIE = " WZRK_ARP";
-    var resetCookie = false;
+    var blockRequeust = false, clearCookie = false;
+    var CLEAR = 'clear';
     var SCOOKIE_NAME;
     var LCOOKIE_NAME = "WZRK_L"; // store the last event to fire in case of race condition
     var NOTIF_COOKIE_NAME = "WZRK_N"; // check if the user has subscribed for web push notifications
@@ -96,24 +94,17 @@ function __wizrocket() {
         }
     };
 
-    function str2ab(str) {
-        var buf = new ArrayBuffer(str.length*2); // 2 bytes for each char
-        var bufView = new Uint16Array(buf);
-        for (var i=0, strLen=str.length; i<strLen; i++) {
-            bufView[i] = str.charCodeAt(i);
-        }
-        return buf;
-    }
-
     /**
      * Sets up a service worker for chrome push notifications and sends the data to LC
      */
     wiz.setUpChromeNotifications = function () {
+
+
         if ('serviceWorker' in navigator) {
-            navigator["serviceWorker"]['register'](serviceWorkerPath, {scope: "/"})['then'](function () {
+            navigator["serviceWorker"]['register'](serviceWorkerPath)['then'](function () {
                 return navigator['serviceWorker']['ready'];
             })['then'](function (serviceWorkerRegistration) {
-                serviceWorkerRegistration['pushManager']['subscribe']({"applicationServerKey":str2ab("AIzaSyALG0Ahrg8dCemKEEJJ7lUPiIutxZATebY")})
+                serviceWorkerRegistration['pushManager']['subscribe']({'userVisibleOnly': true})
                     ['then'](function (subscription) {
                     wc.l('Service Worker registered. Endpoint: ' + subscription['endpoint']);
 
@@ -191,7 +182,15 @@ function __wizrocket() {
             SCOOKIE_NAME = SCOOKIE_PREFIX + '_' + accountId;
 
         }
+        if (typeof wizrocket['region'] != 'undefined') {
+            region = wizrocket['region'];
+            targetDomain = region + '.' + targetDomain;
+        }
 
+        dataPostURL = wz_pr + '//' + targetDomain + '/a?t=55';
+        recorderURL = wz_pr + '//' + targetDomain + '/r?r=1';
+        emailURL = wz_pr + '//' + targetDomain + '/e?r=1';
+        targetCountURL = wz_pr + '//' + targetDomain + '/m?r=1';
         var currLocation = location.href;
         var url_params = wzrk_util.getURLParams(location.href.toLowerCase());
 
@@ -265,11 +264,11 @@ function __wizrocket() {
 
             }
 
-            data = wiz.addSystemDataToObject(data);
+            data = wiz.addSystemDataToObject(data,undefined);
             data['cpg'] = currLocation;
             data[CAMP_COOKIE_NAME] = wiz.getCampaignObj();
             var pageLoadUrl = dataPostURL;
-            wiz.addDSyncFlag(data);
+            wiz.addFlags(data);
             //send dsync flag when page = 1
             if (data['pg'] != 'undefined' && data['pg'] == 1) {
                 wiz.overrideDSyncFlag(data);
@@ -284,7 +283,7 @@ function __wizrocket() {
             var pingRequest = function () {
                 var pageLoadUrl = dataPostURL;
                 var data = {};
-                data = wiz.addSystemDataToObject(data);
+                data = wiz.addSystemDataToObject(data,undefined);
 
                 pageLoadUrl = wiz.addToURL(pageLoadUrl, "type", EVT_PING);
                 pageLoadUrl = wiz.addToURL(pageLoadUrl, "d", wiz.compressData(JSON.stringify(data)));
@@ -514,12 +513,13 @@ function __wizrocket() {
                     }
                 }
                 wiz.addToLocalEventMap(data['evtName']);
-                data = wiz.addSystemDataToObject(data);
-                wiz.addDSyncFlag(data);
+                data = wiz.addSystemDataToObject(data,undefined);
+                wiz.addFlags(data);
+
                 var compressedData = wiz.compressData(JSON.stringify(data));
 
                 var pageLoadUrl = dataPostURL;
-                var pageLoadUrl = wiz.addToURL(pageLoadUrl, "type", EVT_PUSH);
+                pageLoadUrl = wiz.addToURL(pageLoadUrl, "type", EVT_PUSH);
                 pageLoadUrl = wiz.addToURL(pageLoadUrl, "d", compressedData);
 
 
@@ -600,7 +600,13 @@ function __wizrocket() {
         return url;
     };
 
-    wiz.addDSyncFlag = function (data) {
+    wiz.addFlags = function (data) {
+
+        //check if cookie should be cleared.
+        clearCookie = wiz.getAndClearMetaProp(CLEAR);
+        if( (clearCookie !== undefined && clearCookie) || blockRequeust){
+            data['rc'] = true;
+        }
         if (wzrk_util.isPersonalizationActive()) {
             var lastSyncTime = wiz.getMetaProp('lsTime');
             var expirySeconds = wiz.getMetaProp('exTs');
@@ -616,6 +622,8 @@ function __wizrocket() {
                 data['dsync'] = true;
             }
         }
+
+
 
     };
 
@@ -633,6 +641,31 @@ function __wizrocket() {
     };
 
 
+    var deleteUser = function () {
+        blockRequeust = true;
+        if (wzrk_util.isLocalStorageSupported()) {
+            delete localStorage[GCOOKIE_NAME];
+            delete localStorage[KCOOKIE_NAME];
+            delete localStorage[PR_COOKIE];
+            delete localStorage[EV_COOKIE];
+            delete localStorage[META_COOKIE];
+            delete localStorage[ARP_COOKIE];
+        }
+        if (wzrk_util.isSessionStorageSupported()) {
+            delete sessionStorage[CAMP_COOKIE_NAME];
+        }
+        wiz.deleteCookie(GCOOKIE_NAME, broadDomain);
+        wiz.deleteCookie(CAMP_COOKIE_NAME, domain);
+        wiz.deleteCookie(KCOOKIE_NAME, domain);
+        wiz.deleteCookie(SCOOKIE_NAME, broadDomain);
+        wiz.deleteCookie(ARP_COOKIE, broadDomain);
+        gcookie = null;
+        scookieObj = '';
+        //reset request number when user is deleted
+        REQ_N = 0;
+        RESP_N = 0;
+    };
+
     var setInstantDeleteFlagInK = function () {
         var k = wiz.readFromLSorCookie(KCOOKIE_NAME);
         if (typeof k == 'undefined') {
@@ -644,6 +677,11 @@ function __wizrocket() {
 
     wiz.logout = function () {
         setInstantDeleteFlagInK();
+    };
+
+    wiz.clear = function (){
+        deleteUser();
+        wiz.setMetaProp(CLEAR,true);
     };
 
     wiz.arp = function (jsonMap) {
@@ -700,30 +738,6 @@ function __wizrocket() {
                     profileObj = wiz.processGPlusUserObj(GPlusProfileObj);
                 }
             }
-
-
-            var deleteUser = function () {
-                resetCookie = true;
-                if (wzrk_util.isLocalStorageSupported()) {
-                    delete localStorage[GCOOKIE_NAME];
-                    delete localStorage[KCOOKIE_NAME];
-                    delete localStorage[PR_COOKIE];
-                    delete localStorage[EV_COOKIE];
-                    delete localStorage[META_COOKIE];
-                }
-                if (wzrk_util.isSessionStorageSupported()) {
-                    delete sessionStorage[CAMP_COOKIE_NAME];
-                }
-                wiz.deleteCookie(GCOOKIE_NAME, broadDomain);
-                wiz.deleteCookie(CAMP_COOKIE_NAME, domain);
-                wiz.deleteCookie(KCOOKIE_NAME, domain);
-                wiz.deleteCookie(SCOOKIE_NAME, broadDomain);
-                gcookie = null;
-                scookieObj = '';
-                //reset request number when user is deleted
-                REQ_N = 0;
-                RESP_N = 0;
-            };
 
             var addToK = function (ids) {
                 var k = wiz.readFromLSorCookie(KCOOKIE_NAME);
@@ -801,19 +815,16 @@ function __wizrocket() {
                     }
                 }
                 wiz.addToLocalProfileMap(profileObj, true);
-                data = wiz.addSystemDataToObject(data);
-                if (resetCookie) {
-                    data['rc'] = true;
-                }
+                data = wiz.addSystemDataToObject(data,undefined);
 
-                wiz.overrideDSyncFlag(data);
+                wiz.addFlags(data);
                 var compressedData = wiz.compressData(JSON.stringify(data));
 
                 var pageLoadUrl = dataPostURL;
                 pageLoadUrl = wiz.addToURL(pageLoadUrl, "type", EVT_PUSH);
                 pageLoadUrl = wiz.addToURL(pageLoadUrl, "d", compressedData);
 
-                wiz.saveAndFireRequest(pageLoadUrl, resetCookie);
+                wiz.saveAndFireRequest(pageLoadUrl, blockRequeust);
 
             }
         }
@@ -870,7 +881,7 @@ function __wizrocket() {
             return 0;
         };
         wizrocket['logout'] = wiz.logout;
-
+        wizrocket['clear'] = wiz.clear;
         wiz.processLoginArray(wizrocket['onUserLogin']);  // process old stuff from the login array before we overloaded the push method
         wiz.processEventArray(wizrocket['event']);      // process old stuff from the event array before we overloaded the push method
         wiz.processProfileArray(wizrocket['profile']);  // process old stuff from the profile array before we overloaded the push method
@@ -889,7 +900,9 @@ function __wizrocket() {
 
         wiz.createBroadCookie(LCOOKIE_NAME, data, TWENTY_MINS, domain); // self-destruct after 20 minutes
         wc.d("stored in " + LCOOKIE_NAME + "-> " + data);
-        if (!resetCookie || override) {
+
+
+        if (!blockRequeust || override || clearCookie) {
             wiz.fireRequest(url + '&i=' + now);
         }
 
@@ -1174,10 +1187,16 @@ function __wizrocket() {
             if (typeof wzrkMetaObj == 'undefined') {
                 wzrkMetaObj = {};
             }
-            wzrkMetaObj[key] = value;
+            if(value === undefined){
+                delete wzrkMetaObj[key];
+            }else{
+                wzrkMetaObj[key] = value;
+            }
             wiz.saveToLSorCookie(META_COOKIE, wzrkMetaObj);
         }
     };
+
+
 
     wiz.getMetaProp = function (key) {
         if (wzrk_util.isLocalStorageSupported()) {
@@ -1186,6 +1205,11 @@ function __wizrocket() {
                 return wzrkMetaObj[key];
             }
         }
+    };
+    wiz.getAndClearMetaProp = function (key){
+        var value = wiz.getMetaProp(key);
+        wiz.setMetaProp(key,undefined);
+        return value;
     };
 
     wiz.manageSession = function (session) {
@@ -1227,7 +1251,7 @@ function __wizrocket() {
         }
 
         if (resume) {
-            resetCookie = false;
+            blockRequeust = false;
         }
         if (wzrk_util.isLocalStorageSupported()) {
             wiz.manageSession(session);
@@ -1797,7 +1821,7 @@ function __wizrocket() {
                 "<a href='javascript:void(0);' onclick=" + onClickStr + " class='wzrkClose' style='background-color:" + btnBg + ";color:" + btColor + "'>&times;</a>" +
                 "<div id='contentDiv' class='wzrk'>" +
                 "<table cellpadding='0' cellspacing='0' border='0'>" +
-                    //"<tr><td colspan='2'></td></tr>"+
+                //"<tr><td colspan='2'></td></tr>"+
                 "<tr>" + imageTd + "<td style='vertical-align:top;'>" +
                 "<div class='wzrkPPtitle' style='color:" + textColor + "'>" + titleText + "</div>";
             var body = "<div class='wzrkPPdscr' style='color:" + textColor + "'>" + descriptionText + "<div></td></tr></table></div>";
@@ -2056,7 +2080,7 @@ function __wizrocket() {
             data['type'] = 'view';
         }
 
-        data = wiz.addSystemDataToObject(data);
+        data = wiz.addSystemDataToObject(data,undefined);
         return wiz.addToURL(recorderURL, "d", wiz.compressData(JSON.stringify(data)));
 
     };
@@ -2261,6 +2285,7 @@ function __wizrocket() {
     wiz['unSubEmail'] = wiz.unSubEmail;
     wiz['subEmail'] = wiz.subEmail;
     wiz['logout'] = wiz.logout;
+    wiz['clear'] = wiz.clear;
     wizrocket['getCleverTapID'] = wiz.getCleverTapID;
 
 
