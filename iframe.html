@@ -16,7 +16,9 @@
             }
             Notification.requestPermission(function (state) {
                 console.log(state);
-                parent.postMessage(JSON.stringify({"state":"granted"}),"*");
+                if(state === "granted"){
+                    parent.postMessage(JSON.stringify({"state":"granted"}),"*");
+                }
             });
         }
         subscribe();
