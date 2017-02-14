@@ -47,22 +47,50 @@ test server
 //        }
 //    });
 
+//    clevertap.notifications.push({
+//        "titleText":'Would you like to receive Push Notifications?',
+//        "bodyText":'We promise to only send you relevant content and give you updates on your transactions',
+//        "okButtonText":'Sign me up!',
+//        "rejectButtonText":'No thanks',
+//        "okButtonColor":'#f28046',
+//        "askAgainTimeInSeconds":1,
+//        "okCallback":function () {
+//            console.log("user clicked on ok on popup");
+//        },
+//        "rejectCallback":function () {
+//            console.log("user clicked on reject on popup");
+//        },
+//        "subscriptionCallback":function () {
+//            console.log("user subscribed for web push notifications");
+//        }
+//    });
+
     clevertap.notifications.push({
-        "titleText":'Would you like to receive Push Notifications?',
-        "bodyText":'We promise to only send you relevant content and give you updates on your transactions',
-        "okButtonText":'Sign me up!',
-        "rejectButtonText":'No thanks',
-        "okButtonColor":'#f28046',
-        "askAgainTimeInSeconds":1,
+        "titleText": 'Let Baby Destination notify you',
+        "bodyText": "<img src='https://www.babydestination.com/skin/frontend/smartwave/porto/images/logo-bd.png' width='250px' height='250px' /> <br><br>  We'll send you notifications on" +
+    " most relevant parenting tips from experts and mom's experiences to guide you through your parenting journey.",
+        "okButtonText": 'OK GOT IT',
+        "rejectButtonText": 'Not Now',
+        "okButtonColor": '#f28046',
+        "askAgainTimeInSeconds": 86400,
         "okCallback":function () {
-            console.log("user clicked on ok on popup");
-        },
-        "rejectCallback":function () {
-            console.log("user clicked on reject on popup");
-        },
-        "subscriptionCallback":function () {
-            console.log("user subscribed for web push notifications");
-        }
+        clevertap.event.push(
+            "CT notification popup", {
+                "Allowed": "Logged out user"
+            });
+    },
+    "rejectCallback":function () {
+        clevertap.event.push(
+            "CT notification popup", {
+                "Denied": "Logged out user"
+            });
+    },
+    "subscriptionCallback":function () {
+        clevertap.event.push(
+            "Chrome notif-popup", {
+                "Subscribed": "Logged out user"
+            });
+    }
     });
 
 //        clevertap.notifications.push({
