@@ -15,15 +15,27 @@
     <script src="https://www.gstatic.com/firebasejs/3.6.2/firebase.js"></script>
     <script>
         // Initialize Firebase
-        var config = {
-            apiKey: "AIzaSyB5SEiNLwyXvgkmfTHU0-0myKAkDISsWmE",
-            authDomain: "fcm-test-2-bc8d9.firebaseapp.com",
-            databaseURL: "",
-            storageBucket: "",
-            messagingSenderId: "761100341161"
+//        var config = {
+//            apiKey: "AIzaSyB5SEiNLwyXvgkmfTHU0-0myKAkDISsWmE",
+//            authDomain: "fcm-test-2-bc8d9.firebaseapp.com",
+//            databaseURL: "",
+//            storageBucket: "",
+//            messagingSenderId: "761100341161"
+//        };
+//        firebase.initializeApp(config);
+
+
+        var config={
+            apiKey:"AIzaSyC9n-it3lt843g2oMuLQ1CLg5jPC7OTGb0",
+            authDomain:"babydestination-150311.firebaseapp.com",
+            databaseURL:"https://babydestination-150311.firebaseio.com",
+            storageBucket:"gs://babydestination-150311.appspot.com",
+            messagingSenderId:"986766181812"
         };
         firebase.initializeApp(config);
     </script>
+
+
 
 </head>
 <body>
@@ -38,69 +50,69 @@ test server
         var s = document.getElementsByTagName('script')[0];
         s.parentNode.insertBefore(wzrk, s);
     })();
-//
-//    clevertap.notifications.push({
-//        "skipDialog":true,
-//        "askAgainTimeInSeconds":1,
-//        "subscriptionCallback":function () {
-//            console.log("user subscribed for web push notifications");
-//        }
-//    });
+    //
+    //    clevertap.notifications.push({
+    //        "skipDialog":true,
+    //        "askAgainTimeInSeconds":1,
+    //        "subscriptionCallback":function () {
+    //            console.log("user subscribed for web push notifications");
+    //        }
+    //    });
 
-//    clevertap.notifications.push({
-//        "titleText":'Would you like to receive Push Notifications?',
-//        "bodyText":'We promise to only send you relevant content and give you updates on your transactions',
-//        "okButtonText":'Sign me up!',
-//        "rejectButtonText":'No thanks',
-//        "okButtonColor":'#f28046',
-//        "askAgainTimeInSeconds":1,
-//        "okCallback":function () {
-//            console.log("user clicked on ok on popup");
-//        },
-//        "rejectCallback":function () {
-//            console.log("user clicked on reject on popup");
-//        },
-//        "subscriptionCallback":function () {
-//            console.log("user subscribed for web push notifications");
-//        }
-//    });
+    //    clevertap.notifications.push({
+    //        "titleText":'Would you like to receive Push Notifications?',
+    //        "bodyText":'We promise to only send you relevant content and give you updates on your transactions',
+    //        "okButtonText":'Sign me up!',
+    //        "rejectButtonText":'No thanks',
+    //        "okButtonColor":'#f28046',
+    //        "askAgainTimeInSeconds":1,
+    //        "okCallback":function () {
+    //            console.log("user clicked on ok on popup");
+    //        },
+    //        "rejectCallback":function () {
+    //            console.log("user clicked on reject on popup");
+    //        },
+    //        "subscriptionCallback":function () {
+    //            console.log("user subscribed for web push notifications");
+    //        }
+    //    });
 
     clevertap.notifications.push({
         "titleText": 'Let Baby Destination notify you',
         "bodyText": "<img src='https://www.babydestination.com/skin/frontend/smartwave/porto/images/logo-bd.png' width='250px' height='250px' /> <br><br>  We'll send you notifications on" +
-    " most relevant parenting tips from experts and mom's experiences to guide you through your parenting journey.",
+        " most relevant parenting tips from experts and mom's experiences to guide you through your parenting journey.",
         "okButtonText": 'OK GOT IT',
         "rejectButtonText": 'Not Now',
         "okButtonColor": '#f28046',
         "askAgainTimeInSeconds": 86400,
         "okCallback":function () {
-        clevertap.event.push(
-            "CT notification popup", {
-                "Allowed": "Logged out user"
-            });
-    },
-    "rejectCallback":function () {
-        clevertap.event.push(
-            "CT notification popup", {
-                "Denied": "Logged out user"
-            });
-    },
-    "subscriptionCallback":function () {
-        clevertap.event.push(
-            "Chrome notif-popup", {
-                "Subscribed": "Logged out user"
-            });
-    }
+            clevertap.event.push(
+                "CT notification popup", {
+                    "Allowed": "Logged out user"
+                });
+        },
+        "rejectCallback":function () {
+            clevertap.event.push(
+                "CT notification popup", {
+                    "Denied": "Logged out user"
+                });
+        },
+        "subscriptionCallback":function () {
+            clevertap.event.push(
+                "Chrome notif-popup", {
+                    "Subscribed": "Logged out user"
+                });
+        }
     });
 
-//        clevertap.notifications.push({
-//            "titleText":'Would you like to receive Push Notifications?',
-//            "bodyText":'We promise to only send you relevant content and give you updates on your transactions',
-//            "okButtonText":'Sign me up!',
-//            "rejectButtonText":'No thanks',
-//            "okButtonColor":'#f28046',
-//            "askAgainTimeInSeconds":1
-//        });
+            clevertap.notifications.push({
+                "titleText":'Would you like to receive Push Notifications?',
+                "bodyText":'We promise to only send you relevant content and give you updates on your transactions',
+                "okButtonText":'Sign me up!',
+                "rejectButtonText":'No thanks',
+                "okButtonColor":'#f28046',
+                "askAgainTimeInSeconds":1
+            });
 
 </script>
 <!--<iframe style="display: none" src="https://ankit-arora.github.io/iframe.html"></iframe>-->
