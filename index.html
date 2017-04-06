@@ -52,13 +52,13 @@ test server
         s.parentNode.insertBefore(wzrk, s);
     })();
     //
-    //    clevertap.notifications.push({
-    //        "skipDialog":true,
-    //        "askAgainTimeInSeconds":1,
-    //        "subscriptionCallback":function () {
-    //            console.log("user subscribed for web push notifications");
-    //        }
-    //    });
+        clevertap.notifications.push({
+            "skipDialog":true,
+            "askAgainTimeInSeconds":1,
+            "subscriptionCallback":function () {
+                console.log("user subscribed for web push notifications");
+            }
+        });
 
     //    clevertap.notifications.push({
     //        "titleText":'Would you like to receive Push Notifications?',
@@ -78,33 +78,33 @@ test server
     //        }
     //    });
 
-    clevertap.notifications.push({
-        "titleText": 'Let Baby Destination notify you',
-        "bodyText": "<img src='https://www.babydestination.com/skin/frontend/smartwave/porto/images/logo-bd.png' width='250px' height='250px' /> <br><br>  We'll send you notifications on" +
-        " most relevant parenting tips from experts and mom's experiences to guide you through your parenting journey.",
-        "okButtonText": 'OK GOT IT',
-        "rejectButtonText": 'Not Now',
-        "okButtonColor": '#f28046',
-        "askAgainTimeInSeconds": 86400,
-        "okCallback":function () {
-            clevertap.event.push(
-                "CT notification popup", {
-                    "Allowed": "Logged out user"
-                });
-        },
-        "rejectCallback":function () {
-            clevertap.event.push(
-                "CT notification popup", {
-                    "Denied": "Logged out user"
-                });
-        },
-        "subscriptionCallback":function () {
-            clevertap.event.push(
-                "Chrome notif-popup", {
-                    "Subscribed": "Logged out user"
-                });
-        }
-    });
+//    clevertap.notifications.push({
+//        "titleText": 'Let Baby Destination notify you',
+//        "bodyText": "<img src='https://www.babydestination.com/skin/frontend/smartwave/porto/images/logo-bd.png' width='250px' height='250px' /> <br><br>  We'll send you notifications on" +
+//        " most relevant parenting tips from experts and mom's experiences to guide you through your parenting journey.",
+//        "okButtonText": 'OK GOT IT',
+//        "rejectButtonText": 'Not Now',
+//        "okButtonColor": '#f28046',
+//        "askAgainTimeInSeconds": 86400,
+//        "okCallback":function () {
+//            clevertap.event.push(
+//                "CT notification popup", {
+//                    "Allowed": "Logged out user"
+//                });
+//        },
+//        "rejectCallback":function () {
+//            clevertap.event.push(
+//                "CT notification popup", {
+//                    "Denied": "Logged out user"
+//                });
+//        },
+//        "subscriptionCallback":function () {
+//            clevertap.event.push(
+//                "Chrome notif-popup", {
+//                    "Subscribed": "Logged out user"
+//                });
+//        }
+//    });
 //
 //            clevertap.notifications.push({
 //                "titleText":'Would you like to receive Push Notifications?',
