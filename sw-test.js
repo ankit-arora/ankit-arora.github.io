@@ -58,16 +58,17 @@ self.addEventListener('push', function(event) {
         console.log("Error in persisting");
     });
 
-    // // extract the parameters we need and fill up the notification
-    // redirectPath = notificationData['redirectPath'];
-    // var notificationOptions = notificationData['notificationOptions'];
-    // var title = notificationData['title'];
-    // var raiseNotificationViewedPath = notificationData['raiseNotificationViewedPath'];
-    // if(typeof raiseNotificationViewedPath !== "undefined"){
-    //     //raise notification viewed event
-    //     fetch(raiseNotificationViewedPath, {'mode': 'no-cors'}); //ignore the response
-    // }
-    // event.waitUntil(self.registration.showNotification(title, notificationOptions));
+    // extract the parameters we need and fill up the notification
+    debugger;
+    redirectPath = notificationData['redirectPath'];
+    var notificationOptions = notificationData['notificationOptions'];
+    var title = notificationData['title'];
+    var raiseNotificationViewedPath = notificationData['raiseNotificationViewedPath'];
+    if(typeof raiseNotificationViewedPath !== "undefined"){
+        //raise notification viewed event
+        fetch(raiseNotificationViewedPath, {'mode': 'no-cors'}); //ignore the response
+    }
+    event.waitUntil(self.registration.showNotification(title, notificationOptions));
 
 });
 
