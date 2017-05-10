@@ -46,35 +46,35 @@ self.addEventListener('activated', function(event) {
     );
 });
 
-// self.addEventListener('push', function(event) {
-//
-//     console.log('Push event: ', event);
-//     // get all the notification data
-//     notificationData = JSON.parse(event.data.text());
-//     localforage.setItem("nD", event.data.text()).then(function(value){
-//         // console.log("persisted");
-//     }).catch(function(err) {
-//         // This code runs if there were any errors
-//         console.log("Error in persisting");
-//     });
-//
-//     // // extract the parameters we need and fill up the notification
-//     // redirectPath = notificationData['redirectPath'];
-//     // var notificationOptions = notificationData['notificationOptions'];
-//     // var title = notificationData['title'];
-//     // var raiseNotificationViewedPath = notificationData['raiseNotificationViewedPath'];
-//     // if(typeof raiseNotificationViewedPath !== "undefined"){
-//     //     //raise notification viewed event
-//     //     fetch(raiseNotificationViewedPath, {'mode': 'no-cors'}); //ignore the response
-//     // }
-//     // event.waitUntil(self.registration.showNotification(title, notificationOptions));
-//
-// });
+self.addEventListener('push', function(event) {
 
-chrome.gcm.onMessage.addListener(function (message) {
-    debugger;
-    console.log("received");
+    console.log('Push event: ', event);
+    // get all the notification data
+    notificationData = JSON.parse(event.data.text());
+    localforage.setItem("nD", event.data.text()).then(function(value){
+        // console.log("persisted");
+    }).catch(function(err) {
+        // This code runs if there were any errors
+        console.log("Error in persisting");
+    });
+
+    // // extract the parameters we need and fill up the notification
+    // redirectPath = notificationData['redirectPath'];
+    // var notificationOptions = notificationData['notificationOptions'];
+    // var title = notificationData['title'];
+    // var raiseNotificationViewedPath = notificationData['raiseNotificationViewedPath'];
+    // if(typeof raiseNotificationViewedPath !== "undefined"){
+    //     //raise notification viewed event
+    //     fetch(raiseNotificationViewedPath, {'mode': 'no-cors'}); //ignore the response
+    // }
+    // event.waitUntil(self.registration.showNotification(title, notificationOptions));
+
 });
+
+// chrome.gcm.onMessage.addListener(function (message) {
+//     debugger;
+//     console.log("received");
+// });
 
 function onClick(event){
     var finalDeepLink = redirectPath;
