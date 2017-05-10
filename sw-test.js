@@ -72,11 +72,6 @@ self.addEventListener('push', function(event) {
 
 });
 
-// chrome.gcm.onMessage.addListener(function (message) {
-//     debugger;
-//     console.log("received");
-// });
-
 function onClick(event){
     var finalDeepLink = redirectPath;
     var silentRequest = true; // are opening up a new window or sending a quiet get request from here?
