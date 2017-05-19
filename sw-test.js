@@ -1,5 +1,13 @@
 /**
- * Created by ankit on 10/05/17.
+ * Author: Jashan Shewakramani
+ * Last updated: 27 June 2016
+ * Description: Service worker for handling chrome push notifications
+ *
+ * NOTES:
+ * -> "self" refers to the global ServiceWorker Object
+ * -> This script is registered to the browser from a.js
+ * -> We're only handling notification clicks; "delivered" is handled by NB
+ * -> Use Google's closure compiler on http://closure-compiler.appspot.com/ for minifying
  */
 
 importScripts('https://d2r1yp2w7bby2u.cloudfront.net/js/localforage.min.js');
@@ -46,31 +54,30 @@ self.addEventListener('activated', function(event) {
     );
 });
 
-self.addEventListener('push', function(event) {
-
-    console.log('Push event: ', event);
-    // get all the notification data
-    notificationData = JSON.parse(event.data.text());
-    localforage.setItem("nD", event.data.text()).then(function(value){
-        // console.log("persisted");
-    }).catch(function(err) {
-        // This code runs if there were any errors
-        console.log("Error in persisting");
-    });
-
-    // extract the parameters we need and fill up the notification
-    debugger;
-    redirectPath = notificationData['redirectPath'];
-    var notificationOptions = notificationData['notificationOptions'];
-    var title = notificationData['title'];
-    var raiseNotificationViewedPath = notificationData['raiseNotificationViewedPath'];
-    if(typeof raiseNotificationViewedPath !== "undefined"){
-        //raise notification viewed event
-        fetch(raiseNotificationViewedPath, {'mode': 'no-cors'}); //ignore the response
-    }
-    event.waitUntil(self.registration.showNotification(title, notificationOptions));
-
-});
+// self.addEventListener('push', function(event) {
+//
+//     console.log('Push event: ', event);
+//     // get all the notification data
+//     notificationData = JSON.parse(event.data.text());
+//     localforage.setItem("nD", event.data.text()).then(function(value){
+//         // console.log("persisted");
+//     }).catch(function(err) {
+//         // This code runs if there were any errors
+//         console.log("Error in persisting");
+//     });
+//
+//     // extract the parameters we need and fill up the notification
+//     redirectPath = notificationData['redirectPath'];
+//     var notificationOptions = notificationData['notificationOptions'];
+//     var title = notificationData['title'];
+//     var raiseNotificationViewedPath = notificationData['raiseNotificationViewedPath'];
+//     if(typeof raiseNotificationViewedPath !== "undefined"){
+//         //raise notification viewed event
+//         fetch(raiseNotificationViewedPath, {'mode': 'no-cors'}); //ignore the response
+//     }
+//     event.waitUntil(self.registration.showNotification(title, notificationOptions));
+//
+// });
 
 function onClick(event){
     var finalDeepLink = redirectPath;
