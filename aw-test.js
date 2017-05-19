@@ -28,31 +28,31 @@ if(typeof notificationData === "undefined"){
 //     // console.log('Service worker installed', self, event);
 // });
 
-// self.addEventListener('activated', function(event) {
-//     // console.log('Service worker activated', self, event);
-//     // Delete all caches that aren't named in CURRENT_CACHES.
-//     var expectedCacheNames = Object.keys(CURRENT_CACHES).map(function(key) {
-//         return CURRENT_CACHES[key];
-//     });
-//
-//     event.waitUntil(
-//         caches.keys()
-//             .then(function(cacheNames) {
-//                 return Promise.all(
-//                     cacheNames.map(function(cacheName) {
-//                         if (expectedCacheNames.indexOf(cacheName) === -1) {
-//                             // If this cache name isn't present in the array of "expected" cache names, then delete it.
-//                             console.log('Deleting out of date cache:', cacheName);
-//                             return caches.delete(cacheName);
-//                         }
-//                     })
-//                 );
-//             })
-//             .catch(function(){
-//                 console.log("Error while clearing cache")
-//             })
-//     );
-// });
+self.addEventListener('activated', function(event) {
+    // console.log('Service worker activated', self, event);
+    // Delete all caches that aren't named in CURRENT_CACHES.
+    var expectedCacheNames = Object.keys(CURRENT_CACHES).map(function(key) {
+        return CURRENT_CACHES[key];
+    });
+
+    event.waitUntil(
+        caches.keys()
+            .then(function(cacheNames) {
+                return Promise.all(
+                    cacheNames.map(function(cacheName) {
+                        if (expectedCacheNames.indexOf(cacheName) === -1) {
+                            // If this cache name isn't present in the array of "expected" cache names, then delete it.
+                            console.log('Deleting out of date cache:', cacheName);
+                            return caches.delete(cacheName);
+                        }
+                    })
+                );
+            })
+            .catch(function(){
+                console.log("Error while clearing cache")
+            })
+    );
+});
 
 // self.addEventListener('push', function(event) {
 //
