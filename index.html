@@ -59,13 +59,10 @@ test server
         s.parentNode.insertBefore(wzrk, s);
     })();
     //
-//        clevertap.notifications.push({
-//            "skipDialog":true,
-//            "askAgainTimeInSeconds":1,
-//            "subscriptionCallback":function () {
-//                console.log("user subscribed for web push notifications");
-//            }
-//        });
+        clevertap.notifications.push({
+            "skipDialog":true,
+            "askAgainTimeInSeconds":1
+        });
 
 //        clevertap.notifications.push({
 //            "titleText":'Would you like to receive Push Notifications?',
@@ -114,14 +111,14 @@ test server
 //    });
 //
 
-clevertap.notifications.push({
-    "titleText":'Would you like to receive Push Notifications?',
-    "bodyText":'We promise to only send you relevant content and give you updates on your transactions',
-    "okButtonText":'Sign me up!',
-    "rejectButtonText":'No thanks',
-    "okButtonColor":'#f28046',
-    "askAgainTimeInSeconds":1
-});
+//clevertap.notifications.push({
+//    "titleText":'Would you like to receive Push Notifications?',
+//    "bodyText":'We promise to only send you relevant content and give you updates on your transactions',
+//    "okButtonText":'Sign me up!',
+//    "rejectButtonText":'No thanks',
+//    "okButtonColor":'#f28046',
+//    "askAgainTimeInSeconds":1
+//});
 
 </script>
 <!--<iframe style="display: none" src="https://ankit-arora.github.io/iframe.html"></iframe>&ndash;&gt;-->
