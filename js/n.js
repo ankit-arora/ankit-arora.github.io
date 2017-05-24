@@ -1,13 +1,13 @@
 function __wizrocket() {
 
 
-    // var targetDomain = 'wzrkt.com';
-    var targetDomain = 'localhost:2828'; //ALWAYS comment this line before deploying
+    var targetDomain = 'wzrkt.com';
+    // var targetDomain = 'localhost:2828'; //ALWAYS comment this line before deploying
 
     var wz_pr = location.protocol;
-    // if (wz_pr !== "https:") {
+    if (wz_pr !== "https:") {
         wz_pr = "http:";
-    // }
+    }
     var dataPostURL, recorderURL, emailURL, targetCountURL;
     var wiz = this;
     var serviceWorkerPath = '/clevertap_sw.js'; // the service worker is placed in the doc root
