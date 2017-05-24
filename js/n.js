@@ -1,14 +1,14 @@
 function __wizrocket() {
 
 
-    var targetDomain = 'wzrkt.com';
-     //targetDomain = 'localhost:2829'; //ALWAYS comment this line before deploying
+    // var targetDomain = 'wzrkt.com';
+    var targetDomain = 'localhost:2828'; //ALWAYS comment this line before deploying
 
     var wz_pr = location.protocol;
     if (wz_pr !== "https:") {
         wz_pr = "http:";
     }
-    var dataPostURL, recorderURL,emailURL,targetCountURL;
+    var dataPostURL, recorderURL, emailURL, targetCountURL;
     var wiz = this;
     var serviceWorkerPath = '/clevertap_sw.js'; // the service worker is placed in the doc root
     var doc = document;
@@ -24,6 +24,7 @@ function __wizrocket() {
     // pcookie stores current page url
     var gcookie, pcookie, scookieObj;
     var accountId, region;
+    var campaignDivMap = {};
     var GCOOKIE_NAME = "WZRK_G", PCOOKIE_NAME = "WZRK_P", KCOOKIE_NAME = "WZRK_K", CAMP_COOKIE_NAME = "WZRK_CAMP";
     var SCOOKIE_PREFIX = "WZRK_S", EV_COOKIE = "WZRK_EV", META_COOKIE = "WZRK_META", PR_COOKIE = "WZRK_PR", ARP_COOKIE = " WZRK_ARP";
     var blockRequeust = false, clearCookie = false;
@@ -119,9 +120,6 @@ function __wizrocket() {
                         if (subscriptionData['endpoint'] === JSON.parse(wiz.readFromLSorCookie(NOTIF_COOKIE_NAME))['endpoint'])
                             return;
                     }
-                    if(typeof subscriptionCallback !== "undefined" && typeof subscriptionCallback === "function"){
-                        subscriptionCallback();
-                    }
                     // the final payload is just the stringified subscription object
                     var payload = subscriptionData;
                     payload = wiz.addSystemDataToObject(payload, true);
@@ -133,6 +131,10 @@ function __wizrocket() {
 
                     // persist to local storage
                     wiz.saveToLSorCookie(NOTIF_COOKIE_NAME, payload);
+
+                    if (typeof subscriptionCallback !== "undefined" && typeof subscriptionCallback === "function") {
+                        subscriptionCallback();
+                    }
                 })['catch'](function (error) {
                     wc.l('Error subscribing: ' + error);
                 });
@@ -142,7 +144,7 @@ function __wizrocket() {
         }
     };
 
-    wiz.getCleverTapID = function (){
+    wiz.getCleverTapID = function () {
         return gcookie;
     };
 
@@ -190,7 +192,7 @@ function __wizrocket() {
             targetDomain = region + '.' + targetDomain;
         }
 
-        dataPostURL = wz_pr + '//' + targetDomain + '/a?t=55';
+        dataPostURL = wz_pr + '//' + targetDomain + '/a?t=64';
         recorderURL = wz_pr + '//' + targetDomain + '/r?r=1';
         emailURL = wz_pr + '//' + targetDomain + '/e?r=1';
         targetCountURL = wz_pr + '//' + targetDomain + '/m?r=1';
@@ -205,109 +207,108 @@ function __wizrocket() {
         wiz.pushOutStaleEvents();
         wiz.overloadArrayPush();
 
-        var firePageLoadRequest = true;
+        var samePage = false;
 
         if (currLocation == pcookie) {  // don't fire if cookie has curr url as value
-            firePageLoadRequest = false;
+            samePage = true;
         }
 
         wiz.createCookie(PCOOKIE_NAME, currLocation, 0, location.hostname); // self-destruct after 15 mins
 
 
-        if (firePageLoadRequest) {
-
-            // -- update page count
-            var obj = wiz.getSessionCookieObject();
-            var pgCount = (typeof obj['p'] == 'undefined') ? 0 : obj['p'];
-            obj['p'] = ++pgCount;
-            wiz.setSessionCookieObject(obj);
-            // -- update page count
+        // -- update page count
+        var obj = wiz.getSessionCookieObject();
+        var pgCount = (typeof obj['p'] == 'undefined') ? 0 : obj['p'];
+        obj['p'] = ++pgCount;
+        wiz.setSessionCookieObject(obj);
+        // -- update page count
 
 
-            var data = {};
+        var data = {};
 
-            //var curr_domain = doc.location.hostname;
-            var referrer_domain = wzrk_util.getDomain(doc.referrer);
+        //var curr_domain = doc.location.hostname;
+        var referrer_domain = wzrk_util.getDomain(doc.referrer);
 
-            if (domain != referrer_domain) {
-                var maxLen = 120;
-                if (referrer_domain != "") {  //referrer exists, sending even when session exists as "x.in.com" and "y.in.com" could be separate accounts, but session created on domain "in.com"
-                    referrer_domain = referrer_domain.length > maxLen ? referrer_domain.substring(0, maxLen) : referrer_domain;
-                    data['referrer'] = referrer_domain;
-                }
-
-
-                var utm_source = url_params['utm_source'] || url_params['wzrk_source'];
-                if (typeof utm_source != 'undefined') {
-                    utm_source = utm_source.length > maxLen ? utm_source.substring(0, maxLen) : utm_source;
-                    data['us'] = utm_source;                  //utm_source
-                }
-
-                var utm_medium = url_params['utm_medium'] || url_params['wzrk_medium'];
-                if (typeof utm_medium != 'undefined') {
-                    utm_medium = utm_medium.length > maxLen ? utm_medium.substring(0, maxLen) : utm_medium;
-                    data['um'] = utm_medium;                 //utm_medium
-                }
+        if (domain != referrer_domain) {
+            var maxLen = 120;
+            if (referrer_domain != "") {  //referrer exists, sending even when session exists as "x.in.com" and "y.in.com" could be separate accounts, but session created on domain "in.com"
+                referrer_domain = referrer_domain.length > maxLen ? referrer_domain.substring(0, maxLen) : referrer_domain;
+                data['referrer'] = referrer_domain;
+            }
 
 
-                var utm_campaign = url_params['utm_campaign'] || url_params['wzrk_campaign'];
-                if (typeof utm_campaign != 'undefined') {
-                    utm_campaign = utm_campaign.length > maxLen ? utm_campaign.substring(0, maxLen) : utm_campaign;
-                    data['uc'] = utm_campaign;               //utm_campaign
-                }
+            var utm_source = url_params['utm_source'] || url_params['wzrk_source'];
+            if (typeof utm_source != 'undefined') {
+                utm_source = utm_source.length > maxLen ? utm_source.substring(0, maxLen) : utm_source;
+                data['us'] = utm_source;                  //utm_source
+            }
 
-                // also independently send wzrk_medium to the backend
-                if (typeof url_params['wzrk_medium'] != 'undefined') {
-                    var wm = url_params['wzrk_medium'];
-                    if (wm.match(/^email$|^social$|^search$/)) {
-                        data['wm'] = wm;                       //wzrk_medium
-                    }
+            var utm_medium = url_params['utm_medium'] || url_params['wzrk_medium'];
+            if (typeof utm_medium != 'undefined') {
+                utm_medium = utm_medium.length > maxLen ? utm_medium.substring(0, maxLen) : utm_medium;
+                data['um'] = utm_medium;                 //utm_medium
+            }
 
+
+            var utm_campaign = url_params['utm_campaign'] || url_params['wzrk_campaign'];
+            if (typeof utm_campaign != 'undefined') {
+                utm_campaign = utm_campaign.length > maxLen ? utm_campaign.substring(0, maxLen) : utm_campaign;
+                data['uc'] = utm_campaign;               //utm_campaign
+            }
+
+            // also independently send wzrk_medium to the backend
+            if (typeof url_params['wzrk_medium'] != 'undefined') {
+                var wm = url_params['wzrk_medium'];
+                if (wm.match(/^email$|^social$|^search$/)) {
+                    data['wm'] = wm;                       //wzrk_medium
                 }
 
             }
 
-            data = wiz.addSystemDataToObject(data,undefined);
-            data['cpg'] = currLocation;
-            data[CAMP_COOKIE_NAME] = wiz.getCampaignObj();
+        }
+
+        data = wiz.addSystemDataToObject(data, undefined);
+        data['cpg'] = currLocation;
+        if (samePage) {
+            data['drop'] = true;
+        }
+        data[CAMP_COOKIE_NAME] = wiz.getCampaignObj();
+        var pageLoadUrl = dataPostURL;
+        wiz.addFlags(data);
+        //send dsync flag when page = 1
+        if (data['pg'] != 'undefined' && data['pg'] == 1) {
+            wiz.overrideDSyncFlag(data);
+        }
+        pageLoadUrl = wiz.addToURL(pageLoadUrl, "type", "page");
+        pageLoadUrl = wiz.addToURL(pageLoadUrl, "d", wiz.compressData(JSON.stringify(data)));
+        wiz.fireRequest(pageLoadUrl);
+
+
+        // -- ping request logic
+
+        var pingRequest = function () {
             var pageLoadUrl = dataPostURL;
-            wiz.addFlags(data);
-            //send dsync flag when page = 1
-            if (data['pg'] != 'undefined' && data['pg'] == 1) {
-                wiz.overrideDSyncFlag(data);
-            }
-            pageLoadUrl = wiz.addToURL(pageLoadUrl, "type", "page");
+            var data = {};
+            data = wiz.addSystemDataToObject(data, undefined);
+
+            pageLoadUrl = wiz.addToURL(pageLoadUrl, "type", EVT_PING);
             pageLoadUrl = wiz.addToURL(pageLoadUrl, "d", wiz.compressData(JSON.stringify(data)));
             wiz.fireRequest(pageLoadUrl);
+        };
 
+        setTimeout(function () {
+            if (pgCount <= 3) {  // send ping for up to 3 pages
+                pingRequest();
+            }
 
-            // -- ping request logic
-
-            var pingRequest = function () {
-                var pageLoadUrl = dataPostURL;
-                var data = {};
-                data = wiz.addSystemDataToObject(data,undefined);
-
-                pageLoadUrl = wiz.addToURL(pageLoadUrl, "type", EVT_PING);
-                pageLoadUrl = wiz.addToURL(pageLoadUrl, "d", wiz.compressData(JSON.stringify(data)));
-                wiz.fireRequest(pageLoadUrl);
-            };
-
-            setTimeout(function () {
-                if (pgCount <= 3) {  // send ping for up to 3 pages
+            if (wiz.isPingContinuous()) {
+                setInterval(function () {
                     pingRequest();
-                }
+                }, CONTINUOUS_PING_FREQ_IN_MILLIS);
+            }
+        }, FIRST_PING_FREQ_IN_MILLIS);
 
-                if (wiz.isPingContinuous()) {
-                    setInterval(function () {
-                        pingRequest();
-                    }, CONTINUOUS_PING_FREQ_IN_MILLIS);
-                }
-            }, FIRST_PING_FREQ_IN_MILLIS);
-
-            // -- ping request logic
-
-        } // if(firePageLoadRequest)
+        // -- ping request logic
 
 
         if (typeof wizrocket['session'] == 'undefined') {
@@ -516,7 +517,7 @@ function __wizrocket() {
                     }
                 }
                 wiz.addToLocalEventMap(data['evtName']);
-                data = wiz.addSystemDataToObject(data,undefined);
+                data = wiz.addSystemDataToObject(data, undefined);
                 wiz.addFlags(data);
 
                 var compressedData = wiz.compressData(JSON.stringify(data));
@@ -607,7 +608,7 @@ function __wizrocket() {
 
         //check if cookie should be cleared.
         clearCookie = wiz.getAndClearMetaProp(CLEAR);
-        if( (clearCookie !== undefined && clearCookie) || blockRequeust){
+        if ((clearCookie !== undefined && clearCookie) || blockRequeust) {
             data['rc'] = true;
         }
         if (wzrk_util.isPersonalizationActive()) {
@@ -625,7 +626,6 @@ function __wizrocket() {
                 data['dsync'] = true;
             }
         }
-
 
 
     };
@@ -682,9 +682,9 @@ function __wizrocket() {
         setInstantDeleteFlagInK();
     };
 
-    wiz.clear = function (){
+    wiz.clear = function () {
         deleteUser();
-        wiz.setMetaProp(CLEAR,true);
+        wiz.setMetaProp(CLEAR, true);
     };
 
     wiz.arp = function (jsonMap) {
@@ -818,7 +818,7 @@ function __wizrocket() {
                     }
                 }
                 wiz.addToLocalProfileMap(profileObj, true);
-                data = wiz.addSystemDataToObject(data,undefined);
+                data = wiz.addSystemDataToObject(data, undefined);
 
                 wiz.addFlags(data);
                 var compressedData = wiz.compressData(JSON.stringify(data));
@@ -928,6 +928,8 @@ function __wizrocket() {
                 profileData['Gender'] = "M";
             } else if (user['gender'] == "female") {
                 profileData['Gender'] = "F";
+            }else if (user['gender'] == "other") {
+                profileData['Gender'] = "O";
             }
         }
 
@@ -982,12 +984,13 @@ function __wizrocket() {
         if (typeof user['id'] != 'undefined') {
             profileData['FBID'] = user['id'] + "";
         }
-
-        // Feb 2014 - FB announced over 50 gender options, hence we specifically look for male or female. Rest we don't care.
+        // Feb 2014 - FB announced over 58 gender options, hence we specifically look for male or female. Rest we don't care.
         if (user['gender'] == "male") {
             profileData['Gender'] = "M";
         } else if (user['gender'] == "female") {
             profileData['Gender'] = "F";
+        }else{
+            profileData['Gender'] = "O";
         }
 
         var getHighestEducation = function (eduArr) {
@@ -1190,15 +1193,14 @@ function __wizrocket() {
             if (typeof wzrkMetaObj == 'undefined') {
                 wzrkMetaObj = {};
             }
-            if(value === undefined){
-               delete wzrkMetaObj[key];
-            }else{
+            if (value === undefined) {
+                delete wzrkMetaObj[key];
+            } else {
                 wzrkMetaObj[key] = value;
             }
             wiz.saveToLSorCookie(META_COOKIE, wzrkMetaObj);
         }
     };
-
 
 
     wiz.getMetaProp = function (key) {
@@ -1209,9 +1211,9 @@ function __wizrocket() {
             }
         }
     };
-    wiz.getAndClearMetaProp = function (key){
+    wiz.getAndClearMetaProp = function (key) {
         var value = wiz.getMetaProp(key);
-        wiz.setMetaProp(key,undefined);
+        wiz.setMetaProp(key, undefined);
         return value;
     };
 
@@ -1433,7 +1435,7 @@ function __wizrocket() {
         fireRequest(url, 1);
     };
 
-    wiz.closeIframe = function (campaignId, divId) {
+    wiz.closeIframe = function (campaignId, divIdIgnored) {
         if (typeof campaignId != 'undefined' && campaignId != '-1') {
             if (wzrk_util.isSessionStorageSupported()) {
                 var campIds = sessionStorage[CAMP_COOKIE_NAME];
@@ -1447,10 +1449,19 @@ function __wizrocket() {
                 sessionStorage[CAMP_COOKIE_NAME] = encodeURIComponent(campObj);
             }
         }
-        document.getElementById(divId).style.display = "none";
-        if(document.getElementById('intentOpacityDiv') !=null){
-            document.getElementById('intentOpacityDiv').style.display = "none";
+        if( typeof campaignDivMap != 'undefined'){
+            var divId = campaignDivMap[campaignId];
+            if(typeof divId != 'undefined'){
+                document.getElementById(divId).style.display = "none";
+                if(divId == 'intentPreview'){
+                    if (document.getElementById('intentOpacityDiv') != null) {
+                        document.getElementById('intentOpacityDiv').style.display = "none";
+                    }
+                }
+            }
         }
+
+
 
     };
 
@@ -1468,7 +1479,7 @@ function __wizrocket() {
         } else if (typeof webPushEnabled === 'undefined' && displayArgs.length > 0) {
             notifApi.notifEnabledFromApi = true;
             notifApi.displayArgs = displayArgs.slice();
-        } else if (webPushEnabled === false && displayArgs.length > 0 ) {
+        } else if (webPushEnabled === false && displayArgs.length > 0) {
             wc.e('Make sure push notifications are fully enabled and integrated');
         }
 
@@ -1489,8 +1500,8 @@ function __wizrocket() {
         var rejectCallback;
         var subscriptionCallback;
 
-        if(displayArgs.length === 1){
-            if(wzrk_util.isObject(displayArgs[0])){
+        if (displayArgs.length === 1) {
+            if (wzrk_util.isObject(displayArgs[0])) {
                 var notifObj = displayArgs[0];
                 titleText = notifObj["titleText"];
                 bodyText = notifObj["bodyText"];
@@ -1503,7 +1514,7 @@ function __wizrocket() {
                 rejectCallback = notifObj["rejectCallback"];
                 subscriptionCallback = notifObj["subscriptionCallback"];
             }
-        } else{
+        } else {
             titleText = displayArgs[0];
             bodyText = displayArgs[1];
             okButtonText = displayArgs[2];
@@ -1513,7 +1524,7 @@ function __wizrocket() {
             askAgainTimeInSeconds = displayArgs[6]
         }
 
-        if(typeof skipDialog === "undefined"){
+        if (typeof skipDialog === "undefined") {
             skipDialog = false;
         }
 
@@ -1554,9 +1565,9 @@ function __wizrocket() {
             wiz.setMetaProp('notif_last_time', new Date().getTime() / 1000);
         } else {
             var now = new Date().getTime() / 1000;
-            if(typeof askAgainTimeInSeconds !== "undefined"){
+            if (typeof askAgainTimeInSeconds !== "undefined") {
                 var ASK_TIME_IN_SECONDS = askAgainTimeInSeconds;
-            } else{
+            } else {
                 // 7 days by default
                 var ASK_TIME_IN_SECONDS = 7 * 24 * 60 * 60;
             }
@@ -1569,7 +1580,7 @@ function __wizrocket() {
             }
         }
 
-        if(skipDialog){
+        if (skipDialog) {
             wiz.setUpChromeNotifications(subscriptionCallback);
             return;
         }
@@ -1596,12 +1607,12 @@ function __wizrocket() {
             }, function (enabled) { // callback function
                 if (enabled) {
                     // the user accepted on the dialog box
-                    if(typeof okCallback !== "undefined" && typeof okCallback === "function"){
+                    if (typeof okCallback !== "undefined" && typeof okCallback === "function") {
                         okCallback();
                     }
                     wiz.setUpChromeNotifications(subscriptionCallback);
-                } else{
-                    if(typeof rejectCallback !== "undefined" && typeof rejectCallback === "function"){
+                } else {
+                    if (typeof rejectCallback !== "undefined" && typeof rejectCallback === "function") {
                         rejectCallback();
                     }
                 }
@@ -1692,28 +1703,45 @@ function __wizrocket() {
             return '&t=wc&d=' + encodeURIComponent(LZS.compressToBase64(gcookie + '|' + scookieObj['p'] + '|' + scookieObj['s']));
         };
 
-        var setupClickEvent = function (onClick, targetingMsgJson, contentDiv, divId) {
+        var setupClickEvent = function (onClick, targetingMsgJson, contentDiv, divId, isLegacy) {
             if (onClick != '' && typeof onClick != 'undefined') {
-                var jsFunc = targetingMsgJson['display']['jsFunc'];
-                onClick += getCookieParams();
-                contentDiv.onclick =
-                    function () {
-                        //invoke js function call
-                        if (typeof jsFunc != 'undefined') {
-                            //track notification clicked event
-                            wiz.fireRequest(onClick);
-                            invokeExternalJs(jsFunc, targetingMsgJson);
-                            //close iframe. using -1 for no campaignId
-                            wiz.closeIframe('-1', divId);
-                            return;
-                        }
-                        //pass on the gcookie|page|scookieId for capturing the click event
-                        if (targetingMsgJson['display']['window'] == '1') {
-                            window.open(onClick, '_blank');
-                        } else {
-                            window.location = onClick;
-                        }
+                var ctaElement;
+                if (isLegacy) {
+                    ctaElement = contentDiv;
+                } else {
+                    var jsCTAElements = contentDiv.getElementsByClassName('jsCT_CTA');
+                    if (typeof jsCTAElements != 'undefined' && jsCTAElements.length == 1) {
+                        ctaElement = jsCTAElements[0];
                     }
+                }
+                var jsFunc = targetingMsgJson['display']['jsFunc'];
+                var isPreview = targetingMsgJson['display']['preview'];
+                if(typeof isPreview == 'undefined'){
+                    onClick += getCookieParams();
+                }
+
+                if (typeof ctaElement != 'undefined') {
+                    ctaElement.onclick =
+                        function () {
+                            //invoke js function call
+                            if (typeof jsFunc != 'undefined') {
+                                //track notification clicked event
+                                if(typeof isPreview == 'undefined'){
+                                    wiz.fireRequest(onClick);
+                                }
+                                invokeExternalJs(jsFunc, targetingMsgJson);
+                                //close iframe. using -1 for no campaignId
+                                wiz.closeIframe('-1', divId);
+                                return;
+                            }
+                            //pass on the gcookie|page|scookieId for capturing the click event
+                            if (targetingMsgJson['display']['window'] == '1') {
+                                window.open(onClick, '_blank');
+                            } else {
+                                window.location = onClick;
+                            }
+                        }
+                }
             }
         };
 
@@ -1728,9 +1756,9 @@ function __wizrocket() {
             }
         };
 
-        var setupClickUrl = function (onClick, targetingMsgJson, contentDiv, divId) {
+        var setupClickUrl = function (onClick, targetingMsgJson, contentDiv, divId, isLegacy) {
             incrementImpression(targetingMsgJson);
-            setupClickEvent(onClick, targetingMsgJson, contentDiv, divId);
+            setupClickEvent(onClick, targetingMsgJson, contentDiv, divId, isLegacy);
         };
 
         var incrementImpression = function (targetingMsgJson) {
@@ -1750,33 +1778,64 @@ function __wizrocket() {
 
         var renderFooterNotification = function (targetingMsgJson) {
             var campaignId = targetingMsgJson['wzrk_id'].split('_')[0];
+            var displayObj = targetingMsgJson['display'];
 
-            var msgDiv = document.createElement('div');
-            msgDiv.id = 'wizParDiv';
-            var viewHeight = window.innerHeight;
-            var viewWidth = window.innerWidth;
-
-            var marginBottom = viewHeight * 5 / 100;
-            var contentHeight = 10;
-            var right = viewWidth * 5 / 100;
-            var bottomPosition = contentHeight + marginBottom;
-            var width = viewWidth * 30 / 100 + 20;
-            //for small devices  - mobile phones
-            if ((/mobile/i.test(navigator.userAgent) || (/mini/i.test(navigator.userAgent)) ) && /iPad/i.test(navigator.userAgent) == false) {
-                width = viewWidth * 85 / 100 + 20;
-                right = viewWidth * 5 / 100;
-                bottomPosition = viewHeight * 5 / 100;
-                //medium devices - tablets
-            } else if ('ontouchstart' in window || (/tablet/i.test(navigator.userAgent))) {
-                width = viewWidth * 50 / 100 + 20;
-                right = viewWidth * 5 / 100;
-                bottomPosition = viewHeight * 5 / 100;
+            if (displayObj['layout'] == 1) {
+                return showExitIntent(undefined, targetingMsgJson);
+            }
+            if (doCampHouseKeeping(targetingMsgJson) == false) {
+                return;
             }
 
+            var divId = 'wizParDiv' + displayObj['layout'];
 
-            msgDiv.setAttribute('style', 'display:block;overflow:hidden; bottom:' + bottomPosition + 'px !important;width:' + width + 'px !important;right:' + right + 'px !important;position:fixed;z-index:2147483647;');
+            if (document.getElementById(divId) != null) {
+                return;
+            }
+            campaignDivMap[campaignId] = divId;
+            var isBanner = displayObj['layout'] == 2;
+            var msgDiv = document.createElement('div');
+            msgDiv.id = divId;
+            var viewHeight = window.innerHeight;
+            var viewWidth = window.innerWidth;
+            var legacy = false;
+
+
+            if (!isBanner) {
+                var marginBottom = viewHeight * 5 / 100;
+                var contentHeight = 10;
+                var right = viewWidth * 5 / 100;
+                var bottomPosition = contentHeight + marginBottom;
+                var width = viewWidth * 30 / 100 + 20;
+                var widthPerct = 'width:30%;';
+                //for small devices  - mobile phones
+                if ((/mobile/i.test(navigator.userAgent) || (/mini/i.test(navigator.userAgent)) ) && /iPad/i.test(navigator.userAgent) == false) {
+                    width = viewWidth * 85 / 100 + 20;
+                    right = viewWidth * 5 / 100;
+                    bottomPosition = viewHeight * 5 / 100;
+                    widthPerct = 'width:80%;';
+                    //medium devices - tablets
+                } else if ('ontouchstart' in window || (/tablet/i.test(navigator.userAgent))) {
+                    width = viewWidth * 50 / 100 + 20;
+                    right = viewWidth * 5 / 100;
+                    bottomPosition = viewHeight * 5 / 100;
+                    widthPerct = 'width:50%;';
+                }
+
+                //legacy footer notif
+                if (typeof displayObj['proto'] == 'undefined') {
+                    legacy = true;
+                    msgDiv.setAttribute('style', 'display:block;overflow:hidden; bottom:' + bottomPosition + 'px !important;width:' + width + 'px !important;right:' + right + 'px !important;position:fixed;z-index:2147483647;');
+                } else {
+                    msgDiv.setAttribute('style', widthPerct + displayObj['iFrameStyle']);
+                }
+            } else {
+                msgDiv.setAttribute('style', displayObj['iFrameStyle']);
+            }
             document.body.appendChild(msgDiv);
             var iframe = document.createElement('iframe');
+
+            var borderRadius = displayObj['br'] == false ? "0" : "8";
 
             iframe['frameborder'] = '0px';
             iframe['marginheight'] = '0px';
@@ -1788,60 +1847,61 @@ function __wizrocket() {
             if (onClick != '' && typeof onClick != 'undefined') {
                 pointerCss = 'cursor:pointer;';
             }
-            var css = '' +
-                '<style type="text/css">' +
-                'body{margin:0;padding:0;}' +
-                '#contentDiv.wzrk{overflow:hidden;padding:0;text-align:center;' + pointerCss + '}' +
-                '#contentDiv.wzrk td{padding:15px 10px;}' +
-                '.wzrkPPtitle{font-weight: bold;font-size: 16px;font-family:arial;padding-bottom:10px;word-break: break-word;}' +
-                '.wzrkPPdscr{font-size: 14px;font-family:arial;line-height:16px;word-break: break-word;display:inline-block;}' +
-                '.PL15{padding-left:15px;}' +
-                '.wzrkPPwarp{margin:20px 20px 0 5px;padding:0px;border-radius: 8px;box-shadow: 1px 1px 5px #888888;}' +
-                'a.wzrkClose{cursor:pointer;position: absolute;top: 11px;right: 11px;z-index: 2147483647;font-size:19px;font-family:arial;font-weight:bold;text-decoration: none;width: 25px;/*height: 25px;*/text-align: center; -webkit-appearance: none; line-height: 25px;' +
-                'background: #353535;border: #fff 2px solid;border-radius: 100%;box-shadow: #777 2px 2px 2px;color:#fff;}' +
-                'a:hover.wzrkClose{background-color:#d1914a !important;color:#fff !important; -webkit-appearance: none;}' +
-                'td{vertical-align:top;}' +
-                'td.imgTd{border-top-left-radius:8px;border-bottom-left-radius:8px;}' +
-                '</style>';
 
-            var bgColor;
-            if (targetingMsgJson['display']['theme'] == 'dark') {
-                bgColor = "#2d2d2e";
-                textColor = "#eaeaea";
-                btnBg = '#353535';
-                leftTd = '#353535';
-                btColor = '#ffffff';
-            } else {
-                bgColor = "#ffffff";
-                textColor = "#000000";
-                leftTd = '#f4f4f4';
-                btnBg = '#a5a6a6';
-                btColor = '#ffffff';
-            }
-
+            var html;
             //direct html
             if (targetingMsgJson['msgContent']['type'] == 1) {
-                iframe.src = targetingMsgJson['msgContent']['html'];
-                msgDiv.appendChild(iframe);
-                return;
+                html = targetingMsgJson['msgContent']['html'];
+                html = html.replace('##campaignId##', campaignId);
+            } else {
+                var css = '' +
+                    '<style type="text/css">' +
+                    'body{margin:0;padding:0;}' +
+                    '#contentDiv.wzrk{overflow:hidden;padding:0;text-align:center;' + pointerCss + '}' +
+                    '#contentDiv.wzrk td{padding:15px 10px;}' +
+                    '.wzrkPPtitle{font-weight: bold;font-size: 16px;font-family:arial;padding-bottom:10px;word-break: break-word;}' +
+                    '.wzrkPPdscr{font-size: 14px;font-family:arial;line-height:16px;word-break: break-word;display:inline-block;}' +
+                    '.PL15{padding-left:15px;}' +
+                    '.wzrkPPwarp{margin:20px 20px 0 5px;padding:0px;border-radius: ' + borderRadius + 'px;box-shadow: 1px 1px 5px #888888;}' +
+                    'a.wzrkClose{cursor:pointer;position: absolute;top: 11px;right: 11px;z-index: 2147483647;font-size:19px;font-family:arial;font-weight:bold;text-decoration: none;width: 25px;/*height: 25px;*/text-align: center; -webkit-appearance: none; line-height: 25px;' +
+                    'background: #353535;border: #fff 2px solid;border-radius: 100%;box-shadow: #777 2px 2px 2px;color:#fff;}' +
+                    'a:hover.wzrkClose{background-color:#d1914a !important;color:#fff !important; -webkit-appearance: none;}' +
+                    'td{vertical-align:top;}' +
+                    'td.imgTd{border-top-left-radius:8px;border-bottom-left-radius:8px;}' +
+                    '</style>';
+
+                var bgColor, textColor, btnBg, leftTd, btColor;
+                if (targetingMsgJson['display']['theme'] == 'dark') {
+                    bgColor = "#2d2d2e";
+                    textColor = "#eaeaea";
+                    btnBg = '#353535';
+                    leftTd = '#353535';
+                    btColor = '#ffffff';
+                } else {
+                    bgColor = "#ffffff";
+                    textColor = "#000000";
+                    leftTd = '#f4f4f4';
+                    btnBg = '#a5a6a6';
+                    btColor = '#ffffff';
+                }
+                var titleText = targetingMsgJson['msgContent']['title'];
+                var descriptionText = targetingMsgJson['msgContent']['description'];
+                var imageTd = "";
+                if (typeof targetingMsgJson['msgContent']['imageUrl'] != 'undefined' && targetingMsgJson['msgContent']['imageUrl'] != '') {
+                    imageTd = "<td class='imgTd' style='background-color:" + leftTd + "'><img src='" + targetingMsgJson['msgContent']['imageUrl'] + "' height='60' width='60'></td>";
+                }
+                var onClickStr = "parent.$WZRK_WR.closeIframe(" + campaignId + ",'"+divId+"');";
+                var title = "<div class='wzrkPPwarp' style='color:" + textColor + ";background-color:" + bgColor + ";'>" +
+                    "<a href='javascript:void(0);' onclick=" + onClickStr + " class='wzrkClose' style='background-color:" + btnBg + ";color:" + btColor + "'>&times;</a>" +
+                    "<div id='contentDiv' class='wzrk'>" +
+                    "<table cellpadding='0' cellspacing='0' border='0'>" +
+                    //"<tr><td colspan='2'></td></tr>"+
+                    "<tr>" + imageTd + "<td style='vertical-align:top;'>" +
+                    "<div class='wzrkPPtitle' style='color:" + textColor + "'>" + titleText + "</div>";
+                var body = "<div class='wzrkPPdscr' style='color:" + textColor + "'>" + descriptionText + "<div></td></tr></table></div>";
+                html = css + title + body;
             }
 
-            var titleText = targetingMsgJson['msgContent']['title'];
-            var descriptionText = targetingMsgJson['msgContent']['description'];
-            var imageTd = "";
-            if (typeof targetingMsgJson['msgContent']['imageUrl'] != 'undefined' && targetingMsgJson['msgContent']['imageUrl'] != '') {
-                imageTd = "<td class='imgTd' style='background-color:" + leftTd + "'><img src='" + targetingMsgJson['msgContent']['imageUrl'] + "' height='60' width='60'></td>";
-            }
-            var onClickStr = "parent.$WZRK_WR.closeIframe(" + campaignId + ",'wizParDiv');";
-            var title = "<div class='wzrkPPwarp' style='color:" + textColor + ";background-color:" + bgColor + ";'>" +
-                "<a href='javascript:void(0);' onclick=" + onClickStr + " class='wzrkClose' style='background-color:" + btnBg + ";color:" + btColor + "'>&times;</a>" +
-                "<div id='contentDiv' class='wzrk'>" +
-                "<table cellpadding='0' cellspacing='0' border='0'>" +
-                    //"<tr><td colspan='2'></td></tr>"+
-                "<tr>" + imageTd + "<td style='vertical-align:top;'>" +
-                "<div class='wzrkPPtitle' style='color:" + textColor + "'>" + titleText + "</div>";
-            var body = "<div class='wzrkPPdscr' style='color:" + textColor + "'>" + descriptionText + "<div></td></tr></table></div>";
-            var html = css + title + body;
 
             iframe.setAttribute('style', 'z-index: 2147483647; display:block; width: 100% !important; border:0px !important; border-color:none !important;');
             msgDiv.appendChild(iframe);
@@ -1851,22 +1911,25 @@ function __wizrocket() {
             doc.open();
             doc.write(html);
             doc.close();
+
+
             //adjust iframe and body height of html inside correctly
-            contentHeight = document.getElementById("wiz-iframe").contentDocument.getElementById('contentDiv').scrollHeight + 26;
+            contentHeight = document.getElementById("wiz-iframe").contentDocument.getElementById('contentDiv').scrollHeight;
+            if (displayObj['custom-editor'] != true && !isBanner) {
+                contentHeight += 25;
+            }
             document.getElementById("wiz-iframe").contentDocument.body.style.margin = "0px";
             document.getElementById("wiz-iframe").style.height = contentHeight + "px";
-            return document.getElementById("wiz-iframe").contentDocument.getElementById('contentDiv');
+            var contentDiv = document.getElementById("wiz-iframe").contentDocument.getElementById('contentDiv');
+            setupClickUrl(onClick, targetingMsgJson, contentDiv, divId, legacy);
+
         };
 
         var _callBackCalled = false;
 
         var showFooterNotification = function (targetingMsgJson) {
-            if (document.getElementById("wizParDiv") != null) {
-                return;
-            }
-            if (doCampHouseKeeping(targetingMsgJson) == false) {
-                return;
-            }
+
+
             var onClick = targetingMsgJson['display']['onClick'];
             if (wizrocket.hasOwnProperty("notificationCallback") &&
                 typeof wizrocket["notificationCallback"] !== "undefined" &&
@@ -1906,40 +1969,56 @@ function __wizrocket() {
                     _callBackCalled = true;
                 }
             } else {
-                var contentDiv = renderFooterNotification(targetingMsgJson);
-                setupClickUrl(onClick, targetingMsgJson, contentDiv, 'wizParDiv');
+                renderFooterNotification(targetingMsgJson);
+
             }
         };
         var exitintentObj;
-        var showExitIntent = function () {
-            var targetingMsgJson = exitintentObj;
+        var showExitIntent = function (event, targetObj) {
+            var targetingMsgJson;
+            if(typeof event !='undefined' && event['clientY'] > 0){
+                return;
+            }
+            if (typeof targetObj == 'undefined') {
+                targetingMsgJson = exitintentObj;
+            } else {
+                targetingMsgJson = targetObj;
+            }
+
             if (document.getElementById("intentPreview") != null) {
                 return;
             }
-            //not desktop
-            if ((/mobile/i.test(navigator.userAgent)) || (/mini/i.test(navigator.userAgent)) || (/iPad/i.test(navigator.userAgent)) ||
-                ('ontouchstart' in window) || (/tablet/i.test(navigator.userAgent))) {
+            //dont show exit intent on tablet/mobile - only on desktop
+            if (typeof targetingMsgJson['display']['layout'] == 'undefined' &&
+                ((/mobile/i.test(navigator.userAgent)) || (/mini/i.test(navigator.userAgent)) || (/iPad/i.test(navigator.userAgent)) ||
+                ('ontouchstart' in window) || (/tablet/i.test(navigator.userAgent)))) {
                 return;
             }
-
 
             var campaignId = targetingMsgJson['wzrk_id'].split('_')[0];
             if (doCampHouseKeeping(targetingMsgJson) == false) {
                 return;
             }
+
+            campaignDivMap[campaignId] = 'intentPreview';
+            var legacy = false;
             var opacityDiv = document.createElement('div');
             opacityDiv.id = 'intentOpacityDiv';
-            opacityDiv.setAttribute('style', 'position: fixed;top: 0;bottom: 0;opacity: 0.6;left: 0;width: 100%;height: 100%;z-index: 2147483646;background: #000;');
+            opacityDiv.setAttribute('style', 'position: fixed;top: 0;bottom: 0;left: 0;width: 100%;height: 100%;z-index: 2147483646;background: rgba(0,0,0,0.7);');
             document.body.appendChild(opacityDiv);
 
             var msgDiv = document.createElement('div');
             msgDiv.id = 'intentPreview';
-            var viewHeight = window.innerHeight;
-            var viewWidth = window.innerWidth;
-            msgDiv.setAttribute('style', 'display:block;overflow:hidden;top:55% !important;left:50% !important;position:fixed;z-index:2147483647;width:600px !important;height:600px !important;margin:-300px 0 0 -300px !important;');
+
+            if (typeof targetingMsgJson['display']['proto'] == 'undefined') {
+                legacy = true;
+                msgDiv.setAttribute('style', 'display:block;overflow:hidden;top:55% !important;left:50% !important;position:fixed;z-index:2147483647;width:600px !important;height:600px !important;margin:-300px 0 0 -300px !important;');
+            } else {
+                msgDiv.setAttribute('style', targetingMsgJson['display']['iFrameStyle']);
+            }
             document.body.appendChild(msgDiv);
             var iframe = document.createElement('iframe');
-
+            var borderRadius = targetingMsgJson['display']['br'] == false ? "0" : "8";
             iframe.frameborder = '0px';
             iframe.marginheight = '0px';
             iframe.marginwidth = '0px';
@@ -1950,53 +2029,60 @@ function __wizrocket() {
             if (onClick != '' && typeof onClick != 'undefined') {
                 pointerCss = 'cursor:pointer;';
             }
-            var css = '' +
-                '<style type="text/css">' +
-                'body{margin:0;padding:0;}' +
-                '#contentDiv.wzrk{overflow:hidden;padding:0 0 20px 0;text-align:center;' + pointerCss + '}' +
-                '#contentDiv.wzrk td{padding:15px 10px;}' +
-                '.wzrkPPtitle{font-weight: bold;font-size: 24px;font-family:arial;word-break: break-word;padding-top:20px;}' +
-                '.wzrkPPdscr{font-size: 14px;font-family:arial;line-height:16px;word-break: break-word;display:inline-block;padding:20px 20px 0 20px;line-height:20px;}' +
-                '.PL15{padding-left:15px;}' +
-                '.wzrkPPwarp{margin:20px 20px 0 5px;padding:0px;border-radius: 8px;box-shadow: 1px 1px 5px #888888;}' +
-                'a.wzrkClose{cursor:pointer;position: absolute;top: 11px;right: 11px;z-index: 2147483647;font-size:19px;font-family:arial;font-weight:bold;text-decoration: none;width: 25px;/*height: 25px;*/text-align: center; -webkit-appearance: none; line-height: 25px;' +
-                'background: #353535;border: #fff 2px solid;border-radius: 100%;box-shadow: #777 2px 2px 2px;color:#fff;}' +
-                'a:hover.wzrkClose{background-color:#d1914a !important;color:#fff !important; -webkit-appearance: none;}' +
-                '#contentDiv .button{padding-top:20px;}' +
-                '#contentDiv .button a{font-size: 14px;font-weight:bold;font-family:arial;text-align:center;display:inline-block;text-decoration:none;padding:0 30px;height:40px;line-height:40px;background:#ea693b;color:#fff;border-radius:4px;-webkit-border-radius:4px;-moz-border-radius:4px;}' +
-                '</style>';
-
-            var bgColor;
-            if (targetingMsgJson['display']['theme'] == 'dark') {
-                bgColor = "#2d2d2e";
-                textColor = "#eaeaea";
-                btnBg = '#353535';
-                btColor = '#ffffff';
+            var html;
+            //direct html
+            if (targetingMsgJson['msgContent']['type'] == 1) {
+                html = targetingMsgJson['msgContent']['html'];
+                html = html.replace('##campaignId##', campaignId);
             } else {
-                bgColor = "#ffffff";
-                textColor = "#000000";
-                btnBg = '#a5a6a6';
-                btColor = '#ffffff';
-            }
-            var titleText = targetingMsgJson['msgContent']['title'];
-            var descriptionText = targetingMsgJson['msgContent']['description'];
-            var ctaText = "";
-            if (typeof targetingMsgJson['msgContent']['ctaText'] != 'undefined' && targetingMsgJson['msgContent']['ctaText'] != '') {
-                ctaText = "<div class='button'><a href='#'>" + targetingMsgJson['msgContent']['ctaText'] + "</a></div>";
-            }
+                var css = '' +
+                    '<style type="text/css">' +
+                    'body{margin:0;padding:0;}' +
+                    '#contentDiv.wzrk{overflow:hidden;padding:0 0 20px 0;text-align:center;' + pointerCss + '}' +
+                    '#contentDiv.wzrk td{padding:15px 10px;}' +
+                    '.wzrkPPtitle{font-weight: bold;font-size: 24px;font-family:arial;word-break: break-word;padding-top:20px;}' +
+                    '.wzrkPPdscr{font-size: 14px;font-family:arial;line-height:16px;word-break: break-word;display:inline-block;padding:20px 20px 0 20px;line-height:20px;}' +
+                    '.PL15{padding-left:15px;}' +
+                    '.wzrkPPwarp{margin:20px 20px 0 5px;padding:0px;border-radius: ' + borderRadius + 'px;box-shadow: 1px 1px 5px #888888;}' +
+                    'a.wzrkClose{cursor:pointer;position: absolute;top: 11px;right: 11px;z-index: 2147483647;font-size:19px;font-family:arial;font-weight:bold;text-decoration: none;width: 25px;/*height: 25px;*/text-align: center; -webkit-appearance: none; line-height: 25px;' +
+                    'background: #353535;border: #fff 2px solid;border-radius: 100%;box-shadow: #777 2px 2px 2px;color:#fff;}' +
+                    'a:hover.wzrkClose{background-color:#d1914a !important;color:#fff !important; -webkit-appearance: none;}' +
+                    '#contentDiv .button{padding-top:20px;}' +
+                    '#contentDiv .button a{font-size: 14px;font-weight:bold;font-family:arial;text-align:center;display:inline-block;text-decoration:none;padding:0 30px;height:40px;line-height:40px;background:#ea693b;color:#fff;border-radius:4px;-webkit-border-radius:4px;-moz-border-radius:4px;}' +
+                    '</style>';
 
-            var imageTd = "";
-            if (typeof targetingMsgJson['msgContent']['imageUrl'] != 'undefined' && targetingMsgJson['msgContent']['imageUrl'] != '') {
-                imageTd = "<div style='padding-top:20px;'><img src='" + targetingMsgJson['msgContent']['imageUrl'] + "' width='500' alt=" + titleText + " /></div>";
+                var bgColor, textColor, btnBg, btColor;
+                if (targetingMsgJson['display']['theme'] == 'dark') {
+                    bgColor = "#2d2d2e";
+                    textColor = "#eaeaea";
+                    btnBg = '#353535';
+                    btColor = '#ffffff';
+                } else {
+                    bgColor = "#ffffff";
+                    textColor = "#000000";
+                    btnBg = '#a5a6a6';
+                    btColor = '#ffffff';
+                }
+                var titleText = targetingMsgJson['msgContent']['title'];
+                var descriptionText = targetingMsgJson['msgContent']['description'];
+                var ctaText = "";
+                if (typeof targetingMsgJson['msgContent']['ctaText'] != 'undefined' && targetingMsgJson['msgContent']['ctaText'] != '') {
+                    ctaText = "<div class='button'><a href='#'>" + targetingMsgJson['msgContent']['ctaText'] + "</a></div>";
+                }
+
+                var imageTd = "";
+                if (typeof targetingMsgJson['msgContent']['imageUrl'] != 'undefined' && targetingMsgJson['msgContent']['imageUrl'] != '') {
+                    imageTd = "<div style='padding-top:20px;'><img src='" + targetingMsgJson['msgContent']['imageUrl'] + "' width='500' alt=" + titleText + " /></div>";
+                }
+                var onClickStr = "parent.$WZRK_WR.closeIframe(" + campaignId + ",'intentPreview');";
+                var title = "<div class='wzrkPPwarp' style='color:" + textColor + ";background-color:" + bgColor + ";'>" +
+                    "<a href='javascript:void(0);' onclick=" + onClickStr + " class='wzrkClose' style='background-color:" + btnBg + ";color:" + btColor + "'>&times;</a>" +
+                    "<div id='contentDiv' class='wzrk'>" +
+                    "<div class='wzrkPPtitle' style='color:" + textColor + "'>" + titleText + "</div>";
+                var body = "<div class='wzrkPPdscr' style='color:" + textColor + "'>" + descriptionText + "</div>" + imageTd + ctaText +
+                    "</div></div>";
+                html = css + title + body;
             }
-            var onClickStr = "parent.$WZRK_WR.closeIframe(" + campaignId + ",'intentPreview');";
-            var title = "<div class='wzrkPPwarp' style='color:" + textColor + ";background-color:" + bgColor + ";'>" +
-                "<a href='javascript:void(0);' onclick=" + onClickStr + " class='wzrkClose' style='background-color:" + btnBg + ";color:" + btColor + "'>&times;</a>" +
-                "<div id='contentDiv' class='wzrk'>" +
-                "<div class='wzrkPPtitle' style='color:" + textColor + "'>" + titleText + "</div>";
-            var body = "<div class='wzrkPPdscr' style='color:" + textColor + "'>" + descriptionText + "</div>" + imageTd + ctaText +
-                "</div></div>";
-            var html = css + title + body;
             iframe.setAttribute('style', 'z-index: 2147483647; display:block; height: 100% !important; width: 100% !important;min-height:80px !important;border:0px !important; border-color:none !important;');
             msgDiv.appendChild(iframe);
             var ifrm = (iframe.contentWindow) ? iframe.contentWindow : (iframe.contentDocument.document) ? iframe.contentDocument.document : iframe.contentDocument;
@@ -2005,8 +2091,9 @@ function __wizrocket() {
             doc.open();
             doc.write(html);
             doc.close();
+
             var contentDiv = document.getElementById("wiz-iframe-intent").contentDocument.getElementById('contentDiv');
-            setupClickUrl(onClick, targetingMsgJson, contentDiv, 'intentPreview');
+            setupClickUrl(onClick, targetingMsgJson, contentDiv, 'intentPreview', legacy);
 
 
         };
@@ -2096,7 +2183,7 @@ function __wizrocket() {
             data['type'] = 'view';
         }
 
-        data = wiz.addSystemDataToObject(data,undefined);
+        data = wiz.addSystemDataToObject(data, undefined);
         return wiz.addToURL(recorderURL, "d", wiz.compressData(JSON.stringify(data)));
 
     };
