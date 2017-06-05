@@ -120,20 +120,13 @@ function __wizrocket() {
                     var sessionObj = wiz.getSessionCookieObject();
                     var shouldSendToken = typeof sessionObj['p'] === 'undefined' || sessionObj['p'] === 1;
                     if(shouldSendToken){
-                        var didTokenChange = typeof wiz.readFromLSorCookie(NOTIF_COOKIE_NAME) === 'undefined' ||
-                            subscriptionData['endpoint'] !== JSON.parse(wiz.readFromLSorCookie(NOTIF_COOKIE_NAME))['endpoint']
-                        if (didTokenChange) {
-                            var payload = subscriptionData;
-                            payload = wiz.addSystemDataToObject(payload, true);
-                            payload = JSON.stringify(payload);
-                            var pageLoadUrl = dataPostURL;
-                            pageLoadUrl = wiz.addToURL(pageLoadUrl, "type", "data");
-                            pageLoadUrl = wiz.addToURL(pageLoadUrl, "d", wiz.compressData(payload));
-                            wiz.fireRequest(pageLoadUrl);
-
-                            // persist to local storage
-                            wiz.saveToLSorCookie(NOTIF_COOKIE_NAME, payload);
-                        }
+                        var payload = subscriptionData;
+                        payload = wiz.addSystemDataToObject(payload, true);
+                        payload = JSON.stringify(payload);
+                        var pageLoadUrl = dataPostURL;
+                        pageLoadUrl = wiz.addToURL(pageLoadUrl, "type", "data");
+                        pageLoadUrl = wiz.addToURL(pageLoadUrl, "d", wiz.compressData(payload));
+                        wiz.fireRequest(pageLoadUrl);
                     }
 
                     if (typeof subscriptionCallback !== "undefined" && typeof subscriptionCallback === "function") {
