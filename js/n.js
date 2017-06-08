@@ -1,7 +1,8 @@
 function __wizrocket() {
 
 
-    var targetDomain = 'wzrkt.com';
+    // var targetDomain = 'wzrkt.com';
+    var targetDomain = "eu1.wzrkt.com";
     //targetDomain = 'localhost:2829'; //ALWAYS comment this line before deploying
 
     var wz_pr = location.protocol;
@@ -15,7 +16,7 @@ function __wizrocket() {
     var domain = window.location.hostname;
     var broadDomain;
     var wc = window.console;
-    var requestTime = 0, seqNo = 0;
+    var requestTime = 0, seqNo = 0, fseen = 0, lseen = 0;
     var wzrk_error = {}; //to trap input errors
     var wiz_counter = 0; // to keep track of number of times we load the body
 
@@ -30,6 +31,7 @@ function __wizrocket() {
     var SCOOKIE_PREFIX = "WZRK_S", EV_COOKIE = "WZRK_EV", META_COOKIE = "WZRK_META", PR_COOKIE = "WZRK_PR", ARP_COOKIE = " WZRK_ARP";
     var blockRequeust = false, clearCookie = false;
     var CLEAR = 'clear';
+    var FSEEN = 'fts', LSEEN = 'lts';
     var SCOOKIE_NAME, globalChargedId;
     var CHARGED_ID = "chargedId";
     var LCOOKIE_NAME = "WZRK_L"; // store the last event to fire in case of race condition
@@ -193,6 +195,7 @@ function __wizrocket() {
         recorderURL = wz_pr + '//' + targetDomain + '/r?r=1';
         emailURL = wz_pr + '//' + targetDomain + '/e?r=1';
         targetCountURL = wz_pr + '//' + targetDomain + '/m?r=1';
+
         var currLocation = location.href;
         var url_params = wzrk_util.getURLParams(location.href.toLowerCase());
 
@@ -1136,10 +1139,20 @@ function __wizrocket() {
         }                               //Global cookie
 
         var obj = wiz.getSessionCookieObject();
-
+        fseen = wiz.getMetaProp(FSEEN);
+        lseen = wiz.getMetaProp(LSEEN);
+        if(typeof fseen =='undefined'){
+            fseen = 0;
+        }
+        if(typeof lseen == 'undefined'){
+            lseen = 0;
+        }
+        dataObject[FSEEN] = fseen;
+        dataObject[LSEEN] = lseen;
         dataObject['s'] = obj['s'];                                                      //Session cookie
         dataObject['pg'] = (typeof obj['p'] == 'undefined') ? 1 : obj['p'];                //Page count
-
+        wiz.setMetaProp(FSEEN, fseen == 0 ? wzrk_util.getNow() : fseen);
+        wiz.setMetaProp(LSEEN, wzrk_util.getNow());
         return dataObject;
     };
 
@@ -1575,8 +1588,8 @@ function __wizrocket() {
             if (typeof askAgainTimeInSeconds !== "undefined") {
                 var ASK_TIME_IN_SECONDS = askAgainTimeInSeconds;
             } else {
-                // 10 seconds by default
-                var ASK_TIME_IN_SECONDS = 10;
+                // 7 days by default
+                var ASK_TIME_IN_SECONDS = 7 * 24 * 60 * 60;
             }
 
             if (now - wiz.getMetaProp('notif_last_time') < ASK_TIME_IN_SECONDS) {
