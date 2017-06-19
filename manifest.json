@@ -1,5 +1,5 @@
-//{
-//  "name": "Test",
-//  "gcm_sender_id": "761100341161"
-//}
-{"name": "iZooto Push Notification","short_name": "iZooto Notifier","icons": [{"src": "icon-192x192.png","sizes": "192x192"}],"start_url": "./index.html?homescreen=1","display": "standalone","gcm_sender_id": "475150756944"}
+{
+  "name": "Test",
+  "gcm_sender_id": "761100341161"
+}
+//{"name": "iZooto Push Notification","short_name": "iZooto Notifier","icons": [{"src": "icon-192x192.png","sizes": "192x192"}],"start_url": "./index.html?homescreen=1","display": "standalone","gcm_sender_id": "475150756944"}

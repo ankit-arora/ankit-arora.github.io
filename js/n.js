@@ -21,11 +21,11 @@ function __wizrocket() {
     // to be used for checking whether the script loaded fine and the wiz.init function was called
     var onloadcalled = 0;  // 1 = fired
 
-    // pcookie stores current page url
-    var gcookie, pcookie, scookieObj;
+
+    var gcookie, scookieObj;
     var accountId, region;
     var campaignDivMap = {};
-    var GCOOKIE_NAME = "WZRK_G", PCOOKIE_NAME = "WZRK_P", KCOOKIE_NAME = "WZRK_K", CAMP_COOKIE_NAME = "WZRK_CAMP";
+    var GCOOKIE_NAME = "WZRK_G", KCOOKIE_NAME = "WZRK_K", CAMP_COOKIE_NAME = "WZRK_CAMP";
     var SCOOKIE_PREFIX = "WZRK_S", EV_COOKIE = "WZRK_EV", META_COOKIE = "WZRK_META", PR_COOKIE = "WZRK_PR", ARP_COOKIE = " WZRK_ARP";
     var blockRequeust = false, clearCookie = false;
     var CLEAR = 'clear';
@@ -37,8 +37,7 @@ function __wizrocket() {
     var staleEvtMaxTime = 20 * 60; //20 mins
 
     // path to reference the JS for our dialog
-    // var wizAlertJSPath = 'https://d2r1yp2w7bby2u.cloudfront.net/js/wzrk_dialog.min.js';
-    var wizAlertJSPath = 'https://ankit-arora.github.io/js/dialog.js';
+    var wizAlertJSPath = 'https://d2r1yp2w7bby2u.cloudfront.net/js/wzrk_dialog.min.js';
 
     var FIRST_PING_FREQ_IN_MILLIS = 2 * 60 * 1000; // 2 mins
     var CONTINUOUS_PING_FREQ_IN_MILLIS = 5 * 60 * 1000; // 5 mins
@@ -150,7 +149,8 @@ function __wizrocket() {
     };
 
     wiz.init = function () {
-
+        //delete pcookie
+        wiz.deleteCookie("WZRK_P",window.location.hostname);
         wiz.g(); // load cookies on pageload; this HAS to be the first thing in this method
 
         wc = {
@@ -193,7 +193,7 @@ function __wizrocket() {
             targetDomain = region + '.' + targetDomain;
         }
 
-        dataPostURL = wz_pr + '//' + targetDomain + '/a?t=65';
+        dataPostURL = wz_pr + '//' + targetDomain + '/a?t=67';
         recorderURL = wz_pr + '//' + targetDomain + '/r?r=1';
         emailURL = wz_pr + '//' + targetDomain + '/e?r=1';
         targetCountURL = wz_pr + '//' + targetDomain + '/m?r=1';
@@ -207,14 +207,6 @@ function __wizrocket() {
 
         wiz.pushOutStaleEvents();
         wiz.overloadArrayPush();
-
-        var samePage = false;
-
-        if (currLocation == pcookie) {  // don't fire if cookie has curr url as value
-            samePage = true;
-        }
-
-        wiz.createCookie(PCOOKIE_NAME, currLocation, 0, location.hostname); // self-destruct after 15 mins
 
 
         // -- update page count
@@ -270,9 +262,7 @@ function __wizrocket() {
 
         data = wiz.addSystemDataToObject(data, undefined);
         data['cpg'] = currLocation;
-        if (samePage) {
-            data['drop'] = true;
-        }
+
         data[CAMP_COOKIE_NAME] = wiz.getCampaignObj();
         var pageLoadUrl = dataPostURL;
         wiz.addFlags(data);
@@ -929,7 +919,7 @@ function __wizrocket() {
                 profileData['Gender'] = "M";
             } else if (user['gender'] == "female") {
                 profileData['Gender'] = "F";
-            }else if (user['gender'] == "other") {
+            } else if (user['gender'] == "other") {
                 profileData['Gender'] = "O";
             }
         }
@@ -990,7 +980,7 @@ function __wizrocket() {
             profileData['Gender'] = "M";
         } else if (user['gender'] == "female") {
             profileData['Gender'] = "F";
-        }else{
+        } else {
             profileData['Gender'] = "O";
         }
 
@@ -1184,8 +1174,6 @@ function __wizrocket() {
         if (gcookie == null && wzrk_util.isLocalStorageSupported()) { // only get from localStorage if cookie is null
             gcookie = localStorage[GCOOKIE_NAME];
         }
-
-        pcookie = wiz.readCookie(PCOOKIE_NAME);
     };
 
     wiz.setMetaProp = function (key, value) {
@@ -1450,18 +1438,17 @@ function __wizrocket() {
                 sessionStorage[CAMP_COOKIE_NAME] = encodeURIComponent(campObj);
             }
         }
-        if( typeof campaignDivMap != 'undefined'){
+        if (typeof campaignDivMap != 'undefined') {
             var divId = campaignDivMap[campaignId];
-            if(typeof divId != 'undefined'){
+            if (typeof divId != 'undefined') {
                 document.getElementById(divId).style.display = "none";
-                if(divId == 'intentPreview'){
+                if (divId == 'intentPreview') {
                     if (document.getElementById('intentOpacityDiv') != null) {
                         document.getElementById('intentOpacityDiv').style.display = "none";
                     }
                 }
             }
         }
-
 
 
     };
@@ -1724,7 +1711,7 @@ function __wizrocket() {
                 }
                 var jsFunc = targetingMsgJson['display']['jsFunc'];
                 var isPreview = targetingMsgJson['display']['preview'];
-                if(typeof isPreview == 'undefined'){
+                if (typeof isPreview == 'undefined') {
                     onClick += getCookieParams();
                 }
 
@@ -1734,7 +1721,7 @@ function __wizrocket() {
                             //invoke js function call
                             if (typeof jsFunc != 'undefined') {
                                 //track notification clicked event
-                                if(typeof isPreview == 'undefined'){
+                                if (typeof isPreview == 'undefined') {
                                     wiz.fireRequest(onClick);
                                 }
                                 invokeExternalJs(jsFunc, targetingMsgJson);
@@ -1898,7 +1885,7 @@ function __wizrocket() {
                 if (typeof targetingMsgJson['msgContent']['imageUrl'] != 'undefined' && targetingMsgJson['msgContent']['imageUrl'] != '') {
                     imageTd = "<td class='imgTd' style='background-color:" + leftTd + "'><img src='" + targetingMsgJson['msgContent']['imageUrl'] + "' height='60' width='60'></td>";
                 }
-                var onClickStr = "parent.$WZRK_WR.closeIframe(" + campaignId + ",'"+divId+"');";
+                var onClickStr = "parent.$WZRK_WR.closeIframe(" + campaignId + ",'" + divId + "');";
                 var title = "<div class='wzrkPPwarp' style='color:" + textColor + ";background-color:" + bgColor + ";'>" +
                     "<a href='javascript:void(0);' onclick=" + onClickStr + " class='wzrkClose' style='background-color:" + btnBg + ";color:" + btColor + "'>&times;</a>" +
                     "<div id='contentDiv' class='wzrk'>" +
@@ -1984,7 +1971,7 @@ function __wizrocket() {
         var exitintentObj;
         var showExitIntent = function (event, targetObj) {
             var targetingMsgJson;
-            if(typeof event !='undefined' && event['clientY'] > 0){
+            if (typeof event != 'undefined' && event['clientY'] > 0) {
                 return;
             }
             if (typeof targetObj == 'undefined') {
