@@ -105,6 +105,7 @@ function __wizrocket() {
             navigator["serviceWorker"]['register'](serviceWorkerPath)['then'](function () {
                 return navigator['serviceWorker']['ready'];
             })['then'](function (serviceWorkerRegistration) {
+                console.log("scope: " + serviceWorkerRegistration.scope);
                 serviceWorkerRegistration['pushManager']['subscribe']({'userVisibleOnly': true})
                     ['then'](function (subscription) {
                     wc.l('Service Worker registered. Endpoint: ' + subscription['endpoint']);
