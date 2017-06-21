@@ -10,7 +10,7 @@ function __wizrocket() {
     }
     var dataPostURL, recorderURL, emailURL, targetCountURL;
     var wiz = this;
-    var serviceWorkerPath = '/clevertap_sw.js'; // the service worker is placed in the doc root
+    // var serviceWorkerPath = '/clevertap_sw.js'; // the service worker is placed in the doc root
     var doc = document;
     var domain = window.location.hostname;
     var broadDomain;
@@ -98,7 +98,7 @@ function __wizrocket() {
     /**
      * Sets up a service worker for chrome push notifications and sends the data to LC
      */
-    wiz.setUpChromeNotifications = function (subscriptionCallback) {
+    wiz.setUpChromeNotifications = function (subscriptionCallback,serviceWorkerPath) {
 
 
         if ('serviceWorker' in navigator) {
@@ -1488,6 +1488,7 @@ function __wizrocket() {
         var rejectCallback;
         var subscriptionCallback;
         var hidePoweredByCT;
+        var serviceWorkerPath;
 
         if (displayArgs.length === 1) {
             if (wzrk_util.isObject(displayArgs[0])) {
@@ -1503,6 +1504,7 @@ function __wizrocket() {
                 rejectCallback = notifObj["rejectCallback"];
                 subscriptionCallback = notifObj["subscriptionCallback"];
                 hidePoweredByCT = notifObj["hidePoweredByCT"];
+                serviceWorkerPath = notifObj["serviceWorkerPath"];
             }
         } else {
             titleText = displayArgs[0];
@@ -1520,6 +1522,10 @@ function __wizrocket() {
 
         if (typeof hidePoweredByCT === "undefined") {
             hidePoweredByCT = false;
+        }
+
+        if (typeof serviceWorkerPath === "undefined") {
+            serviceWorkerPath = '/clevertap_sw.js';
         }
 
         // ensure that the browser supports notifications
@@ -1547,7 +1553,7 @@ function __wizrocket() {
         // handle migrations from other services -> chrome notifications may have already been asked for before
         if (Notification.permission === 'granted') {
             // skip the dialog and register
-            wiz.setUpChromeNotifications(subscriptionCallback);
+            wiz.setUpChromeNotifications(subscriptionCallback,serviceWorkerPath);
             return;
         } else if (Notification.permission === 'denied') {
             // we've lost this profile :'(
@@ -1575,7 +1581,7 @@ function __wizrocket() {
         }
 
         if (skipDialog) {
-            wiz.setUpChromeNotifications(subscriptionCallback);
+            wiz.setUpChromeNotifications(subscriptionCallback,serviceWorkerPath);
             return;
         }
 
@@ -1605,7 +1611,7 @@ function __wizrocket() {
                     if (typeof okCallback !== "undefined" && typeof okCallback === "function") {
                         okCallback();
                     }
-                    wiz.setUpChromeNotifications(subscriptionCallback);
+                    wiz.setUpChromeNotifications(subscriptionCallback,serviceWorkerPath);
                 } else {
                     if (typeof rejectCallback !== "undefined" && typeof rejectCallback === "function") {
                         rejectCallback();
