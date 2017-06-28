@@ -1,7 +1,7 @@
 function __wizrocket() {
 
 
-    var targetDomain = 'wzrkt.com';
+    var targetDomain = 'eu1.wzrkt.com';
     //targetDomain = 'localhost:2829'; //ALWAYS comment this line before deploying
 
     var wz_pr = location.protocol;
