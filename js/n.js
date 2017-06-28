@@ -10,11 +10,12 @@ function __wizrocket() {
     }
     var dataPostURL, recorderURL, emailURL, targetCountURL;
     var wiz = this;
-    // var serviceWorkerPath = '/clevertap_sw.js'; // the service worker is placed in the doc root
+    var serviceWorkerPath = '/clevertap_sw.js'; // the service worker is placed in the doc root
     var doc = document;
     var domain = window.location.hostname;
     var broadDomain;
     var wc = window.console;
+    var requestTime = 0, seqNo = 0, fseen = 0, lseen = 0;
     var wzrk_error = {}; //to trap input errors
     var wiz_counter = 0; // to keep track of number of times we load the body
 
@@ -29,7 +30,9 @@ function __wizrocket() {
     var SCOOKIE_PREFIX = "WZRK_S", EV_COOKIE = "WZRK_EV", META_COOKIE = "WZRK_META", PR_COOKIE = "WZRK_PR", ARP_COOKIE = " WZRK_ARP";
     var blockRequeust = false, clearCookie = false;
     var CLEAR = 'clear';
-    var SCOOKIE_NAME;
+    var FSEEN = 'fts', LSEEN = 'lts';
+    var SCOOKIE_NAME, globalChargedId;
+    var CHARGED_ID = "chargedId";
     var LCOOKIE_NAME = "WZRK_L"; // store the last event to fire in case of race condition
     var NOTIF_COOKIE_NAME = "WZRK_N"; // check if the user has subscribed for web push notifications
     var globalEventsMap, globalProfileMap, lastSessionId, currentSessionId;
@@ -98,14 +101,13 @@ function __wizrocket() {
     /**
      * Sets up a service worker for chrome push notifications and sends the data to LC
      */
-    wiz.setUpChromeNotifications = function (subscriptionCallback,serviceWorkerPath) {
+    wiz.setUpChromeNotifications = function (subscriptionCallback) {
 
 
         if ('serviceWorker' in navigator) {
             navigator["serviceWorker"]['register'](serviceWorkerPath)['then'](function () {
                 return navigator['serviceWorker']['ready'];
             })['then'](function (serviceWorkerRegistration) {
-                console.log("scope: " + serviceWorkerRegistration.scope);
                 serviceWorkerRegistration['pushManager']['subscribe']({'userVisibleOnly': true})
                     ['then'](function (subscription) {
                     wc.l('Service Worker registered. Endpoint: ' + subscription['endpoint']);
@@ -116,22 +118,17 @@ function __wizrocket() {
                     // remove the common chrome endpoint at the beginning of the token
                     subscriptionData['endpoint'] = subscriptionData['endpoint'].split('/').pop();
 
-                    // if the token changes; push over the new stuff
-                    if (typeof wiz.readFromLSorCookie(NOTIF_COOKIE_NAME) !== 'undefined') {
-                        if (subscriptionData['endpoint'] === JSON.parse(wiz.readFromLSorCookie(NOTIF_COOKIE_NAME))['endpoint'])
-                            return;
+                    var sessionObj = wiz.getSessionCookieObject();
+                    var shouldSendToken = typeof sessionObj['p'] === 'undefined' || sessionObj['p'] === 1;
+                    if(shouldSendToken){
+                        var payload = subscriptionData;
+                        payload = wiz.addSystemDataToObject(payload, true);
+                        payload = JSON.stringify(payload);
+                        var pageLoadUrl = dataPostURL;
+                        pageLoadUrl = wiz.addToURL(pageLoadUrl, "type", "data");
+                        pageLoadUrl = wiz.addToURL(pageLoadUrl, "d", wiz.compressData(payload));
+                        wiz.fireRequest(pageLoadUrl);
                     }
-                    // the final payload is just the stringified subscription object
-                    var payload = subscriptionData;
-                    payload = wiz.addSystemDataToObject(payload, true);
-                    payload = JSON.stringify(payload);
-                    var pageLoadUrl = dataPostURL;
-                    pageLoadUrl = wiz.addToURL(pageLoadUrl, "type", "data");
-                    pageLoadUrl = wiz.addToURL(pageLoadUrl, "d", wiz.compressData(payload));
-                    wiz.fireRequest(pageLoadUrl);
-
-                    // persist to local storage
-                    wiz.saveToLSorCookie(NOTIF_COOKIE_NAME, payload);
 
                     if (typeof subscriptionCallback !== "undefined" && typeof subscriptionCallback === "function") {
                         subscriptionCallback();
@@ -198,6 +195,7 @@ function __wizrocket() {
         recorderURL = wz_pr + '//' + targetDomain + '/r?r=1';
         emailURL = wz_pr + '//' + targetDomain + '/e?r=1';
         targetCountURL = wz_pr + '//' + targetDomain + '/m?r=1';
+
         var currLocation = location.href;
         var url_params = wzrk_util.getURLParams(location.href.toLowerCase());
 
@@ -273,7 +271,7 @@ function __wizrocket() {
         }
         pageLoadUrl = wiz.addToURL(pageLoadUrl, "type", "page");
         pageLoadUrl = wiz.addToURL(pageLoadUrl, "d", wiz.compressData(JSON.stringify(data)));
-        wiz.fireRequest(pageLoadUrl);
+        wiz.saveAndFireRequest(pageLoadUrl, false);
 
 
         // -- ping request logic
@@ -285,7 +283,7 @@ function __wizrocket() {
 
             pageLoadUrl = wiz.addToURL(pageLoadUrl, "type", EVT_PING);
             pageLoadUrl = wiz.addToURL(pageLoadUrl, "d", wiz.compressData(JSON.stringify(data)));
-            wiz.fireRequest(pageLoadUrl);
+            wiz.saveAndFireRequest(pageLoadUrl, false);
         };
 
         setTimeout(function () {
@@ -418,9 +416,14 @@ function __wizrocket() {
 
                 // use the current location protocol, since it may have gone from http to https when we saved the original request
                 var newUrl = wz_pr + url.substring(url.indexOf('//'));
-
+                if (epoch == requestTime) {
+                    seqNo++;
+                } else {
+                    requestTime = now;
+                    seqNo = 0;
+                }
                 // using the epoch as the request id - this helps reduce dupe events
-                wiz.fireRequest(newUrl + '&dl=' + d + '&i=' + epoch);
+                wiz.fireRequest(newUrl + '&dl=' + d + '&i=' + epoch + '&sn=' + seqNo);
             }
         }
     };
@@ -490,8 +493,6 @@ function __wizrocket() {
                         eventArr.unshift(eventObj);    // put it back if it is not an object
                     } else {
                         //check Charged Event vs. other events.
-
-
                         if (eventName == "Charged") {
                             if (!wiz.isChargedEventStructureValid(eventObj)) {
                                 wiz.reportError(511, "Charged event structure invalid. Not sent.");
@@ -898,7 +899,14 @@ function __wizrocket() {
 
 
         if (!blockRequeust || override || clearCookie) {
-            wiz.fireRequest(url + '&i=' + now);
+            if (now == requestTime) {
+                seqNo++;
+            } else {
+                requestTime = now;
+                seqNo = 0;
+            }
+
+            wiz.fireRequest(url + '&i=' + now + "&sn=" + seqNo);
         }
 
     };
@@ -1121,10 +1129,20 @@ function __wizrocket() {
         }                               //Global cookie
 
         var obj = wiz.getSessionCookieObject();
-
+        fseen = wiz.getMetaProp(FSEEN);
+        lseen = wiz.getMetaProp(LSEEN);
+        if(typeof fseen =='undefined'){
+            fseen = 0;
+        }
+        if(typeof lseen == 'undefined'){
+            lseen = 0;
+        }
+        dataObject[FSEEN] = fseen;
+        dataObject[LSEEN] = lseen;
         dataObject['s'] = obj['s'];                                                      //Session cookie
         dataObject['pg'] = (typeof obj['p'] == 'undefined') ? 1 : obj['p'];                //Page count
-
+        wiz.setMetaProp(FSEEN, fseen == 0 ? wzrk_util.getNow() : fseen);
+        wiz.setMetaProp(LSEEN, wzrk_util.getNow());
         return dataObject;
     };
 
@@ -1417,6 +1435,7 @@ function __wizrocket() {
         s.setAttribute("src", url);
         s.setAttribute("rel", "nofollow");
         s.async = true;
+
         doc.getElementsByTagName("head")[0].appendChild(s);
         wc.d("req snt -> url: " + url);
     };
@@ -1489,7 +1508,6 @@ function __wizrocket() {
         var rejectCallback;
         var subscriptionCallback;
         var hidePoweredByCT;
-        var serviceWorkerPath;
 
         if (displayArgs.length === 1) {
             if (wzrk_util.isObject(displayArgs[0])) {
@@ -1505,7 +1523,6 @@ function __wizrocket() {
                 rejectCallback = notifObj["rejectCallback"];
                 subscriptionCallback = notifObj["subscriptionCallback"];
                 hidePoweredByCT = notifObj["hidePoweredByCT"];
-                serviceWorkerPath = notifObj["serviceWorkerPath"];
             }
         } else {
             titleText = displayArgs[0];
@@ -1523,10 +1540,6 @@ function __wizrocket() {
 
         if (typeof hidePoweredByCT === "undefined") {
             hidePoweredByCT = false;
-        }
-
-        if (typeof serviceWorkerPath === "undefined") {
-            serviceWorkerPath = '/clevertap_sw.js';
         }
 
         // ensure that the browser supports notifications
@@ -1554,7 +1567,7 @@ function __wizrocket() {
         // handle migrations from other services -> chrome notifications may have already been asked for before
         if (Notification.permission === 'granted') {
             // skip the dialog and register
-            wiz.setUpChromeNotifications(subscriptionCallback,serviceWorkerPath);
+            wiz.setUpChromeNotifications(subscriptionCallback);
             return;
         } else if (Notification.permission === 'denied') {
             // we've lost this profile :'(
@@ -1582,7 +1595,7 @@ function __wizrocket() {
         }
 
         if (skipDialog) {
-            wiz.setUpChromeNotifications(subscriptionCallback,serviceWorkerPath);
+            wiz.setUpChromeNotifications(subscriptionCallback);
             return;
         }
 
@@ -1612,7 +1625,7 @@ function __wizrocket() {
                     if (typeof okCallback !== "undefined" && typeof okCallback === "function") {
                         okCallback();
                     }
-                    wiz.setUpChromeNotifications(subscriptionCallback,serviceWorkerPath);
+                    wiz.setUpChromeNotifications(subscriptionCallback);
                 } else {
                     if (typeof rejectCallback !== "undefined" && typeof rejectCallback === "function") {
                         rejectCallback();
@@ -2251,6 +2264,20 @@ function __wizrocket() {
                 } // if key == Items
 
             } //for..
+            //save charged Id
+            if (typeof chargedObj[CHARGED_ID] != 'undefined') {
+                var chargedId = chargedObj[CHARGED_ID];
+                if (typeof globalChargedId == 'undefined') {
+                    globalChargedId = wzrk_util.readFromLSorCookie(CHARGED_ID);
+                }
+                if (typeof globalChargedId != 'undefined' && globalChargedId == chargedId) {
+                    //drop event- duplicate charged id
+                    wiz.e("Duplicate charged Id - Dropped" + chargedObj);
+                    return false;
+                }
+                globalChargedId = chargedId;
+                wzrk_util.saveToLSorCookie(CHARGED_ID, chargedId);
+            }
             return true;
         } // if object (chargedObject)
         return false;
