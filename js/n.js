@@ -1,8 +1,8 @@
 function __wizrocket() {
 
 
-    var targetDomain = 'eu1.wzrkt.com';
-    //targetDomain = 'localhost:2829'; //ALWAYS comment this line before deploying
+    var targetDomain = 'wzrkt.com';
+    //targetDomain = 'eu1.wzrkt.com'; //ALWAYS comment this line before deploying
 
     var wz_pr = location.protocol;
     if (wz_pr !== "https:") {
@@ -10,12 +10,12 @@ function __wizrocket() {
     }
     var dataPostURL, recorderURL, emailURL, targetCountURL;
     var wiz = this;
-    var serviceWorkerPath = '/clevertap_sw.js'; // the service worker is placed in the doc root
+    // var serviceWorkerPath = '/clevertap_sw.js'; // the service worker is placed in the doc root
     var doc = document;
     var domain = window.location.hostname;
     var broadDomain;
     var wc = window.console;
-    var requestTime = 0, seqNo = 0, fseen = 0, lseen = 0;
+    var requestTime = 0, seqNo = 0;
     var wzrk_error = {}; //to trap input errors
     var wiz_counter = 0; // to keep track of number of times we load the body
 
@@ -30,7 +30,6 @@ function __wizrocket() {
     var SCOOKIE_PREFIX = "WZRK_S", EV_COOKIE = "WZRK_EV", META_COOKIE = "WZRK_META", PR_COOKIE = "WZRK_PR", ARP_COOKIE = " WZRK_ARP";
     var blockRequeust = false, clearCookie = false;
     var CLEAR = 'clear';
-    var FSEEN = 'fts', LSEEN = 'lts';
     var SCOOKIE_NAME, globalChargedId;
     var CHARGED_ID = "chargedId";
     var LCOOKIE_NAME = "WZRK_L"; // store the last event to fire in case of race condition
@@ -101,7 +100,7 @@ function __wizrocket() {
     /**
      * Sets up a service worker for chrome push notifications and sends the data to LC
      */
-    wiz.setUpChromeNotifications = function (subscriptionCallback) {
+    wiz.setUpChromeNotifications = function (subscriptionCallback,serviceWorkerPath) {
 
 
         if ('serviceWorker' in navigator) {
@@ -191,7 +190,7 @@ function __wizrocket() {
             targetDomain = region + '.' + targetDomain;
         }
 
-        dataPostURL = wz_pr + '//' + targetDomain + '/a?t=67';
+        dataPostURL = wz_pr + '//' + targetDomain + '/a?t=68';
         recorderURL = wz_pr + '//' + targetDomain + '/r?r=1';
         emailURL = wz_pr + '//' + targetDomain + '/e?r=1';
         targetCountURL = wz_pr + '//' + targetDomain + '/m?r=1';
@@ -1129,20 +1128,10 @@ function __wizrocket() {
         }                               //Global cookie
 
         var obj = wiz.getSessionCookieObject();
-        fseen = wiz.getMetaProp(FSEEN);
-        lseen = wiz.getMetaProp(LSEEN);
-        if(typeof fseen =='undefined'){
-            fseen = 0;
-        }
-        if(typeof lseen == 'undefined'){
-            lseen = 0;
-        }
-        dataObject[FSEEN] = fseen;
-        dataObject[LSEEN] = lseen;
+
         dataObject['s'] = obj['s'];                                                      //Session cookie
         dataObject['pg'] = (typeof obj['p'] == 'undefined') ? 1 : obj['p'];                //Page count
-        wiz.setMetaProp(FSEEN, fseen == 0 ? wzrk_util.getNow() : fseen);
-        wiz.setMetaProp(LSEEN, wzrk_util.getNow());
+
         return dataObject;
     };
 
@@ -1508,6 +1497,7 @@ function __wizrocket() {
         var rejectCallback;
         var subscriptionCallback;
         var hidePoweredByCT;
+        var serviceWorkerPath;
 
         if (displayArgs.length === 1) {
             if (wzrk_util.isObject(displayArgs[0])) {
@@ -1523,6 +1513,7 @@ function __wizrocket() {
                 rejectCallback = notifObj["rejectCallback"];
                 subscriptionCallback = notifObj["subscriptionCallback"];
                 hidePoweredByCT = notifObj["hidePoweredByCT"];
+                serviceWorkerPath = notifObj["serviceWorkerPath"];
             }
         } else {
             titleText = displayArgs[0];
@@ -1540,6 +1531,10 @@ function __wizrocket() {
 
         if (typeof hidePoweredByCT === "undefined") {
             hidePoweredByCT = false;
+        }
+
+        if (typeof serviceWorkerPath === "undefined") {
+            serviceWorkerPath = '/clevertap_sw.js';
         }
 
         // ensure that the browser supports notifications
@@ -1567,7 +1562,7 @@ function __wizrocket() {
         // handle migrations from other services -> chrome notifications may have already been asked for before
         if (Notification.permission === 'granted') {
             // skip the dialog and register
-            wiz.setUpChromeNotifications(subscriptionCallback);
+            wiz.setUpChromeNotifications(subscriptionCallback,serviceWorkerPath);
             return;
         } else if (Notification.permission === 'denied') {
             // we've lost this profile :'(
@@ -1595,7 +1590,7 @@ function __wizrocket() {
         }
 
         if (skipDialog) {
-            wiz.setUpChromeNotifications(subscriptionCallback);
+            wiz.setUpChromeNotifications(subscriptionCallback,serviceWorkerPath);
             return;
         }
 
@@ -1625,7 +1620,7 @@ function __wizrocket() {
                     if (typeof okCallback !== "undefined" && typeof okCallback === "function") {
                         okCallback();
                     }
-                    wiz.setUpChromeNotifications(subscriptionCallback);
+                    wiz.setUpChromeNotifications(subscriptionCallback,serviceWorkerPath);
                 } else {
                     if (typeof rejectCallback !== "undefined" && typeof rejectCallback === "function") {
                         rejectCallback();
