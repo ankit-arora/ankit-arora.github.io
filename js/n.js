@@ -2,7 +2,7 @@ function __wizrocket() {
 
 
     var targetDomain = 'wzrkt.com';
-    //targetDomain = 'localhost:2829'; //ALWAYS comment this line before deploying
+    //targetDomain = 'eu1.wzrkt.com'; //ALWAYS comment this line before deploying
 
     var wz_pr = location.protocol;
     if (wz_pr !== "https:") {
@@ -15,6 +15,7 @@ function __wizrocket() {
     var domain = window.location.hostname;
     var broadDomain;
     var wc = window.console;
+    var requestTime = 0, seqNo = 0;
     var wzrk_error = {}; //to trap input errors
     var wiz_counter = 0; // to keep track of number of times we load the body
 
@@ -29,7 +30,8 @@ function __wizrocket() {
     var SCOOKIE_PREFIX = "WZRK_S", EV_COOKIE = "WZRK_EV", META_COOKIE = "WZRK_META", PR_COOKIE = "WZRK_PR", ARP_COOKIE = " WZRK_ARP";
     var blockRequeust = false, clearCookie = false;
     var CLEAR = 'clear';
-    var SCOOKIE_NAME;
+    var SCOOKIE_NAME, globalChargedId;
+    var CHARGED_ID = "chargedId";
     var LCOOKIE_NAME = "WZRK_L"; // store the last event to fire in case of race condition
     var NOTIF_COOKIE_NAME = "WZRK_N"; // check if the user has subscribed for web push notifications
     var globalEventsMap, globalProfileMap, lastSessionId, currentSessionId;
@@ -37,8 +39,7 @@ function __wizrocket() {
     var staleEvtMaxTime = 20 * 60; //20 mins
 
     // path to reference the JS for our dialog
-    // var wizAlertJSPath = 'https://d2r1yp2w7bby2u.cloudfront.net/js/wzrk_dialog.min.js';
-    var wizAlertJSPath = 'https://ankit-arora.github.io/js/dialog.js';
+    var wizAlertJSPath = 'https://d2r1yp2w7bby2u.cloudfront.net/js/wzrk_dialog.min.js';
 
     var FIRST_PING_FREQ_IN_MILLIS = 2 * 60 * 1000; // 2 mins
     var CONTINUOUS_PING_FREQ_IN_MILLIS = 5 * 60 * 1000; // 5 mins
@@ -116,22 +117,17 @@ function __wizrocket() {
                     // remove the common chrome endpoint at the beginning of the token
                     subscriptionData['endpoint'] = subscriptionData['endpoint'].split('/').pop();
 
-                    // if the token changes; push over the new stuff
-                    if (typeof wiz.readFromLSorCookie(NOTIF_COOKIE_NAME) !== 'undefined') {
-                        if (subscriptionData['endpoint'] === JSON.parse(wiz.readFromLSorCookie(NOTIF_COOKIE_NAME))['endpoint'])
-                            return;
+                    var sessionObj = wiz.getSessionCookieObject();
+                    var shouldSendToken = typeof sessionObj['p'] === 'undefined' || sessionObj['p'] === 1;
+                    if(shouldSendToken){
+                        var payload = subscriptionData;
+                        payload = wiz.addSystemDataToObject(payload, true);
+                        payload = JSON.stringify(payload);
+                        var pageLoadUrl = dataPostURL;
+                        pageLoadUrl = wiz.addToURL(pageLoadUrl, "type", "data");
+                        pageLoadUrl = wiz.addToURL(pageLoadUrl, "d", wiz.compressData(payload));
+                        wiz.fireRequest(pageLoadUrl);
                     }
-                    // the final payload is just the stringified subscription object
-                    var payload = subscriptionData;
-                    payload = wiz.addSystemDataToObject(payload, true);
-                    payload = JSON.stringify(payload);
-                    var pageLoadUrl = dataPostURL;
-                    pageLoadUrl = wiz.addToURL(pageLoadUrl, "type", "data");
-                    pageLoadUrl = wiz.addToURL(pageLoadUrl, "d", wiz.compressData(payload));
-                    wiz.fireRequest(pageLoadUrl);
-
-                    // persist to local storage
-                    wiz.saveToLSorCookie(NOTIF_COOKIE_NAME, payload);
 
                     if (typeof subscriptionCallback !== "undefined" && typeof subscriptionCallback === "function") {
                         subscriptionCallback();
@@ -198,6 +194,7 @@ function __wizrocket() {
         recorderURL = wz_pr + '//' + targetDomain + '/r?r=1';
         emailURL = wz_pr + '//' + targetDomain + '/e?r=1';
         targetCountURL = wz_pr + '//' + targetDomain + '/m?r=1';
+
         var currLocation = location.href;
         var url_params = wzrk_util.getURLParams(location.href.toLowerCase());
 
@@ -273,7 +270,7 @@ function __wizrocket() {
         }
         pageLoadUrl = wiz.addToURL(pageLoadUrl, "type", "page");
         pageLoadUrl = wiz.addToURL(pageLoadUrl, "d", wiz.compressData(JSON.stringify(data)));
-        wiz.fireRequest(pageLoadUrl);
+        wiz.saveAndFireRequest(pageLoadUrl, false);
 
 
         // -- ping request logic
@@ -285,7 +282,7 @@ function __wizrocket() {
 
             pageLoadUrl = wiz.addToURL(pageLoadUrl, "type", EVT_PING);
             pageLoadUrl = wiz.addToURL(pageLoadUrl, "d", wiz.compressData(JSON.stringify(data)));
-            wiz.fireRequest(pageLoadUrl);
+            wiz.saveAndFireRequest(pageLoadUrl, false);
         };
 
         setTimeout(function () {
@@ -418,9 +415,14 @@ function __wizrocket() {
 
                 // use the current location protocol, since it may have gone from http to https when we saved the original request
                 var newUrl = wz_pr + url.substring(url.indexOf('//'));
-
+                if (epoch == requestTime) {
+                    seqNo++;
+                } else {
+                    requestTime = now;
+                    seqNo = 0;
+                }
                 // using the epoch as the request id - this helps reduce dupe events
-                wiz.fireRequest(newUrl + '&dl=' + d + '&i=' + epoch);
+                wiz.fireRequest(newUrl + '&dl=' + d + '&i=' + epoch + '&sn=' + seqNo);
             }
         }
     };
@@ -490,8 +492,6 @@ function __wizrocket() {
                         eventArr.unshift(eventObj);    // put it back if it is not an object
                     } else {
                         //check Charged Event vs. other events.
-
-
                         if (eventName == "Charged") {
                             if (!wiz.isChargedEventStructureValid(eventObj)) {
                                 wiz.reportError(511, "Charged event structure invalid. Not sent.");
@@ -898,7 +898,14 @@ function __wizrocket() {
 
 
         if (!blockRequeust || override || clearCookie) {
-            wiz.fireRequest(url + '&i=' + now);
+            if (now == requestTime) {
+                seqNo++;
+            } else {
+                requestTime = now;
+                seqNo = 0;
+            }
+
+            wiz.fireRequest(url + '&i=' + now + "&sn=" + seqNo);
         }
 
     };
@@ -1417,6 +1424,7 @@ function __wizrocket() {
         s.setAttribute("src", url);
         s.setAttribute("rel", "nofollow");
         s.async = true;
+
         doc.getElementsByTagName("head")[0].appendChild(s);
         wc.d("req snt -> url: " + url);
     };
@@ -1490,6 +1498,8 @@ function __wizrocket() {
         var subscriptionCallback;
         var hidePoweredByCT;
         var serviceWorkerPath;
+        var httpsPopupPath;
+        var httpsIframePath;
 
         if (displayArgs.length === 1) {
             if (wzrk_util.isObject(displayArgs[0])) {
@@ -1506,6 +1516,8 @@ function __wizrocket() {
                 subscriptionCallback = notifObj["subscriptionCallback"];
                 hidePoweredByCT = notifObj["hidePoweredByCT"];
                 serviceWorkerPath = notifObj["serviceWorkerPath"];
+                httpsPopupPath = notifObj["httpsPopupPath"];
+                httpsIframePath = notifObj["httpsIframePath"];
             }
         } else {
             titleText = displayArgs[0];
@@ -1534,8 +1546,11 @@ function __wizrocket() {
             return;
         }
 
+        var isHTTP = location.protocol === 'http:' && typeof httpsPopupPath !== "undefined" &&
+            typeof httpsIframePath !== "undefined";
+
         // make sure the site is on https for chrome notifications
-        if (location.protocol !== 'https:' && document.location.hostname !== 'localhost') {
+        if (location.protocol !== 'https:' && document.location.hostname !== 'localhost' && !isHTTP) {
             wc.e("Make sure you are https or localhost to register for notifications");
             return;
         }
@@ -1551,39 +1566,40 @@ function __wizrocket() {
 
         // we check for the cookie in setUpChromeNotifications(); the tokens may have changed
 
-        // handle migrations from other services -> chrome notifications may have already been asked for before
-        if (Notification.permission === 'granted') {
-            // skip the dialog and register
-            wiz.setUpChromeNotifications(subscriptionCallback,serviceWorkerPath);
-            return;
-        } else if (Notification.permission === 'denied') {
-            // we've lost this profile :'(
-            return;
-        }
-
-        // make sure the user isn't asked for notifications more than twice in one weeks
-        if (typeof(wiz.getMetaProp('notif_last_time')) === 'undefined') {
-            wiz.setMetaProp('notif_last_time', new Date().getTime() / 1000);
-        } else {
-            var now = new Date().getTime() / 1000;
-            if (typeof askAgainTimeInSeconds !== "undefined") {
-                var ASK_TIME_IN_SECONDS = askAgainTimeInSeconds;
-            } else {
-                // 7 days by default
-                var ASK_TIME_IN_SECONDS = 7 * 24 * 60 * 60;
-            }
-
-            if (now - wiz.getMetaProp('notif_last_time') < ASK_TIME_IN_SECONDS) {
+        if(!isHTTP){
+            // handle migrations from other services -> chrome notifications may have already been asked for before
+            if (Notification.permission === 'granted') {
+                // skip the dialog and register
+                wiz.setUpChromeNotifications(subscriptionCallback,serviceWorkerPath);
                 return;
-            } else {
-                // continue asking
-                wiz.setMetaProp('notif_last_time', now);
+            } else if (Notification.permission === 'denied') {
+                // we've lost this profile :'(
+                return;
             }
-        }
+            // make sure the user isn't asked for notifications more than twice in one weeks
+            if (typeof(wiz.getMetaProp('notif_last_time')) === 'undefined') {
+                wiz.setMetaProp('notif_last_time', new Date().getTime() / 1000);
+            } else {
+                var now = new Date().getTime() / 1000;
+                if (typeof askAgainTimeInSeconds !== "undefined") {
+                    var ASK_TIME_IN_SECONDS = askAgainTimeInSeconds;
+                } else {
+                    // 7 days by default
+                    var ASK_TIME_IN_SECONDS = 7 * 24 * 60 * 60;
+                }
 
-        if (skipDialog) {
-            wiz.setUpChromeNotifications(subscriptionCallback,serviceWorkerPath);
-            return;
+                if (now - wiz.getMetaProp('notif_last_time') < ASK_TIME_IN_SECONDS) {
+                    return;
+                } else {
+                    // continue asking
+                    wiz.setMetaProp('notif_last_time', now);
+                }
+            }
+
+            if (skipDialog) {
+                wiz.setUpChromeNotifications(subscriptionCallback,serviceWorkerPath);
+                return;
+            }
         }
 
         // make sure the right parameters are passed
@@ -1597,29 +1613,72 @@ function __wizrocket() {
             okButtonColor = "#f28046"; // default color for positive button
         }
 
-        wiz.addWizAlertJS().onload = function () {
-            // create our wizrocket popup
-            wzrkPermissionPopup['wizAlert']({
-                'title': titleText,
-                'body': bodyText,
-                'confirmButtonText': okButtonText,
-                'confirmButtonColor': okButtonColor,
-                'rejectButtonText': rejectButtonText,
-                'hidePoweredByCT': hidePoweredByCT
-            }, function (enabled) { // callback function
-                if (enabled) {
-                    // the user accepted on the dialog box
-                    if (typeof okCallback !== "undefined" && typeof okCallback === "function") {
-                        okCallback();
-                    }
-                    wiz.setUpChromeNotifications(subscriptionCallback,serviceWorkerPath);
-                } else {
-                    if (typeof rejectCallback !== "undefined" && typeof rejectCallback === "function") {
-                        rejectCallback();
+        if(isHTTP){
+            //add the https iframe
+            var httpsIframe = document.createElement('iframe');
+            httpsIframe.setAttribute('style', 'display:none;');
+            httpsIframe.setAttribute('src', httpsIframePath);
+            document.body.appendChild(httpsIframe);
+            window.addEventListener("message", function(event){
+                if(typeof event.data !== "undefined"){
+                    var obj = JSON.parse(event.data);
+                    if(typeof obj.state !== "undefined"){
+                        if(obj.from === "ct" && obj.state === "not"){
+                            wiz.addWizAlertJS().onload = function () {
+                                // create our wizrocket popup
+                                wzrkPermissionPopup['wizAlert']({
+                                    'title': titleText,
+                                    'body': bodyText,
+                                    'confirmButtonText': okButtonText,
+                                    'confirmButtonColor': okButtonColor,
+                                    'rejectButtonText': rejectButtonText,
+                                    'hidePoweredByCT': hidePoweredByCT
+                                }, function (enabled) { // callback function
+                                    if (enabled) {
+                                        // the user accepted on the dialog box
+                                        if (typeof okCallback !== "undefined" && typeof okCallback === "function") {
+                                            okCallback();
+                                        }
+                                        //redirect to popup.html
+                                        window.open(httpsPopupPath);
+                                    } else {
+                                        if (typeof rejectCallback !== "undefined" && typeof rejectCallback === "function") {
+                                            rejectCallback();
+                                        }
+                                    }
+                                    wiz.removeWizAlertJS();
+                                });
+                            }
+                        }
                     }
                 }
-                wiz.removeWizAlertJS();
-            });
+                // console.log(event.origin);
+            }, false);
+        }else{
+            wiz.addWizAlertJS().onload = function () {
+                // create our wizrocket popup
+                wzrkPermissionPopup['wizAlert']({
+                    'title': titleText,
+                    'body': bodyText,
+                    'confirmButtonText': okButtonText,
+                    'confirmButtonColor': okButtonColor,
+                    'rejectButtonText': rejectButtonText,
+                    'hidePoweredByCT': hidePoweredByCT
+                }, function (enabled) { // callback function
+                    if (enabled) {
+                        // the user accepted on the dialog box
+                        if (typeof okCallback !== "undefined" && typeof okCallback === "function") {
+                            okCallback();
+                        }
+                        wiz.setUpChromeNotifications(subscriptionCallback,serviceWorkerPath);
+                    } else {
+                        if (typeof rejectCallback !== "undefined" && typeof rejectCallback === "function") {
+                            rejectCallback();
+                        }
+                    }
+                    wiz.removeWizAlertJS();
+                });
+            }
         }
     };
 
@@ -2251,6 +2310,20 @@ function __wizrocket() {
                 } // if key == Items
 
             } //for..
+            //save charged Id
+            if (typeof chargedObj[CHARGED_ID] != 'undefined') {
+                var chargedId = chargedObj[CHARGED_ID];
+                if (typeof globalChargedId == 'undefined') {
+                    globalChargedId = wzrk_util.readFromLSorCookie(CHARGED_ID);
+                }
+                if (typeof globalChargedId != 'undefined' && globalChargedId == chargedId) {
+                    //drop event- duplicate charged id
+                    wiz.e("Duplicate charged Id - Dropped" + chargedObj);
+                    return false;
+                }
+                globalChargedId = chargedId;
+                wzrk_util.saveToLSorCookie(CHARGED_ID, chargedId);
+            }
             return true;
         } // if object (chargedObject)
         return false;
