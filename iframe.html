@@ -10,7 +10,6 @@
         if(Notification.permission !== "granted"){
             console.log("not registered");
             parent.postMessage(JSON.stringify({"from":"ct","state":"not"}),"*");
-            return;
         }
     })();
 </script>
