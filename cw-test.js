@@ -19,7 +19,7 @@ var CURRENT_CACHES = {
 if(typeof notificationData === "undefined"){
     // set up some variables we need globally
     var notificationData;
-    var redirectPath; // when showing thr url; we need to log to LC before opening up the deep link
+    // var redirectPath; // when showing thr url; we need to log to LC before opening up the deep link
 }
 
 self.addEventListener('installed', function(event) {
@@ -68,7 +68,7 @@ self.addEventListener('push', function(event) {
     });
 
     // extract the parameters we need and fill up the notification
-    redirectPath = notificationData['redirectPath'];
+    // redirectPath = notificationData['redirectPath'];
     var notificationOptions = notificationData['notificationOptions'];
     var raiseNotificationViewedPath = notificationData['raiseNotificationViewedPath'];
     if(typeof raiseNotificationViewedPath !== "undefined"){
@@ -79,7 +79,7 @@ self.addEventListener('push', function(event) {
 
 });
 
-function onClick(event){
+function onClick(event, redirectPath){
     var finalDeepLink = redirectPath;
     var silentRequest = true; // are opening up a new window or sending a quiet get request from here?
     if (event.action === 'action1') {
@@ -118,11 +118,11 @@ self.addEventListener('notificationclick', function(event) {
     // if(typeof notificationData === "undefined"){
     var promise = localforage.getItem(event.notification.title).then(function(value) {
         notificationData = JSON.parse(value);
-        redirectPath = notificationData['redirectPath'];
+        var redirectPath = notificationData['redirectPath'];
         // console.log("event",event);
         // console.log("redirect path: " + redirectPath);
         // console.log("notification data: " + notificationData);
-        onClick(event);
+        onClick(event, redirectPath);
     }).catch(function(err) {
         // This code runs if there were any errors
         console.log(err);
