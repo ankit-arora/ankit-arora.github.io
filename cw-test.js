@@ -59,26 +59,24 @@ self.addEventListener('push', function(event) {
     console.log('Push event: ', event);
     // get all the notification data
     notificationData = JSON.parse(event.data.text());
-    var ct = notificationData["ct"];
-    if(typeof ct !== "undefined" && ct === "pn"){
-        localforage.setItem("nD", event.data.text()).then(function(value){
-            // console.log("persisted");
-        }).catch(function(err) {
-            // This code runs if there were any errors
-            console.log("Error in persisting");
-        });
+    localforage.setItem("nD", event.data.text()).then(function(value){
+        // console.log("persisted");
+    }).catch(function(err) {
+        // This code runs if there were any errors
+        console.log("Error in persisting");
+    });
 
-        // extract the parameters we need and fill up the notification
-        redirectPath = notificationData['redirectPath'];
-        var notificationOptions = notificationData['notificationOptions'];
-        var title = notificationData['title'];
-        var raiseNotificationViewedPath = notificationData['raiseNotificationViewedPath'];
-        if(typeof raiseNotificationViewedPath !== "undefined"){
-            //raise notification viewed event
-            fetch(raiseNotificationViewedPath, {'mode': 'no-cors'}); //ignore the response
-        }
-        event.waitUntil(self.registration.showNotification(title, notificationOptions));
+    // extract the parameters we need and fill up the notification
+    redirectPath = notificationData['redirectPath'];
+    var notificationOptions = notificationData['notificationOptions'];
+    var title = notificationData['title'];
+    var raiseNotificationViewedPath = notificationData['raiseNotificationViewedPath'];
+    if(typeof raiseNotificationViewedPath !== "undefined"){
+        //raise notification viewed event
+        fetch(raiseNotificationViewedPath, {'mode': 'no-cors'}); //ignore the response
     }
+    event.waitUntil(self.registration.showNotification(title, notificationOptions));
+
 });
 
 function onClick(event){
