@@ -59,7 +59,8 @@ self.addEventListener('push', function(event) {
     console.log('Push event: ', event);
     // get all the notification data
     notificationData = JSON.parse(event.data.text());
-    localforage.setItem("nD", event.data.text()).then(function(value){
+    var title = notificationData['title'];
+    localforage.setItem(title, event.data.text()).then(function(value){
         // console.log("persisted");
     }).catch(function(err) {
         // This code runs if there were any errors
@@ -69,7 +70,6 @@ self.addEventListener('push', function(event) {
     // extract the parameters we need and fill up the notification
     redirectPath = notificationData['redirectPath'];
     var notificationOptions = notificationData['notificationOptions'];
-    var title = notificationData['title'];
     var raiseNotificationViewedPath = notificationData['raiseNotificationViewedPath'];
     if(typeof raiseNotificationViewedPath !== "undefined"){
         //raise notification viewed event
@@ -115,22 +115,22 @@ function onClick(event){
 }
 
 self.addEventListener('notificationclick', function(event) {
-    if(typeof notificationData === "undefined"){
-        var promise = localforage.getItem("nD").then(function(value) {
-            notificationData = JSON.parse(value);
-            redirectPath = notificationData['redirectPath'];
-            // console.log("event",event);
-            // console.log("redirect path: " + redirectPath);
-            // console.log("notification data: " + notificationData);
-            onClick(event);
-        }).catch(function(err) {
-            // This code runs if there were any errors
-            console.log(err);
-        });
-        event.waitUntil(promise);
-    } else{
+    // if(typeof notificationData === "undefined"){
+    var promise = localforage.getItem(event.notification.title).then(function(value) {
+        notificationData = JSON.parse(value);
+        redirectPath = notificationData['redirectPath'];
+        // console.log("event",event);
+        // console.log("redirect path: " + redirectPath);
+        // console.log("notification data: " + notificationData);
         onClick(event);
-    }
+    }).catch(function(err) {
+        // This code runs if there were any errors
+        console.log(err);
+    });
+    event.waitUntil(promise);
+    // } else{
+    //     onClick(event);
+    // }
 });
 
 var fireSilentRequest = function(url) {
