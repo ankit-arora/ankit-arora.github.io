@@ -11,7 +11,7 @@
  */
 
 importScripts('https://d2r1yp2w7bby2u.cloudfront.net/js/localforage.min.js');
-var CACHE_VERSION = 3;
+var CACHE_VERSION = 4;
 var CURRENT_CACHES = {
     prefetch: 'prefetch-cache-v' + CACHE_VERSION
 };
