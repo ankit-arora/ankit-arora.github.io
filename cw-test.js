@@ -129,7 +129,7 @@ self.addEventListener('notificationclick', function(event) {
     var notification = event.notification;
     var data = notification['data'];
     var key;
-    if(typeof data !== 'undefined'){
+    if(typeof data !== 'undefined' && data !== null){
         key = data['wzrk_id'];
     }
     if(typeof key === 'undefined'){
