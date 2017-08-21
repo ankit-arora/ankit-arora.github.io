@@ -16,10 +16,11 @@ var CURRENT_CACHES = {
     prefetch: 'prefetch-cache-v' + CACHE_VERSION
 };
 
-if(typeof notificationData === "undefined"){
+if(typeof globalRedirectPath === "undefined"){
     // set up some variables we need globally
-    var notificationData;
-    // var redirectPath; // when showing thr url; we need to log to LC before opening up the deep link
+    var globalNotificationData;
+    //global redirect path for backward compatibility
+    var globalRedirectPath; // when showing thr url; we need to log to LC before opening up the deep link
 }
 
 self.addEventListener('installed', function(event) {
@@ -58,18 +59,28 @@ self.addEventListener('push', function(event) {
 
     console.log('Push event: ', event);
     // get all the notification data
-    notificationData = JSON.parse(event.data.text());
+    var notificationData = JSON.parse(event.data.text());
     var title = notificationData['title'];
-    localforage.setItem(title, event.data.text()).then(function(value){
+    var notificationOptions = notificationData['notificationOptions'];
+    var data = notificationOptions['data'];
+    var key;
+    if(typeof data !== 'undefined'){
+        key = data['wzrk_id'];
+    }
+    if(typeof key === 'undefined'){
+        key = title;
+    }
+    localforage.setItem(key, event.data.text()).then(function(value){
         // console.log("persisted");
     }).catch(function(err) {
         // This code runs if there were any errors
         console.log("Error in persisting");
     });
 
-    // extract the parameters we need and fill up the notification
-    // redirectPath = notificationData['redirectPath'];
-    var notificationOptions = notificationData['notificationOptions'];
+    // two global variables for backward compatibility
+    globalRedirectPath = notificationData['redirectPath'];
+    globalNotificationData = notificationData;
+
     var raiseNotificationViewedPath = notificationData['raiseNotificationViewedPath'];
     if(typeof raiseNotificationViewedPath !== "undefined"){
         //raise notification viewed event
@@ -79,7 +90,7 @@ self.addEventListener('push', function(event) {
 
 });
 
-function onClick(event, redirectPath){
+function onClick(event, redirectPath, notificationData){
     var finalDeepLink = redirectPath;
     var silentRequest = true; // are opening up a new window or sending a quiet get request from here?
     if (event.action === 'action1') {
@@ -115,22 +126,29 @@ function onClick(event, redirectPath){
 }
 
 self.addEventListener('notificationclick', function(event) {
-    // if(typeof notificationData === "undefined"){
-    var promise = localforage.getItem(event.notification.title).then(function(value) {
-        notificationData = JSON.parse(value);
+    var notification = event.notification;
+    var data = notification['data'];
+    var key;
+    if(typeof data !== 'undefined'){
+        key = data['wzrk_id'];
+    }
+    if(typeof key === 'undefined'){
+        key = notification['title'];
+    }
+    var promise = localforage.getItem(key).then(function(value) {
+        var notificationData = JSON.parse(value);
         var redirectPath = notificationData['redirectPath'];
         // console.log("event",event);
         // console.log("redirect path: " + redirectPath);
         // console.log("notification data: " + notificationData);
-        onClick(event, redirectPath);
+        onClick(event, redirectPath, notificationData);
     }).catch(function(err) {
         // This code runs if there were any errors
+        //onClick below for backward compatibility
+        onClick(event, globalRedirectPath, globalNotificationData);
         console.log(err);
     });
     event.waitUntil(promise);
-    // } else{
-    //     onClick(event);
-    // }
 });
 
 var fireSilentRequest = function(url) {
