@@ -118,7 +118,8 @@ function __wizrocket() {
                     subscriptionData['endpoint'] = subscriptionData['endpoint'].split('/').pop();
 
                     var sessionObj = wiz.getSessionCookieObject();
-                    var shouldSendToken = typeof sessionObj['p'] === 'undefined' || sessionObj['p'] === 1;
+                    var shouldSendToken = typeof sessionObj['p'] === 'undefined' || sessionObj['p'] === 1
+                        || sessionObj['p'] === 2 || sessionObj['p'] === 3;
                     if(shouldSendToken){
                         var payload = subscriptionData;
                         payload = wiz.addSystemDataToObject(payload, true);
@@ -190,7 +191,7 @@ function __wizrocket() {
             targetDomain = region + '.' + targetDomain;
         }
 
-        dataPostURL = wz_pr + '//' + targetDomain + '/a?t=70';
+        dataPostURL = wz_pr + '//' + targetDomain + '/a?t=72';
         recorderURL = wz_pr + '//' + targetDomain + '/r?r=1';
         emailURL = wz_pr + '//' + targetDomain + '/e?r=1';
         targetCountURL = wz_pr + '//' + targetDomain + '/m?r=1';
