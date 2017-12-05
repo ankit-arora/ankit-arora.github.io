@@ -7,8 +7,11 @@
 <body>
 <script type="text/javascript">
     (function() {
-        Notification.requestPermission().then(function(result) {
-            console.log(result);
+        Notification.requestPermission(function (permission) {
+            // If the user accepts, let's create a notification
+            if (permission === "granted") {
+                var notification = new Notification("Hi there!");
+            }
         });
         if(Notification.permission !== "granted"){
             console.log("not registered");
