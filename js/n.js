@@ -146,6 +146,9 @@ function __wizrocket() {
                     if (typeof subscriptionCallback !== "undefined" && typeof subscriptionCallback === "function") {
                         subscriptionCallback();
                     }
+                    if (wzrk_util.isLocalStorageSupported()) {
+                        localStorage.setItem("ctWPR","ok");
+                    }
                 })['catch'](function (error) {
                     wc.l('Error subscribing: ' + error);
                     //unsubscribe from webpush if error
