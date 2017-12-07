@@ -7,16 +7,17 @@
 <body>
 <script type="text/javascript">
     (function() {
-        Notification.requestPermission(function (permission) {
-            // If the user accepts, let's create a notification
-            if (permission === "granted") {
-                var notification = new Notification("Hi there!");
-            }
-        });
-        if(Notification.permission !== "granted"){
-            console.log("not registered");
-            parent.postMessage(JSON.stringify({"from":"ct","state":"not"}),"*");
-        }
+//        Notification.requestPermission(function (permission) {
+//            // If the user accepts, let's create a notification
+//            if (permission === "granted") {
+//                var notification = new Notification("Hi there!");
+//            }
+//        });
+//        if(Notification.permission !== "granted"){
+//            console.log("not registered");
+//            parent.postMessage(JSON.stringify({"from":"ct","state":"not"}),"*");
+//        }
+        localStorage.setItem("foo","bar");
     })();
 </script>
 </body>
