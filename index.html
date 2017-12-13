@@ -5,12 +5,12 @@
     <title>Test Server</title>
     <script type="text/javascript">
         var clevertap = {event:[], profile:[], account:[], notifications:[]};
-        //        clevertap.account.push({"id": "ZWW-WWW-WWRZ"});
-        clevertap.account.push({"id": "846-Z7Z-6K4Z"});
+        clevertap.account.push({"id": "ZWW-WWW-WWRZ"});
+        // clevertap.account.push({"id": "846-Z7Z-6K4Z"});
         //        clevertap.account.push({"id": "RK6-5WW-844Z"});
         //        clevertap.account.push({"id": "W6Z-4R9-694Z"});
         //        clevertap.account.push({"id": "867-4WK-844Z"});
-        clevertap.event.push("Notification Clicked",{"testProperty":"property1"});
+        clevertap.event.push("testevent",{"testProperty":"property1"});
         //        clevertap.profile.push({
         //            "Site": {
         //                "checkString": -1
@@ -110,14 +110,14 @@ test server
     //    });
     //
 
-clevertap.notifications.push({
-    "titleText":'Would you like to receive Push Notifications?',
-    "bodyText":'We promise to only send you relevant content and give you updates on your transactions',
-    "okButtonText":'Sign me up!',
-    "rejectButtonText":'No thanks',
-    "okButtonColor":'#f28046',
-    "askAgainTimeInSeconds":5
-});
+    clevertap.notifications.push({
+        "titleText":'Would you like to receive Push Notifications?',
+        "bodyText":'We promise to only send you relevant content and give you updates on your transactions',
+        "okButtonText":'Sign me up!',
+        "rejectButtonText":'No thanks',
+        "okButtonColor":'#f28046',
+        "askAgainTimeInSeconds":5
+    });
 
 </script>
 <!--<iframe style="display: none" src="https://ankit-arora.github.io/iframe.html"></iframe>&ndash;&gt;-->
