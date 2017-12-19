@@ -48,7 +48,8 @@ function __wizrocket() {
         GLOBAL: 'global',
         TOTAL_COUNT: 'tc',
         DISPLAY: 'display',
-        UNDEFINED: 'undefined'
+        UNDEFINED: 'undefined',
+        WEBPUSH_LS_KEY: 'WZRK_WPR'
     };
 
     // path to reference the JS for our dialog
@@ -143,7 +144,7 @@ function __wizrocket() {
                         wiz.fireRequest(pageLoadUrl);
                         //set in localstorage
                         if(wzrk_util.isLocalStorageSupported()){
-                            localStorage.setItem("WZRK_WPR",'ok');
+                            localStorage.setItem(STRING_CONSTANTS.WEBPUSH_LS_KEY,'ok');
                         }
                     }
 
