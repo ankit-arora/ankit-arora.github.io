@@ -154,7 +154,7 @@ function __wizrocket() {
                 })['catch'](function (error) {
                     wc.l('Error subscribing: ' + error);
                     //unsubscribe from webpush if error
-                    serviceWorkerRegistration['pushManager']['getSubscription']['then'](function (subscription) {
+                    serviceWorkerRegistration['pushManager']['getSubscription']()['then'](function (subscription) {
                         subscription['unsubscribe']()['then'](function (successful) {
                             // You've successfully unsubscribed
                             wc.l('Unsubscription successful');
