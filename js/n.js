@@ -155,13 +155,15 @@ function __wizrocket() {
                     wc.l('Error subscribing: ' + error);
                     //unsubscribe from webpush if error
                     serviceWorkerRegistration['pushManager']['getSubscription']()['then'](function (subscription) {
-                        subscription['unsubscribe']()['then'](function (successful) {
-                            // You've successfully unsubscribed
-                            wc.l('Unsubscription successful');
-                        })['catch'](function (e) {
-                            // Unsubscription failed
-                            wc.l('Error unsubscribing: ' + e)
-                        })
+                        if(subscription !== null) {
+                            subscription['unsubscribe']()['then'](function (successful) {
+                                // You've successfully unsubscribed
+                                wc.l('Unsubscription successful');
+                            })['catch'](function (e) {
+                                // Unsubscription failed
+                                wc.l('Error unsubscribing: ' + e)
+                            })
+                        }
                     })
                 });
             })['catch'](function (err) {
