@@ -7,7 +7,7 @@
 <body>
 <script type="text/javascript">
     (function() {
-        if(localStorage.getItem("ctWPR") === null){
+        if(localStorage && localStorage.getItem("WZRK_WPR") === null){
             console.log("not registered");
             parent.postMessage(JSON.stringify({"from":"ct","state":"not"}),"*");
         }
