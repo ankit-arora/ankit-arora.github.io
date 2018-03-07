@@ -5,8 +5,8 @@
     <title>Test Server</title>
     <script type="text/javascript">
         var clevertap = {event:[], profile:[], account:[], notifications:[]};
-        clevertap.account.push({"id": "ZWW-WWW-WWRZ"});
-        // clevertap.account.push({"id": "846-Z7Z-6K4Z"});
+        // clevertap.account.push({"id": "ZWW-WWW-WWRZ"});
+        clevertap.account.push({"id": "846-Z7Z-6K4Z"});
         //        clevertap.account.push({"id": "RK6-5WW-844Z"});
         //        clevertap.account.push({"id": "W6Z-4R9-694Z"});
         //        clevertap.account.push({"id": "867-4WK-844Z"});
@@ -58,10 +58,10 @@ test server
         s.parentNode.insertBefore(wzrk, s);
     })();
 
-    //    clevertap.notifications.push({
-    //        "skipDialog":true,
-    //        "askAgainTimeInSeconds":1
-    //    });
+       // clevertap.notifications.push({
+       //     "skipDialog":true,
+       //     "askAgainTimeInSeconds":1
+       // });
 
     //        clevertap.notifications.push({
     //            "titleText":'Would you like to receive Push Notifications?',
@@ -116,7 +116,8 @@ test server
         "okButtonText":'Sign me up!',
         "rejectButtonText":'No thanks',
         "okButtonColor":'#f28046',
-        "askAgainTimeInSeconds":5
+        "askAgainTimeInSeconds":5,
+        "serviceWorkerPath": "/foo/my_sw.js"
     });
 
 </script>
