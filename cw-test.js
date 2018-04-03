@@ -25,8 +25,8 @@ if(typeof globalRedirectPath === "undefined"){
 
 self.addEventListener('install', function(event) {
     // force this service worker to become the active service worker; removes any previous implementations or migrations
-    self.skipWaiting();
-    console.log('Service worker installed', self, event);
+    // self.skipWaiting();
+    console.log('Service worker new installed', self, event);
 });
 
 self.addEventListener('activate', function(event) {
