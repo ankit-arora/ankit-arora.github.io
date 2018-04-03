@@ -26,7 +26,7 @@ if(typeof globalRedirectPath === "undefined"){
 self.addEventListener('install', function(event) {
     // force this service worker to become the active service worker; removes any previous implementations or migrations
     self.skipWaiting();
-    console.log('Service worker new again again installed', self, event);
+    // console.log('Service worker new again again again installed', self, event);
 });
 
 self.addEventListener('activate', function(event) {
@@ -53,7 +53,8 @@ self.addEventListener('activate', function(event) {
     //             console.log("Error while clearing cache")
     //         })
     // );
-    console.log("SW activated")
+    console.log("SW activated");
+    console.log('Service worker new again again again activated');
 });
 
 self.addEventListener('push', function(event) {
